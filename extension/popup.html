@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Site Rebuilder</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="top">
+    <span class="logo">⌘ Site Rebuilder</span>
+    <span id="phaseBadge" class="badge hidden"></span>
+  </header>
+
+  <main>
+    <!-- Step 1: input -->
+    <section id="view-input">
+      <label for="url">Website URL</label>
+      <input id="url" type="text" placeholder="https://example.com" autocomplete="off" spellcheck="false" />
+      <div class="row">
+        <label class="inline" for="pageLimit">Pages to rebuild</label>
+        <select id="pageLimit">
+          <option value="1">1</option>
+          <option value="3">3</option>
+          <option value="5" selected>5</option>
+          <option value="8">8</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+      <button id="btnAnalyze" class="primary">Analyze site</button>
+      <p class="hint">The site opens briefly in a hidden tab to measure real layout, colors and typography.</p>
+    </section>
+
+    <!-- Step 2: analysis result -->
+    <section id="view-ready" class="hidden">
+      <div class="kv"><span>Source</span><b id="readySource" class="ellipsis"></b></div>
+      <div class="kv"><span>Platform</span><b id="readyPlatform" class="pill"></b></div>
+      <div class="kv"><span>Pages found</span><b id="readyPages"></b></div>
+      <div class="kv"><span>Assets on start page</span><b id="readyAssets"></b></div>
+      <div id="readyPageList" class="page-list"></div>
+      <button id="btnRebuild" class="primary">Rebuild as Elementor</button>
+      <button id="btnBack1" class="ghost">Analyze another site</button>
+    </section>
+
+    <!-- Running -->
+    <section id="view-running" class="hidden">
+      <div class="bar"><div id="runBar" class="bar-fill"></div></div>
+      <p id="runLabel" class="status">Working…</p>
+      <pre id="log" class="log"></pre>
+      <button id="btnCancel" class="ghost">Cancel</button>
+    </section>
+
+    <!-- Done -->
+    <section id="view-done" class="hidden">
+      <p class="ok">✅ Package ready</p>
+      <div class="kv"><span>Pages</span><b id="donePages"></b></div>
+      <div class="kv"><span>Local assets</span><b id="doneAssets"></b></div>
+      <div class="kv"><span>Header / footer</span><b id="doneHF"></b></div>
+      <div class="kv"><span>Package size</span><b id="doneSize"></b></div>
+      <p id="doneRemoteNote" class="hint hidden"></p>
+      <button id="btnDownload" class="primary">Download ZIP</button>
+      <button id="btnRestart" class="ghost">Rebuild another site</button>
+    </section>
+
+    <!-- Error / cancelled -->
+    <section id="view-error" class="hidden">
+      <p class="err" id="errorMsg"></p>
+      <button id="btnRetry" class="primary">Start over</button>
+    </section>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>

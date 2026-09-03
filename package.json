@@ -1,0 +1,11 @@
+{
+  "name": "site-rebuilder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Chrome extension + WordPress plugin that rebuilds any public website as an editable Elementor site.",
+  "scripts": {
+    "test": "node tests/test-zip.mjs && node tests/test-elementor.mjs",
+    "package:plugin": "python3 -m zipfile -c site-rebuilder-importer.zip wp-plugin/site-rebuilder-importer/"
+  }
+}
