@@ -111,8 +111,10 @@ docker run --rm -v "$PWD/wp-plugin:/src" php:8.2-cli sh -c \
 - Forms, e-commerce and JS interactivity are not rebuilt; menus are simple link lists.
 - Animations are limited to button hover effects; source webfonts are referenced by name with system fallbacks (add the font in Elementor's settings if you have a license).
 - Responsive behavior is heuristic (rows stack on tablet, large headings scale down).
-- Elements that only exist via JavaScript after long delays (e.g. sliders) may appear as empty containers.
+- Lazy-loaded content and infinite scroll are captured via a progressive scroll + settle pass (up to 12 screens / ~15 s per page), but content that only exists via JavaScript after long delays (or virtualized lists that remove off-screen DOM) may appear as empty containers.
+- Single assets over 25 MB and packages over 150 MB of assets stay as remote URLs to the original site (per-asset status is recorded in `package.json` → `assets` and `assetFallbacks`).
 - Internal links between rebuilt pages keep pointing at the source site — run a find-replace (e.g. *Better Search Replace*) on `postmeta._elementor_data` if you want them remapped.
+- Exported packages are stored in the extension's IndexedDB; if a download link says the package expired, just click Rebuild again.
 
 ## Project layout
 

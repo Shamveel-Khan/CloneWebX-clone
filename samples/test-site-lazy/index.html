@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lazy Load Gallery — Site Rebuilder test page</title>
+  <style>
+    body { margin: 0; font: 16px/1.6 system-ui, sans-serif; color: #1d2333; }
+    header { background: #10142a; color: #fff; padding: 18px 24px; position: sticky; top: 0; }
+    h1 { font-size: 40px; margin: 32px 0 12px; }
+    section { padding: 40px 24px; }
+    .grid { display: flex; flex-wrap: wrap; gap: 16px; }
+    .ph { width: 220px; height: 150px; border-radius: 10px; background: #eee; }
+    img { width: 220px; height: 150px; object-fit: cover; border-radius: 10px; display: block; }
+    .item { padding: 14px 0; border-bottom: 1px solid #e5e7f0; }
+    .sentinel { height: 1px; }
+    #carousel { display: flex; gap: 12px; overflow: hidden; }
+    .slide { min-width: 200px; height: 120px; border-radius: 10px; color: #fff; display: flex;
+             align-items: center; justify-content: center; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <header>Site Rebuilder — lazy content test page</header>
+
+  <section>
+    <h1>Lazy-loaded image gallery</h1>
+    <p>The twelve tiles below only get a real src when they scroll into view (IntersectionObserver). Before the scroll pass, only the first row was captured.</p>
+    <div class="grid" id="gallery"></div>
+  </section>
+
+  <section>
+    <h2>Infinite scroll list</h2>
+    <p>Every scroll-to-bottom appends five more rows — a page that never has "more" content below.</p>
+    <div id="feed"></div>
+    <div class="sentinel" id="sentinel"></div>
+  </section>
+
+  <section>
+    <h2>Always-mutating carousel</h2>
+    <p>These slides rotate every 800 ms — the DOM is never quiet, so the settle deadline must cut in.</p>
+    <div id="carousel"></div>
+  </section>
+
+  <script>
+    const COLORS = [' #4f46e5', '#8b5cf6', '#ec4899', '#0ea5e9', '#22c55e'];
+
+    // --- lazy gallery -------------------------------------------------------
+    const gallery = document.getElementById('gallery');
+    for (let i = 1; i <= 12; i++) {
+      const img = document.createElement('img');
+      img.dataset.src = 'img/' + i + '.svg';
+      img.alt = 'lazy tile ' + i;
+      gallery.appendChild(img);
+    }
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.src = e.target.dataset.src;
+          io.unobserve(e.target);
+        }
+      }
+    }, { rootMargin: '50px' });
+    gallery.querySelectorAll('img').forEach((img) => io.observe(img));
+
+    // --- infinite scroll ----------------------------------------------------
+    const feed = document.getElementById('feed');
+    let n = 0;
+    function addRows(count) {
+      for (let k = 0; k < count; k++) {
+        n++;
+        const row = document.createElement('div');
+        row.className = 'item';
+        row.textContent = 'Feed item ' + n + ' — appended by the infinite scroll.';
+        feed.appendChild(row);
+      }
+    }
+    addRows(5);
+    const feedObserver = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) addRows(5);
+    });
+    feedObserver.observe(document.getElementById('sentinel'));
+
+    // --- never-quiet carousel ----------------------------------------------
+    const carousel = document.getElementById('carousel');
+    for (let i = 1; i <= 5; i++) {
+      const s = document.createElement('div');
+      s.className = 'slide';
+      s.style.background = COLORS[i - 1];
+      s.textContent = 'Slide ' + i;
+      carousel.appendChild(s);
+    }
+    setInterval(() => {
+      const first = carousel.firstElementChild;
+      const order = Number(getComputedStyle(first).order || 0);
+      first.style.order = order - 1;
+    }, 800);
+  </script>
+</body>
+</html>

@@ -4,7 +4,7 @@
 
 import { buildZip, utf8Bytes } from './lib/zip.js';
 import { modelToElementor, nodeToElementor } from './lib/elementor.js';
-import { analyzePage } from './content/analyzer.js';
+import { analyzePage, scrollAndSettle } from './content/analyzer.js';
 
 const IDLE = {
   phase: 'idle', // idle | analyzing | ready | rebuilding | done | error | cancelled
@@ -17,12 +17,60 @@ const IDLE = {
   assetCount: 0,
   log: [],
   progress: { current: 0, total: 0, label: '' },
-  zipB64: '',
   zipName: '',
   summary: null,
   cancelRequested: false,
   startModel: null,
 };
+
+// ------------------------------------------------------------- ZIP storage
+// ZIP blobs live in IndexedDB (Blob-efficient, survives service-worker
+// restarts) instead of chrome.storage.local (JSON/base64, ~2.7x size).
+
+const idb = (mode, fn) =>
+  new Promise((res, rej) => {
+    const open = indexedDB.open('sr-zips', 1);
+    open.onupgradeneeded = () => open.result.createObjectStore('zips');
+    open.onsuccess = () => {
+      const tx = open.result.transaction('zips', mode);
+      const req = fn(tx.objectStore('zips'));
+      tx.oncomplete = () => res(req && req.result);
+      tx.onerror = () => rej(tx.error);
+    };
+    open.onerror = () => rej(open.error);
+  });
+const idbPutZip = (name, blob) => idb('readwrite', (s) => s.put({ name, blob, created: Date.now() }, 'last'));
+const idbGetZip = () => idb('readonly', (s) => s.get('last'));
+const idbDelZip = () => idb('readwrite', (s) => s.delete('last')).catch(() => {});
+
+let zipObjectUrl = '';
+async function downloadZip() {
+  const rec = await idbGetZip().catch(() => null);
+  if (!rec || !rec.blob) {
+    void updateState((s) => {
+      s.phase = 'error';
+      s.error = 'Package expired — please rebuild the site.';
+    });
+    return;
+  }
+  if (zipObjectUrl) URL.revokeObjectURL(zipObjectUrl);
+  const url = URL.createObjectURL(rec.blob);
+  zipObjectUrl = url;
+  const downloadId = await chrome.downloads.download({ url, filename: rec.name, saveAs: false, conflictAction: 'uniquify' });
+  const cleanup = () => {
+    URL.revokeObjectURL(url);
+    if (zipObjectUrl === url) zipObjectUrl = '';
+    chrome.downloads.onChanged.removeListener(onChange);
+  };
+  const timer = setTimeout(cleanup, 120000); // leak guard
+  function onChange(delta) {
+    if (delta.id === downloadId && delta.state && delta.state.current !== 'in_progress') {
+      clearTimeout(timer);
+      cleanup();
+    }
+  }
+  chrome.downloads.onChanged.addListener(onChange);
+}
 
 // ---------------------------------------------------------------- state utils
 
@@ -41,7 +89,6 @@ function updateState(mutator) {
 function addLog(state, msg) {
   state.log = [...(state.log || []), `${new Date().toLocaleTimeString()} — ${msg}`].slice(-200);
 }
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ---------------------------------------------------------------- tab analysis
 
@@ -65,12 +112,23 @@ async function analyzeInTab(url) {
   try {
     tab = await chrome.tabs.create({ url, active: false });
     await waitComplete(tab.id);
-    await sleep(1500); // let lazy content / fonts settle
+    // Progressive scroll + quiescence pass: triggers lazy loaders, waits for
+    // network/DOM to go quiet (bounded by internal deadlines), returns stats.
+    let settle = { ms: 0, screens: 0 };
+    try {
+      const [s] = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: scrollAndSettle,
+      });
+      settle = (s && s.result) || settle;
+    } catch (e) {
+      // Page blocks script injection — fall back to immediate analysis.
+    }
     const [res] = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: analyzePage,
     });
-    return res && res.result;
+    return res && res.result ? { model: res.result, settle } : null;
   } finally {
     if (tab) chrome.tabs.remove(tab.id).catch(() => {});
   }
@@ -79,7 +137,9 @@ async function analyzeInTab(url) {
 // ---------------------------------------------------------------- assets
 
 const MAX_ASSETS = 250;
-const MAX_ASSET_BYTES = 8 * 1024 * 1024;
+const MAX_ASSET_BYTES = 25 * 1024 * 1024; // single asset cap (tunable)
+const MAX_TOTAL_ASSET_BYTES = 150 * 1024 * 1024; // whole-package budget
+const ASSET_FETCH_TIMEOUT_MS = 30000;
 
 function fnv1a(str) {
   let h = 0x811c9dc5;
@@ -111,12 +171,18 @@ function bytesToB64(bytes) {
 }
 
 async function fetchAsset(url) {
-  const res = await fetch(url, { credentials: 'omit' });
-  if (!res.ok) throw new Error('HTTP ' + res.status);
-  const buf = new Uint8Array(await res.arrayBuffer());
-  if (buf.length > MAX_ASSET_BYTES) throw new Error('larger than 8 MB');
-  const mime = res.headers.get('content-type') || '';
-  return { mime: mime.split(';')[0], b64: bytesToB64(buf), size: buf.length };
+  const ctrl = new AbortController();
+  const kill = setTimeout(() => ctrl.abort(), ASSET_FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { credentials: 'omit', signal: ctrl.signal });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const buf = new Uint8Array(await res.arrayBuffer());
+    if (buf.length > MAX_ASSET_BYTES) throw new Error('asset-too-large');
+    const mime = res.headers.get('content-type') || '';
+    return { mime: mime.split(';')[0], b64: bytesToB64(buf), size: buf.length };
+  } finally {
+    clearTimeout(kill);
+  }
 }
 
 // ---------------------------------------------------------------- messages
@@ -129,6 +195,9 @@ chrome.runtime.onMessage.addListener((msg) => {
     case 'rebuild':
       void runRebuild();
       break;
+    case 'downloadZip':
+      void downloadZip();
+      break;
     case 'cancel':
       void updateState((s) => {
         s.cancelRequested = true;
@@ -136,6 +205,7 @@ chrome.runtime.onMessage.addListener((msg) => {
       });
       break;
     case 'reset':
+      void idbDelZip();
       void updateState((s) => Object.assign(s, structuredClone(IDLE)));
       break;
   }
@@ -179,7 +249,7 @@ async function runAnalyze(msg) {
   });
 
   try {
-    const model = await analyzeInTab(url);
+    const { model } = await analyzeInTab(url);
     if (!model || !model.body) throw new Error('Could not read the page (site may block embedded analysis).');
 
     const queue = [url];
@@ -243,12 +313,13 @@ async function runRebuild() {
       await updateState((s) => {
         s.progress = { current: i + 1, total: s.pages.length + 2, label: `Analyzing page ${i + 1}/${s.pages.length}: ${page.url}` };
       });
-      const model = i === 0 && state.startModel ? state.startModel : await analyzeInTab(page.url);
+      const r = i === 0 && state.startModel ? { model: state.startModel, settle: { ms: 0, screens: 0 } } : await analyzeInTab(page.url);
+      const model = r && r.model;
       if (!model) throw new Error('Failed to analyze ' + page.url);
       models.push(model);
       await updateState((s) => {
         if (s.pages[i]) s.pages[i].status = 'analyzed';
-        addLog(s, `Analyzed ${page.url} (${(model.body || []).length} top-level blocks).`);
+        addLog(s, `Analyzed ${page.url} (${(model.body || []).length} top-level blocks, settled in ${r.settle.ms}ms over ${r.settle.screens} screens).`);
       });
     }
 
@@ -259,8 +330,11 @@ async function runRebuild() {
     const first = models[0];
     const assetUrls = new Set();
     for (const m of models) for (const a of m.assets || []) assetUrls.add(a);
-    const assets = {}; // url → {path, mime, b64, ok}
+    const assets = {}; // url → {path, mime, b64, size, status} | null (kept remote)
     const failed = [];
+    const tooLarge = [];
+    const overBudget = [];
+    let totalAssetBytes = 0;
     const list = [...assetUrls].slice(0, MAX_ASSETS);
     for (let i = 0; i < list.length; i++) {
       if (i % 5 === 0) {
@@ -273,16 +347,24 @@ async function runRebuild() {
       const url = list[i];
       try {
         const a = await fetchAsset(url);
+        if (totalAssetBytes + a.size > MAX_TOTAL_ASSET_BYTES) {
+          overBudget.push(url);
+          assets[url] = null;
+          continue;
+        }
+        totalAssetBytes += a.size;
         const ext = extFromMime(a.mime, url);
         const path = `assets/${fnv1a(url)}-${fnv1a(a.b64.slice(0, 256))}.${ext}`;
-        assets[url] = { path, mime: a.mime || 'application/octet-stream', b64: a.b64, size: a.size };
+        assets[url] = { path, mime: a.mime || 'application/octet-stream', b64: a.b64, size: a.size, status: 'downloaded' };
       } catch (err) {
-        failed.push(url);
+        if (err && err.message === 'asset-too-large') tooLarge.push(url);
+        else failed.push(url);
         assets[url] = null; // keep remote URL in the Elementor output
       }
     }
     await updateState((s) => {
-      addLog(s, `Assets: ${Object.values(assets).filter(Boolean).length} downloaded, ${failed.length} will stay as remote URLs.`);
+      const downloaded = list.length - failed.length - tooLarge.length - overBudget.length;
+      addLog(s, `Assets: ${downloaded} downloaded, ${failed.length} failed, ${tooLarge.length} too large, ${overBudget.length} over budget — the skipped ones stay as remote URLs.`);
     });
 
     // 3. Convert to Elementor JSON -------------------------------------------
@@ -301,7 +383,7 @@ async function runRebuild() {
 
     const assetsIndex = {};
     for (const [url, a] of Object.entries(assets)) {
-      if (a) assetsIndex[a.path] = { url, mime: a.mime };
+      if (a) assetsIndex[a.path] = { url, mime: a.mime, size: a.size, status: a.status };
     }
 
     const pkg = {
@@ -311,6 +393,11 @@ async function runRebuild() {
       siteStyles: first.globalStyles || {},
       navigation: first.navLinks || [],
       assets: assetsIndex,
+      assetFallbacks: [
+        ...failed.map((url) => ({ url, status: 'failed' })),
+        ...tooLarge.map((url) => ({ url, status: 'too-large' })),
+        ...overBudget.map((url) => ({ url, status: 'over-budget' })),
+      ],
       header: headerEl ? [headerEl] : null,
       footer: footerEl ? [footerEl] : null,
       pages,
@@ -328,25 +415,26 @@ async function runRebuild() {
       entries.push({ name: a.path, data: bin });
     }
     const blob = buildZip(entries);
-    const zipBytes = new Uint8Array(await blob.arrayBuffer());
-    const zipB64 = bytesToB64(zipBytes);
     const host = (() => { try { return new URL(first.url).hostname.replace(/^www\./, ''); } catch { return 'site'; } })();
     const zipName = `site-rebuilder-${host}-${Date.now()}.zip`;
+    await idbPutZip(zipName, blob);
 
-    const downloaded = Object.values(assets).filter(Boolean).length;
+    const downloaded = list.length - failed.length - tooLarge.length - overBudget.length;
     await updateState((s) => {
       s.phase = 'done';
-      s.zipB64 = zipB64;
       s.zipName = zipName;
       s.summary = {
         pages: pages.length,
         assets: downloaded,
         remoteAssets: failed.length,
+        skippedLarge: tooLarge.length,
+        overBudget: overBudget.length,
+        totalAssetMB: Math.round((totalAssetBytes / 1024 / 1024) * 10) / 10,
         hasHeader: !!headerEl,
         hasFooter: !!footerEl,
-        zipBytes: zipBytes.length,
+        zipBytes: blob.size,
       };
-      addLog(s, `Done! Package ready: ${pages.length} page(s), ${downloaded} local assets, ${(zipBytes.length / 1024 / 1024).toFixed(1)} MB.`);
+      addLog(s, `Done! Package ready: ${pages.length} page(s), ${downloaded} local assets (${s.summary.totalAssetMB} MB), ${(blob.size / 1024 / 1024).toFixed(1)} MB zipped.`);
     });
   } catch (err) {
     await updateState((s) => {

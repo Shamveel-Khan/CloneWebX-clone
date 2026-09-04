@@ -23,6 +23,22 @@ require_once __DIR__ . '/includes/class-sri-package.php';
 require_once __DIR__ . '/includes/class-sri-media.php';
 require_once __DIR__ . '/includes/class-sri-importer.php';
 
+/*
+ * Rebuilt sites rely on SVG (icons, logos, illustrations) and AVIF imagery,
+ * which WordPress does not whitelist for sideloading by default. Widen the
+ * mime list while this importer plugin is active (admin-only imports).
+ */
+add_filter(
+	'upload_mimes',
+	function ( $mimes ) {
+		$mimes['svg']  = 'image/svg+xml';
+		$mimes['svgz'] = 'image/svg+xml';
+		$mimes['avif'] = 'image/avif';
+		$mimes['webp'] = 'image/webp';
+		return $mimes;
+	}
+);
+
 /* -------------------------------------------------------------------------
  * Admin page: Tools → Site Rebuilder
  * ---------------------------------------------------------------------- */

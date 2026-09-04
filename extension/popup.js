@@ -54,13 +54,18 @@ function render(state) {
     show('view-done');
     const s = state.summary || {};
     $('donePages').textContent = String(s.pages || 0);
-    $('doneAssets').textContent = String(s.assets || 0) + (s.remoteAssets ? ` (+${s.remoteAssets} kept remote)` : '');
+    const kept = (s.remoteAssets || 0) + (s.skippedLarge || 0) + (s.overBudget || 0);
+    $('doneAssets').textContent = String(s.assets || 0) + (kept ? ` (+${kept} kept remote)` : '');
     $('doneHF').textContent = (s.hasHeader ? 'header' : '—') + ' / ' + (s.hasFooter ? 'footer' : '—');
     $('doneSize').textContent = fmtBytes(s.zipBytes || 0);
     const note = $('doneRemoteNote');
-    note.classList.toggle('hidden', !s.remoteAssets);
-    if (s.remoteAssets) {
-      note.textContent = `${s.remoteAssets} asset(s) could not be downloaded and reference the original site — the importer keeps them as remote URLs.`;
+    note.classList.toggle('hidden', !kept);
+    if (kept) {
+      const parts = [];
+      if (s.remoteAssets) parts.push(`${s.remoteAssets} failed`);
+      if (s.skippedLarge) parts.push(`${s.skippedLarge} over 25 MB`);
+      if (s.overBudget) parts.push(`${s.overBudget} over the total budget`);
+      note.textContent = `${parts.join(', ')} — those assets load from the original site instead.`;
     }
     $('log').textContent = (state.log || []).join('\n');
   } else if (phase === 'cancelled') {
@@ -109,20 +114,7 @@ $('btnRestart').addEventListener('click', () => send({ type: 'reset' }));
 $('btnRetry').addEventListener('click', () => send({ type: 'reset' }));
 $('btnBack1').addEventListener('click', () => send({ type: 'reset' }));
 
-$('btnDownload').addEventListener('click', async () => {
-  const { state } = await chrome.storage.local.get('state');
-  if (!state || !state.zipB64) return;
-  const bin = atob(state.zipB64);
-  const bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  const blob = new Blob([bytes], { type: 'application/zip' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = state.zipName || 'site-rebuilder.zip';
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 30000);
-});
+$('btnDownload').addEventListener('click', () => send({ type: 'downloadZip' }));
 
 // ---------------------------------------------------------------- init
 

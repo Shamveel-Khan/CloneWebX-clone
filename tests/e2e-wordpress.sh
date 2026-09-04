@@ -8,15 +8,28 @@ set -uxo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PKG="${1:-/tmp/sr-test-package.zip}"
+ELEMENTOR_ZIP="${ELEMENTOR_ZIP:-/tmp/elementor.zip}"
 NET=sr-e2e-net
 DB=sr-e2e-db
 WP=sr-e2e-wp
 PORT=8099
 CLI_IMG="wordpress:cli-php8.2"
 
+# Elementor is fetched on the host (container egress is unreliable) and
+# installed from a mounted file.
+if [ ! -s "$ELEMENTOR_ZIP" ]; then
+  for attempt in 1 2 3; do
+    curl -fsSL -o "$ELEMENTOR_ZIP" https://downloads.wordpress.org/plugin/elementor.latest-stable.zip && break
+    echo "retry $attempt: downloading elementor.latest-stable.zip"
+    sleep 4
+  done
+fi
+[ -s "$ELEMENTOR_ZIP" ] || { echo "E2E FAILED: could not download Elementor zip" >&2; exit 1; }
+
 cleanup() {
   docker rm -f "$DB" "$WP" 2>/dev/null || true
   docker network rm "$NET" 2>/dev/null || true
+  docker volume rm wproot 2>/dev/null || true
 }
 trap cleanup EXIT
 cleanup
@@ -40,19 +53,23 @@ docker run -d --name "$WP" --network "$NET" -p "$PORT:80" \
 sleep 10
 
 cli() {
-  docker run --rm --network "$NET" --user 33:33 -e HOME=/tmp \
+  if ! docker run --rm --network "$NET" --user 33:33 -e HOME=/tmp \
     -e WORDPRESS_DB_HOST="$DB:3306" -e WORDPRESS_DB_USER=wp -e WORDPRESS_DB_PASSWORD=wp -e WORDPRESS_DB_NAME=wp \
     -v wproot:/var/www/html \
     -v "$ROOT/wp-plugin/site-rebuilder-importer:/var/www/html/wp-content/plugins/site-rebuilder-importer:ro" \
     -v "$PKG:/tmp/pkg.zip:ro" \
+    -v "$ELEMENTOR_ZIP:/tmp/elementor.zip:ro" \
     -v "$ROOT/tests/wp:/e2e:ro" \
-    "$CLI_IMG" "$@"
+    "$CLI_IMG" "$@"; then
+    echo "E2E FAILED at: wp $*" >&2
+    exit 1
+  fi
 }
 
 cli wp core install --url="http://localhost:$PORT" --title="SR E2E" \
   --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email
 
-cli wp plugin install elementor --activate
+cli wp plugin install /tmp/elementor.zip --activate
 cli wp plugin activate site-rebuilder-importer
 cli wp plugin list
 

@@ -427,3 +427,62 @@ export function analyzePage() {
     body: bodyChildren,
   };
 }
+
+// Progressive scroll + quiescence detection. Scroll in ~0.9-viewport steps to
+// trigger lazy loaders, then wait until DOM mutations AND network activity
+// stop (or a hard deadline passes), then scroll back to top for analysis.
+// Self-contained like analyzePage — Chrome serializes it for injection.
+export function scrollAndSettle(opts) {
+  const STEP_MS = (opts && opts.stepMs) || 350;
+  const QUIET_MS = (opts && opts.quietMs) || 600;
+  const DEADLINE_MS = (opts && opts.deadlineMs) || 12000;
+  const MAX_SCREENS = 12;
+  const start = Date.now();
+  return new Promise((resolve) => {
+    let lastMutation = Date.now();
+    let lastResources = performance.getEntriesByType('resource').length;
+    const mo = new MutationObserver(() => {
+      lastMutation = Date.now();
+    });
+    mo.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+    let screens = 0;
+    let lastY = -1;
+    (function step() {
+      const y = window.scrollY;
+      const atBottom = window.innerHeight + y >= document.documentElement.scrollHeight - 2;
+      const noProgress = y === lastY;
+      if (
+        Date.now() - start > DEADLINE_MS ||
+        screens >= MAX_SCREENS ||
+        (screens > 0 && (atBottom || noProgress))
+      ) {
+        return finish();
+      }
+      lastY = y;
+      window.scrollTo(0, y + Math.round(window.innerHeight * 0.9));
+      screens++;
+      setTimeout(step, STEP_MS);
+    })();
+    function finish() {
+      (async () => {
+        try {
+          if (document.fonts && document.fonts.ready) await document.fonts.ready;
+        } catch (e) {
+          /* font API unavailable */
+        }
+        const hardStop = Date.now() + 3000;
+        while (Date.now() - lastMutation < QUIET_MS && Date.now() < hardStop) {
+          const n = performance.getEntriesByType('resource').length;
+          if (n !== lastResources) {
+            lastResources = n;
+            lastMutation = Date.now();
+          }
+          await new Promise((r) => setTimeout(r, 250));
+        }
+        mo.disconnect();
+        window.scrollTo(0, 0); // restore top so sticky headers/fixed nav aren't duplicated
+        setTimeout(() => resolve({ ms: Date.now() - start, screens }), 250);
+      })();
+    }
+  });
+}

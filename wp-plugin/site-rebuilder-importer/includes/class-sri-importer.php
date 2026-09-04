@@ -180,7 +180,9 @@ class SRI_Importer {
 		}
 
 		$kit_id = get_option( 'elementor_active_kit' );
-		if ( ! $kit_id || get_post_type( $kit_id ) !== 'elementor_kit' ) {
+		// Elementor 4.x may register the kit under a different post type than
+		// the legacy 'elementor_kit', so only require the post to exist.
+		if ( ! $kit_id || ! get_post( $kit_id ) ) {
 			return 'Active Elementor kit not found — skipping global styles (styles are already baked into each element).';
 		}
 
