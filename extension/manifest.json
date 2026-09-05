@@ -3,7 +3,7 @@
   "name": "Site Rebuilder",
   "version": "0.1.0",
   "description": "Analyze any public website and rebuild it as an editable Elementor + WordPress site.",
-  "permissions": ["tabs", "scripting", "storage", "unlimitedStorage", "downloads"],
+  "permissions": ["tabs", "scripting", "storage", "unlimitedStorage", "downloads", "offscreen"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js",

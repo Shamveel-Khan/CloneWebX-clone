@@ -175,8 +175,13 @@ class SRI_Importer {
 
 	protected static function apply_styles( &$job ) {
 		$styles = $job['package']['siteStyles'] ?? array();
-		if ( ! is_array( $styles ) || ( empty( $styles ) ) ) {
+		if ( ! is_array( $styles ) || empty( $styles ) ) {
 			return 'No global styles in package (colors and typography are baked into each element).';
+		}
+
+		$new_settings = self::kit_style_settings( $styles );
+		if ( empty( $new_settings ) ) {
+			return 'No applicable global styles in package.';
 		}
 
 		$kit_id = get_option( 'elementor_active_kit' );
@@ -186,38 +191,79 @@ class SRI_Importer {
 			return 'Active Elementor kit not found — skipping global styles (styles are already baked into each element).';
 		}
 
-		$kit = json_decode( (string) get_post_meta( $kit_id, '_elementor_data', true ), true );
-		if ( ! is_array( $kit ) ) {
-			$kit = array();
+		// Preferred: Elementor's own API — it owns the kit storage format and
+		// works across versions. Blind meta writes have broken Elementor 4 kits.
+		if ( did_action( 'elementor/loaded' ) && class_exists( '\Elementor\Plugin' ) ) {
+			try {
+				$plugin = \Elementor\Plugin::$instance;
+				if ( isset( $plugin->kits_manager ) ) {
+					$kits = $plugin->kits_manager;
+					if ( method_exists( $kits, 'get_active_kit' ) ) {
+						$kit_doc = $kits->get_active_kit();
+						if ( $kit_doc && method_exists( $kit_doc, 'update_settings' ) ) {
+							$kit_doc->update_settings( $new_settings );
+							return 'Applied body typography and background to the active kit via the Elementor API.';
+						}
+					}
+					if ( method_exists( $kits, 'update_kit_settings' ) ) {
+						$kits->update_kit_settings( $new_settings );
+						return 'Applied body typography and background to the active kit via the Elementor API.';
+					}
+				}
+			} catch ( \Throwable $e ) {
+				return 'Elementor kit API failed (' . $e->getMessage() . ') — skipping global styles (styles are baked into each element).';
+			}
 		}
 
-		if ( ! empty( $styles['bodyBackground'] ) ) {
-			$kit['body_background_background'] = 'classic';
-			$kit['body_background_color']      = sanitize_text_field( $styles['bodyBackground'] );
+		// Fallback: merge only into a recognized legacy storage shape.
+		$data = json_decode( (string) get_post_meta( $kit_id, '_elementor_data', true ), true );
+		if ( is_array( $data ) ) {
+			if ( isset( $data[0] ) && is_array( $data[0] ) && isset( $data[0]['settings'] ) && is_array( $data[0]['settings'] ) ) {
+				$data[0]['settings'] = array_merge( $data[0]['settings'], $new_settings );
+			} elseif ( isset( $data['settings'] ) && is_array( $data['settings'] ) ) {
+				$data['settings'] = array_merge( $data['settings'], $new_settings );
+			} elseif ( count( array_filter( array_keys( $data ), 'is_string' ) ) === count( $data ) ) {
+				// Flat settings object (legacy kit meta).
+				$data = array_merge( $data, $new_settings );
+			} else {
+				return 'Unrecognized kit storage format — skipping global styles (styles are baked into each element).';
+			}
+			update_post_meta( $kit_id, '_elementor_data', wp_slash( wp_json_encode( $data ) ) );
+			return 'Applied body typography and background to the active Elementor kit.';
 		}
-		$has_typo = false;
+
+		return 'Kit settings not readable — skipping global styles (styles are baked into each element).';
+	}
+
+	/**
+	 * Map package siteStyles to Elementor kit settings keys.
+	 *
+	 * @param array $styles Package siteStyles.
+	 * @return array Elementor settings (possibly empty).
+	 */
+	protected static function kit_style_settings( $styles ) {
+		$new = array();
+		if ( ! empty( $styles['bodyBackground'] ) ) {
+			$new['body_background_background'] = 'classic';
+			$new['body_background_color']      = sanitize_text_field( $styles['bodyBackground'] );
+		}
 		if ( ! empty( $styles['bodyFontFamily'] ) ) {
-			$kit['body_typography_font_family'] = sanitize_text_field( $styles['bodyFontFamily'] );
-			$has_typo                           = true;
+			$new['body_typography_font_family'] = sanitize_text_field( $styles['bodyFontFamily'] );
+			$new['body_typography_typography']  = 'custom';
 		}
 		if ( ! empty( $styles['bodyFontSize'] ) ) {
-			$kit['body_typography_font_size'] = array(
+			$new['body_typography_font_size'] = array(
 				'unit'  => 'px',
 				'size'  => (int) $styles['bodyFontSize'],
 				'sizes' => array(),
 			);
-			$has_typo                         = true;
+			$new['body_typography_typography'] = 'custom';
 		}
 		if ( ! empty( $styles['bodyColor'] ) ) {
-			$kit['body_typography_color'] = sanitize_text_field( $styles['bodyColor'] );
-			$has_typo                     = true;
+			$new['body_typography_color'] = sanitize_text_field( $styles['bodyColor'] );
+			$new['body_typography_typography'] = 'custom';
 		}
-		if ( $has_typo ) {
-			$kit['body_typography_typography'] = 'custom';
-		}
-
-		update_post_meta( $kit_id, '_elementor_data', wp_slash( wp_json_encode( $kit ) ) );
-		return 'Applied body typography and background to the active Elementor kit.';
+		return $new;
 	}
 
 	/* ------------------------------------------------------------------- menu */

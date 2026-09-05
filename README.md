@@ -124,6 +124,7 @@ wordpress-copier/
 │   ├── manifest.json
 │   ├── popup.html|css|js       # URL input, analyze, progress, download
 │   ├── background.js           # orchestrator (hidden tabs, assets, ZIP)
+│   ├── offscreen.html|js       # blob-URL helper for ZIP downloads (SW-safe)
 │   ├── content/analyzer.js     # in-page DOM/style analysis
 │   └── lib/zip.js, elementor.js
 ├── wp-plugin/

@@ -1,17 +1,15 @@
 <?php
 /**
  * E2E helper (wp eval-file): create the import job from /tmp/pkg.zip the same
- * way SRI_Package::create_job_from_upload does after a real admin upload.
+ * way the admin flow does — using the plugin's own extraction code path.
  */
 
 require_once ABSPATH . 'wp-admin/includes/file.php';
 
-WP_Filesystem();
-
 $uploads = wp_upload_dir();
 $dest    = trailingslashit( $uploads['basedir'] ) . 'sri-import-1-' . time();
 
-$result = unzip_file( '/tmp/pkg.zip', $dest );
+$result = SRI_Package::extract_zip( '/tmp/pkg.zip', $dest );
 if ( is_wp_error( $result ) ) {
 	echo 'UNZIP FAILED: ' . $result->get_error_message() . "\n";
 	exit( 1 );

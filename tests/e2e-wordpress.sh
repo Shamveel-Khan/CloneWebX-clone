@@ -16,15 +16,22 @@ PORT=8099
 CLI_IMG="wordpress:cli-php8.2"
 
 # Elementor is fetched on the host (container egress is unreliable) and
-# installed from a mounted file.
-if [ ! -s "$ELEMENTOR_ZIP" ]; then
+# installed from a mounted file. Validate the archive — an interrupted
+# download leaves a corrupt zip that PclZip rejects mid-import.
+need_download=1
+if [ -s "$ELEMENTOR_ZIP" ] && python3 -c "import zipfile,sys; sys.exit(0 if zipfile.ZipFile('$ELEMENTOR_ZIP').testzip() is None else 1)" 2>/dev/null; then
+  need_download=0
+fi
+if [ "$need_download" = 1 ]; then
+  rm -f "$ELEMENTOR_ZIP"
   for attempt in 1 2 3; do
-    curl -fsSL -o "$ELEMENTOR_ZIP" https://downloads.wordpress.org/plugin/elementor.latest-stable.zip && break
-    echo "retry $attempt: downloading elementor.latest-stable.zip"
+    curl -fsSL -o "$ELEMENTOR_ZIP" https://downloads.wordpress.org/plugin/elementor.latest-stable.zip || { sleep 4; continue; }
+    python3 -c "import zipfile,sys; sys.exit(0 if zipfile.ZipFile('$ELEMENTOR_ZIP').testzip() is None else 1)" 2>/dev/null && break
+    echo "retry $attempt: downloaded elementor zip failed validation"
     sleep 4
   done
 fi
-[ -s "$ELEMENTOR_ZIP" ] || { echo "E2E FAILED: could not download Elementor zip" >&2; exit 1; }
+[ -s "$ELEMENTOR_ZIP" ] || { echo "E2E FAILED: could not download a valid Elementor zip" >&2; exit 1; }
 
 cleanup() {
   docker rm -f "$DB" "$WP" 2>/dev/null || true

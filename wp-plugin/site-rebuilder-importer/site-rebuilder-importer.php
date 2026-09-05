@@ -39,6 +39,31 @@ add_filter(
 	}
 );
 
+/*
+ * wp_upload_bits() re-validates the extension against the probed fileinfo
+ * type, and SVG often probes as text/xml — which silently rejects the file
+ * even with the mime whitelist above. Trust our known-good extensions.
+ */
+add_filter(
+	'wp_check_filetype_and_ext',
+	function ( $types, $file, $filename, $mimes ) {
+		$ext = strtolower( pathinfo( (string) $filename, PATHINFO_EXTENSION ) );
+		if ( 'svg' === $ext || 'svgz' === $ext ) {
+			$types['ext']  = $ext;
+			$types['type'] = 'image/svg+xml';
+		} elseif ( 'avif' === $ext ) {
+			$types['ext']  = 'avif';
+			$types['type'] = 'image/avif';
+		} elseif ( 'webp' === $ext ) {
+			$types['ext']  = 'webp';
+			$types['type'] = 'image/webp';
+		}
+		return $types;
+	},
+	10,
+	4
+);
+
 /* -------------------------------------------------------------------------
  * Admin page: Tools → Site Rebuilder
  * ---------------------------------------------------------------------- */
@@ -323,7 +348,16 @@ function sri_inject_template( $which ) {
 	$printed[ $which ] = true;
 
 	if ( did_action( 'elementor/loaded' ) && class_exists( '\Elementor\Plugin' ) ) {
-		echo \Elementor\Plugin::$instance->frontend->get_builder_content( $templates[ $which ], true ); // phpcs:ignore WordPress.Security.EscapeOutput
+		try {
+			$content = \Elementor\Plugin::$instance->frontend->get_builder_content( $templates[ $which ], true );
+			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput -- Elementor builder content.
+		} catch ( \Throwable $e ) {
+			// Never let template rendering fatal the frontend.
+			$post = get_post( $templates[ $which ] );
+			if ( $post ) {
+				echo wp_kses_post( apply_filters( 'the_content', $post->post_content ) );
+			}
+		}
 	} else {
 		$post = get_post( $templates[ $which ] );
 		if ( $post ) {

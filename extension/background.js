@@ -43,7 +43,6 @@ const idbPutZip = (name, blob) => idb('readwrite', (s) => s.put({ name, blob, cr
 const idbGetZip = () => idb('readonly', (s) => s.get('last'));
 const idbDelZip = () => idb('readwrite', (s) => s.delete('last')).catch(() => {});
 
-let zipObjectUrl = '';
 async function downloadZip() {
   const rec = await idbGetZip().catch(() => null);
   if (!rec || !rec.blob) {
@@ -53,23 +52,69 @@ async function downloadZip() {
     });
     return;
   }
-  if (zipObjectUrl) URL.revokeObjectURL(zipObjectUrl);
-  const url = URL.createObjectURL(rec.blob);
-  zipObjectUrl = url;
-  const downloadId = await chrome.downloads.download({ url, filename: rec.name, saveAs: false, conflictAction: 'uniquify' });
-  const cleanup = () => {
-    URL.revokeObjectURL(url);
-    if (zipObjectUrl === url) zipObjectUrl = '';
-    chrome.downloads.onChanged.removeListener(onChange);
-  };
-  const timer = setTimeout(cleanup, 120000); // leak guard
-  function onChange(delta) {
-    if (delta.id === downloadId && delta.state && delta.state.current !== 'in_progress') {
-      clearTimeout(timer);
-      cleanup();
+  try {
+    // MV3 service workers lack URL.createObjectURL, so the blob URL is
+    // created in an offscreen document (which reads the blob from IndexedDB
+    // itself — Blobs don't survive chrome.runtime messaging).
+    await setupOffscreenDocument();
+    const res = await sendToOffscreen({ type: 'create-blob-url' });
+    if (!res || !res.url) {
+      throw new Error('could not prepare the package: ' + ((res && res.error) || 'no blob URL'));
     }
+    const downloadId = await chrome.downloads.download({
+      url: res.url,
+      filename: rec.name,
+      saveAs: false,
+      conflictAction: 'uniquify',
+    });
+    const done = () => {
+      void sendToOffscreen({ type: 'revoke-blob-url' }).catch(() => {});
+      chrome.downloads.onChanged.removeListener(onChange);
+    };
+    const timer = setTimeout(done, 120000); // leak guard
+    function onChange(delta) {
+      if (delta.id === downloadId && delta.state && delta.state.current !== 'in_progress') {
+        clearTimeout(timer);
+        done();
+      }
+    }
+    chrome.downloads.onChanged.addListener(onChange);
+  } catch (err) {
+    void updateState((s) => {
+      s.phase = 'error';
+      s.error = 'Download failed: ' + (err && err.message ? err.message : String(err));
+    });
   }
-  chrome.downloads.onChanged.addListener(onChange);
+}
+
+async function setupOffscreenDocument() {
+  try {
+    const contexts = await chrome.runtime.getContexts({ contextTypes: ['OFFSCREEN_DOCUMENT'] });
+    if (contexts && contexts.length > 0) return;
+  } catch (e) {
+    // getContexts unavailable on older Chrome — try creating and let the
+    // duplicate-document error below tell us it already exists.
+  }
+  try {
+    await chrome.offscreen.createDocument({
+      url: 'offscreen.html',
+      reasons: ['BLOBS'],
+      justification: 'Create a blob URL for the exported ZIP download',
+    });
+  } catch (e) {
+    if (!String((e && e.message) || e).includes('single offscreen')) throw e;
+  }
+}
+
+function sendToOffscreen(msg) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('offscreen document timed out')), 8000);
+    chrome.runtime.sendMessage(msg, (res) => {
+      clearTimeout(timer);
+      if (chrome.runtime.lastError) reject(new Error(chrome.runtime.lastError.message));
+      else resolve(res);
+    });
+  });
 }
 
 // ---------------------------------------------------------------- state utils

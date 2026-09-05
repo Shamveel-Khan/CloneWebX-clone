@@ -32,18 +32,18 @@ class SRI_Media {
 
 		// Defensive path check.
 		if ( false !== strpos( $relPath, '..' ) || ! file_exists( $abs ) ) {
-			return self::fallback_url( $job, $relPath );
+			return self::fallback_url( $job, $relPath, 'package file missing (' . $relPath . ')' );
 		}
 
 		$data = file_get_contents( $abs ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 		if ( false === $data || '' === $data ) {
-			return self::fallback_url( $job, $relPath );
+			return self::fallback_url( $job, $relPath, 'package file unreadable (' . $relPath . ')' );
 		}
 
 		$filename = sanitize_file_name( basename( $relPath ) );
 		$upload   = wp_upload_bits( $filename, null, $data );
 		if ( ! empty( $upload['error'] ) ) {
-			return self::fallback_url( $job, $relPath );
+			return self::fallback_url( $job, $relPath, 'wp_upload_bits: ' . $upload['error'] );
 		}
 
 		$filetype = wp_check_filetype( $upload['file'] );
@@ -56,7 +56,8 @@ class SRI_Media {
 			$upload['file']
 		);
 		if ( is_wp_error( $attach_id ) || ! $attach_id ) {
-			return self::fallback_url( $job, $relPath );
+			$msg = is_wp_error( $attach_id ) ? $attach_id->get_error_message() : 'insert returned empty id';
+			return self::fallback_url( $job, $relPath, 'wp_insert_attachment: ' . $msg );
 		}
 
 		require_once ABSPATH . 'wp-admin/includes/image.php';
@@ -64,7 +65,7 @@ class SRI_Media {
 
 		$url = wp_get_attachment_url( $attach_id );
 		if ( ! $url ) {
-			return self::fallback_url( $job, $relPath );
+			return self::fallback_url( $job, $relPath, 'attachment URL unavailable' );
 		}
 
 		$job['map'][ $relPath ] = $url;
@@ -73,15 +74,24 @@ class SRI_Media {
 
 	/**
 	 * When local import fails, use the original remote URL recorded in the
-	 * package (assets map), so images still render from the source site.
+	 * package (assets map) and record why, so results/logs always show the
+	 * reason an asset stayed remote.
 	 *
 	 * @param array  $job     Import job.
 	 * @param string $relPath Package path.
+	 * @param string $reason  Human-readable failure reason.
 	 * @return string
 	 */
-	protected static function fallback_url( $job, $relPath ) {
+	protected static function fallback_url( &$job, $relPath, $reason = '' ) {
 		$assets = $job['package']['assets'] ?? array();
 		if ( isset( $assets[ $relPath ]['url'] ) && is_string( $assets[ $relPath ]['url'] ) ) {
+			if ( ! isset( $job['map'][ '__notice:' . $relPath ] ) ) {
+				$job['map'][ '__notice:' . $relPath ] = true;
+				$job['results'][]                     = array(
+					'type'  => 'notice',
+					'label' => 'Asset kept remote: ' . basename( $relPath ) . ( $reason ? ' — ' . $reason : '' ),
+				);
+			}
 			return esc_url_raw( $assets[ $relPath ]['url'] );
 		}
 		return '';

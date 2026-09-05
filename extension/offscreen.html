@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Site Rebuilder — offscreen</title>
+</head>
+<body>
+  <!-- Creates blob URLs for the exported ZIP; service workers cannot call
+       URL.createObjectURL. This document must stay alive while the blob URL
+       is in use by chrome.downloads. -->
+  <script src="offscreen.js"></script>
+</body>
+</html>
