@@ -10,7 +10,34 @@ from .styles import (
 
 HEADING_TAGS = {"h1", "h2", "h3", "h4", "h5", "h6"}
 TEXT_TAGS = {"p", "blockquote"}
-BUTTON_HINTS = ("btn", "button", "cta")
+BUTTON_HINTS = ("btn", "button", "cta", "link-button", "action-link")
+ALLOWED_HEADER_SIZES = {"h1", "h2", "h3", "h4", "h5", "h6"}
+
+CTA_PHRASES = {
+    "shop now", "contact us", "get started", "sign up", "learn more",
+    "order now", "read more", "try for free", "book a demo", "view all",
+    "see more", "buy now", "download", "subscribe", "join now", "explore",
+    "start free trial", "request a demo", "get in touch", "discover",
+}
+
+
+def _infer_heading_size(node: dict, default: str = "h5") -> str:
+    styles = node.get("styles", {})
+    font_size = px_to_int(styles.get("font-size"))
+    if font_size:
+        if font_size >= 36:
+            return "h1"
+        elif font_size >= 28:
+            return "h2"
+        elif font_size >= 22:
+            return "h3"
+        elif font_size >= 18:
+            return "h4"
+        elif font_size >= 14:
+            return "h5"
+        else:
+            return "h6"
+    return default
 
 
 def walk_and_emit(node: dict, consumed: set[int] | None = None) -> list[dict]:
@@ -25,6 +52,25 @@ def _walk(node: dict, out: list[dict], consumed: set[int]) -> None:
     tag = node.get("tag", "")
     text = (node.get("text") or "").strip()
     class_str = " ".join(node.get("classes", [])).lower()
+
+    # Skip form feedback/status messages (e.g. Webflow .w-form-done, .w-form-fail)
+    if any(k in class_str for k in ("w-form-done", "w-form-fail", "form-success", "form-error", "submission-received")):
+        consumed.add(id(node))
+        for c in _iter(node):
+            consumed.add(id(c))
+        return
+
+    # Form widget: <form> or .w-form wrapper
+    if tag == "form" or (tag == "div" and "w-form" in class_str and any(c.get("tag") == "form" for c in node.get("children", []))):
+        form_node = node if tag == "form" else next((c for c in node.get("children", []) if c.get("tag") == "form"), None)
+        if form_node:
+            form_w = _emit_form_widget(form_node, consumed)
+            if form_w:
+                out.append(form_w)
+                consumed.add(id(node))
+                for c in _iter(node):
+                    consumed.add(id(c))
+                return
 
     # Raw HTML blocks (terminal/console/code viewers): parser flagged these
     # on the outer wrapper. Emit via html widget with source CSS for matching
@@ -67,7 +113,10 @@ def _walk(node: dict, out: list[dict], consumed: set[int]) -> None:
     if tag == "button" or (tag == "a" and looks_like_button(node)):
         btn_text = text or _first_text(node)
         if btn_text:
-            out.append(button_widget(node, btn_text))
+            out.append(button_widget(node, btn_text, consumed))
+            consumed.add(id(node))
+            for c in _iter(node):
+                consumed.add(id(c))
             return
 
     # Link list column (footer column, sidebar): a div with multiple <a>
@@ -290,9 +339,9 @@ def looks_like_button(node: dict) -> bool:
     # Card-link: an <a> that wraps a heading + paragraph block (like
     # `.docs-hub-card` with h3/p/span inside) is a styled card, not a button.
     # Buttons never contain a heading or a paragraph.
-    kids_iter = _iter(node, max_depth=3)
+    kids_iter = list(_iter(node, max_depth=3))
     has_heading = any(c is not node and c.get("tag") in HEADING_TAGS for c in kids_iter)
-    has_para = any(c is not node and c.get("tag") in TEXT_TAGS for c in _iter(node, max_depth=3))
+    has_para = any(c is not node and c.get("tag") in TEXT_TAGS for c in kids_iter)
     if has_heading or has_para:
         return False
 
@@ -305,7 +354,7 @@ def looks_like_button(node: dict) -> bool:
     has_padding = bool(has_padding_val and has_padding_val not in ("0px", "0"))
     has_border_val = styles.get("border-top-width") or styles.get("borderTopWidth") or ""
     has_border = bool(has_border_val and has_border_val not in ("0px", "0"))
-    # A button must have background or border — radius+padding alone is a styled link.
+
     has_hint = any(h in classes for h in BUTTON_HINTS)
     if has_hint and (has_bg or has_border):
         return True
@@ -313,7 +362,85 @@ def looks_like_button(node: dict) -> bool:
         return True  # solid button
     if has_border and has_padding:
         return True  # ghost/outline button
+
+    # Check for CTA intent in links (e.g. Shop Now, Contact us)
+    if node.get("tag") == "a" and node.get("href"):
+        txt = (node.get("text") or _first_text(node) or "").strip().lower()
+        if txt and any(p in txt for p in CTA_PHRASES) and len(txt) <= 40:
+            return True
+        if any(h in classes for h in ("cta", "btn", "button", "link-button", "action-link", "shop-now")):
+            return True
+        has_arrow = any(
+            (c.get("tag") in ("svg", "i") or (c.get("tag") == "img" and any(k in (c.get("src", "") + " ".join(c.get("classes", []))).lower() for k in ("arrow", "chevron", "icon"))))
+            for c in kids_iter if c is not node
+        )
+        if has_arrow and 2 <= len(txt) <= 35:
+            return True
+
     return False
+
+
+def _emit_form_widget(form_node: dict, consumed: set[int]) -> dict:
+    consumed.add(id(form_node))
+    fields: list[dict] = []
+    submit_text = "Submit"
+
+    for n in _iter(form_node):
+        consumed.add(id(n))
+        ntag = n.get("tag")
+        if ntag == "input":
+            itype = (n.get("type") or "text").lower()
+            if itype in ("submit", "button"):
+                submit_text = n.get("value") or (n.get("text") or "Submit").strip()
+                continue
+            name = n.get("name") or itype
+            placeholder = n.get("placeholder") or name.capitalize()
+            field_id = re.sub(r"[^a-zA-Z0-9_]", "_", name.lower())[:12] or f"field_{len(fields)}"
+            fields.append({
+                "_id": field_id,
+                "field_type": "email" if "email" in (name + itype).lower() else ("tel" if itype == "tel" else "text"),
+                "field_label": placeholder,
+                "placeholder": placeholder,
+                "required": "true" if n.get("required") else "false",
+                "width": "100",
+            })
+        elif ntag == "textarea":
+            name = n.get("name") or "message"
+            placeholder = n.get("placeholder") or "Message"
+            field_id = re.sub(r"[^a-zA-Z0-9_]", "_", name.lower())[:12] or f"field_{len(fields)}"
+            fields.append({
+                "_id": field_id,
+                "field_type": "textarea",
+                "field_label": placeholder,
+                "placeholder": placeholder,
+                "required": "true" if n.get("required") else "false",
+                "width": "100",
+            })
+        elif ntag == "button":
+            btn_txt = (n.get("text") or _first_text(n) or "").strip()
+            if btn_txt:
+                submit_text = btn_txt
+
+    if not fields:
+        fields.append({
+            "_id": "email",
+            "field_type": "email",
+            "field_label": "Email",
+            "placeholder": "Enter your email",
+            "required": "true",
+            "width": "100",
+        })
+
+    return {
+        "widgetType": "form",
+        "settings": {
+            "form_name": "Form",
+            "form_fields": fields,
+            "button_text": submit_text or "Submit",
+            "button_size": "md",
+            "button_width": "100",
+        },
+    }
 
 
 def is_icon_box(node: dict) -> bool:
@@ -327,16 +454,12 @@ def is_icon_box(node: dict) -> bool:
         t = c.get("tag")
         if t == "svg" or (t == "i" and "icon" in " ".join(c.get("classes", [])).lower()):
             has_icon = True
-        # Only real icon elements (font-awesome <i>, not emoji divs)
-        if t == "i" and "icon" in " ".join(c.get("classes", [])).lower():
-            has_icon = True
         if t in HEADING_TAGS:
             has_heading = True
         if t in TEXT_TAGS:
             has_text = True
     if not (has_icon and has_heading and has_text):
         return False
-    # If too many headings/paragraphs, it's a grid of cards not a single icon-box
     n_headings = sum(1 for c in _iter(node, max_depth=2) if c is not node and c.get("tag") in HEADING_TAGS)
     n_texts = sum(1 for c in _iter(node, max_depth=2) if c is not node and c.get("tag") in TEXT_TAGS)
     if n_headings > 2 or n_texts > 2:
@@ -348,7 +471,6 @@ def is_hero_bg_image(node: dict, section: dict) -> bool:
     if node.get("tag") != "img" or not node.get("src"):
         return False
     styles = node.get("styles", {})
-    # Small images (avatars, icons, thumbnails) are never bg images
     from .styles import px_to_int
     w = px_to_int(styles.get("width"))
     h = px_to_int(styles.get("height"))
@@ -364,19 +486,12 @@ def is_hero_bg_image(node: dict, section: dict) -> bool:
             "absolute" in classes)
 
 
-# --- widget builders ---
-
 def heading_widget(node: dict) -> dict:
-    tag = node["tag"]
-    # Collect ALL text including children, preserving inline markup
-    # (`<em>` for italics, `<strong>` for bold, `<span style="color">` for
-    # tinted accents). Elementor Heading widget renders inline HTML inside
-    # `title`, so this keeps spans like "Your site, <em>commanded</em> by AI"
-    # instead of flattening to plain "Your site, commanded by AI".
+    tag = node.get("tag", "h2")
+    if tag not in ALLOWED_HEADER_SIZES:
+        tag = _infer_heading_size(node, default="h2")
     text = _all_text_html(node).strip()
     styles = node.get("styles", {})
-    # If the heading has an explicit color in CSS, use it.
-    # If it inherits (no color set), default to "text" global (body color).
     explicit_color = styles.get("color")
     has_explicit = bool(explicit_color and explicit_color not in ("inherit", "initial"))
 
@@ -384,13 +499,12 @@ def heading_widget(node: dict) -> dict:
         "title": text,
         "header_size": tag,
         "align": text_align(styles),
-        "__globals__": {"title_color": "globals/colors?id=text"},
     }
-    if has_explicit:
-        color_hex = to_hex(explicit_color)
+    col = styles.get("color")
+    if col and col not in ("inherit", "initial"):
+        color_hex = to_hex(col)
         if color_hex:
             settings["title_color"] = color_hex
-            del settings["__globals__"]["title_color"]
 
     apply_typography(settings, styles)
     _apply_margin(settings, styles)
@@ -400,22 +514,20 @@ def heading_widget(node: dict) -> dict:
 
 def text_widget(node: dict) -> dict:
     rich_text = _all_text_html(node).strip()
-    # Strip HTML tags for length check (we care about visible chars)
     plain_text = re.sub(r"<[^>]+>", "", rich_text)
     styles = node.get("styles", {})
 
-    # Short text (≤50 chars) → heading widget with div tag (better typography control)
-    if len(plain_text) <= 50:
+    # Short text (≤50 chars) → heading widget with appropriate heading tag (never "div")
+    if len(plain_text) <= 50 and not ("<br" in rich_text or "\n" in rich_text):
+        h_size = _infer_heading_size(node, default="h5")
         settings: dict[str, Any] = {
             "title": rich_text,
-            "header_size": "div",
+            "header_size": h_size,
             "align": text_align(styles),
-            "__globals__": {"title_color": "globals/colors?id=text"},
         }
         color_hex = to_hex(styles.get("color"))
         if color_hex:
             settings["title_color"] = color_hex
-            del settings["__globals__"]["title_color"]
         apply_typography(settings, styles)
         _apply_margin(settings, styles)
         _apply_max_width_and_self_align(settings, styles)
@@ -425,19 +537,17 @@ def text_widget(node: dict) -> dict:
     settings = {
         "editor": f"<p>{rich_text}</p>",
         "align": text_align(styles),
-        "__globals__": {"text_color": "globals/colors?id=text"},
     }
     color_hex = to_hex(styles.get("color"))
     if color_hex:
         settings["text_color"] = color_hex
-        del settings["__globals__"]["text_color"]
     apply_typography(settings, styles)
     _apply_margin(settings, styles)
     _apply_max_width_and_self_align(settings, styles)
     return {"widgetType": "text-editor", "settings": settings}
 
 
-def button_widget(node: dict, text: str) -> dict:
+def button_widget(node: dict, text: str, consumed: set[int] | None = None) -> dict:
     from .colors import darken
     href = node.get("href", "#")
     styles = node.get("styles", {})
@@ -445,16 +555,26 @@ def button_widget(node: dict, text: str) -> dict:
     radius = styles.get("border-radius") or styles.get("borderRadius") or "0px"
     is_ghost = not bg or bg in ("transparent", "none")
 
+    clean_text = re.sub(r"[\s→↗>›»]+$", "", text).strip() or text
+
     settings: dict[str, Any] = {
-        "text": text,
+        "text": clean_text,
         "link": {"url": href, "is_external": False, "nofollow": False},
         "size": "md",
         "align": text_align(styles),
         "border_radius": parse_radius(radius),
     }
 
+    # Check for arrow / icon in children or text
+    has_arrow = any(
+        (c.get("tag") in ("svg", "i") or (c.get("tag") == "img" and any(k in (c.get("src", "") + " ".join(c.get("classes", []))).lower() for k in ("arrow", "chevron", "icon"))))
+        for c in _iter(node, max_depth=3) if c is not node
+    ) or any(arrow in text for arrow in ("→", "↗", "›", "»"))
+    if has_arrow:
+        settings["selected_icon"] = {"value": "fas fa-arrow-right", "library": "fa-solid"}
+        settings["icon_align"] = "right"
+
     if is_ghost:
-        # Check: is it a text-link style (no border at all) or outlined (has border)?
         has_real_border = bool(
             styles.get("border") or
             (styles.get("border-top-width") or styles.get("borderTopWidth") or "0px") not in ("0px", "0", "")
@@ -476,7 +596,6 @@ def button_widget(node: dict, text: str) -> dict:
                 settings["border_color"] = border_hex
             settings["button_background_hover_color"] = "#00000010"
         else:
-            # Pure text link styled as button — no border, no bg, just colored text
             settings["border_border"] = "none"
             settings["border_radius"] = {"unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": True}
             settings["_padding"] = {"unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": True}
@@ -674,9 +793,12 @@ def _link_list_widgets(node: dict) -> list[dict]:
     # Heading
     if heading_node:
         h_styles = heading_node.get("styles", {})
+        h_tag = heading_node.get("tag", "h4")
+        if h_tag not in ALLOWED_HEADER_SIZES:
+            h_tag = "h4"
         h_settings: dict[str, Any] = {
             "title": _escape((heading_node.get("text") or "").strip()),
-            "header_size": heading_node.get("tag", "h4"),
+            "header_size": h_tag,
             "align": text_align(h_styles),
         }
         h_color = to_hex(h_styles.get("color"))
@@ -1384,11 +1506,13 @@ def _leaf_text_widget(node: dict) -> dict:
     styles = node.get("styles", {})
     color_hex = to_hex(styles.get("color"))
 
-    # Short text (≤50 chars) → heading with div tag (better typography control)
+    # Short text (≤50 chars) → heading with appropriate size (never "div")
     if len(text) <= 50 and text:
+        fs = px_to_int(styles.get("font-size"))
+        h_size = "h6" if fs and fs <= 16 else _infer_heading_size(node, default="h5")
         settings: dict[str, Any] = {
             "title": text,
-            "header_size": "div",
+            "header_size": h_size,
             "align": text_align(styles),
         }
         apply_typography(settings, styles)
@@ -1927,7 +2051,7 @@ def _avatar_widget(node: dict, size: int, radius_override: int | None = None) ->
     # Inner heading with just the text/initials
     heading_settings: dict[str, Any] = {
         "title": _escape(text),
-        "header_size": "div",
+        "header_size": "h6",
         "align": "center",
     }
     color_hex = to_hex(styles.get("color"))

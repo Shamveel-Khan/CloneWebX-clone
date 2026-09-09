@@ -16,18 +16,20 @@ from typing import Any
 from .parser import parse_html
 from .sections import detect_sections, classify_section
 from .containers import map_section
-from .builder import build_layout
+from .builder import build_layout, build_template_envelope
 from .globals import build_kit
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 def convert(html: str, html_path: str | None = None,
-            extra_css: list[str] | None = None) -> dict[str, Any]:
+            extra_css: list[str] | None = None,
+            use_globals: bool = False) -> dict[str, Any]:
     """Convert an HTML string to Elementor layout + kit globals.
 
     Returns dict with:
-        "layout": list[dict] — _elementor_data sections
+        "template": dict — complete Elementor template export envelope (ready for Elementor Import)
+        "layout": list[dict] — raw _elementor_data sections/containers
         "kit": dict — site settings (system_colors, custom_colors, system_typography)
         "color_map": dict — {hex: global_id}
         "font_map": dict — {font_name: global_id}
@@ -48,10 +50,18 @@ def convert(html: str, html_path: str | None = None,
 
     layout = build_layout(mapped)
 
-    # Post-pass: replace literal colors/fonts with __globals__ refs
-    _apply_globals(layout, color_map, font_map, typo_map)
+    if use_globals:
+        # Post-pass: replace literal colors/fonts with __globals__ refs
+        _apply_globals(layout, color_map, font_map, typo_map)
+    else:
+        # Inlined styles mode: remove dangling __globals__ for 100% self-contained portability
+        _strip_globals(layout)
+
+    page_title = capture.get("title") or "Page Template"
+    template = build_template_envelope(layout, title=page_title, page_type="page")
 
     return {
+        "template": template,
         "layout": layout,
         "kit": kit_settings,
         "color_map": color_map,
@@ -59,9 +69,18 @@ def convert(html: str, html_path: str | None = None,
     }
 
 
-def convert_to_json(html: str, indent: int = 2) -> str:
-    result = convert(html)
-    return json.dumps(result["layout"], indent=indent, ensure_ascii=False)
+def convert_to_json(html: str, indent: int = 2, use_globals: bool = False) -> str:
+    result = convert(html, use_globals=use_globals)
+    return json.dumps(result["template"], indent=indent, ensure_ascii=False)
+
+
+def _strip_globals(layout: list[dict]) -> None:
+    """Recursively strip __globals__ references to ensure settings are standalone."""
+    for element in layout:
+        settings = element.get("settings", {})
+        settings.pop("__globals__", None)
+        for child in element.get("elements", []):
+            _strip_globals([child])
 
 
 def _apply_globals(layout: list[dict], color_map: dict, font_map: dict, typo_map: dict | None = None) -> None:

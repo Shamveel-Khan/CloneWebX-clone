@@ -8,6 +8,17 @@ def _id() -> str:
     return uuid.uuid4().hex[:7]
 
 
+def build_template_envelope(elements: list[dict], title: str = "Page Template", page_type: str = "page") -> dict[str, Any]:
+    """Wraps layout elements into the standard Elementor Template export envelope."""
+    return {
+        "version": "0.4",
+        "title": title or "Page Template",
+        "type": page_type or "page",
+        "content": elements,
+        "page_settings": [],
+    }
+
+
 def build_layout(mapped_sections: list[tuple[dict, list[dict]]]) -> list[dict]:
     layout: list[dict] = []
     for container_settings, element_specs in mapped_sections:
@@ -44,4 +55,5 @@ def _build_element(spec: dict) -> dict:
         "settings": spec["settings"],
         "elements": [],
         "widgetType": spec["widgetType"],
+        "isInner": False,
     }

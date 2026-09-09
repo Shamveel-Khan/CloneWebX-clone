@@ -173,3 +173,43 @@ def upload_all_images(layout: list[dict], html_path: str | None = None) -> int:
 
     walk(layout)
     return count
+
+
+def generate_image_manifest(layout: list[dict]) -> list[dict]:
+    """Scan all elements and collect an audit manifest of all external/referenced images."""
+    manifest = []
+    seen = set()
+
+    def walk(elements: list[dict]):
+        for el in elements:
+            el_id = el.get("id", "")
+            settings = el.get("settings", {})
+            img = settings.get("image")
+            if isinstance(img, dict) and img.get("url"):
+                url = img["url"]
+                if (url, el_id) not in seen:
+                    seen.add((url, el_id))
+                    manifest.append({
+                        "element_id": el_id,
+                        "type": "image",
+                        "url": url,
+                        "is_external": url.startswith(("http://", "https://", "//")),
+                        "alt": settings.get("alt", ""),
+                    })
+            bg_img = settings.get("background_image")
+            if isinstance(bg_img, dict) and bg_img.get("url"):
+                url = bg_img["url"]
+                if (url, el_id) not in seen:
+                    seen.add((url, el_id))
+                    manifest.append({
+                        "element_id": el_id,
+                        "type": "background_image",
+                        "url": url,
+                        "is_external": url.startswith(("http://", "https://", "//")),
+                        "alt": "background",
+                    })
+            walk(el.get("elements", []))
+
+    walk(layout)
+    return manifest
+

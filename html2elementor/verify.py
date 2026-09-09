@@ -238,7 +238,7 @@ def _check_widget(widget: dict, html_tree: dict, issues: list, kit_maps: dict, p
         # but completely different size.
         is_badge_like = (header_size in ("h5", "h6")
                           and (s.get("_background_background") or s.get("_border_radius")))
-        if header_size == "div" or is_badge_like:
+        if header_size in ("h5", "h6") or is_badge_like:
             tags = {"div", "span", "p"}
         else:
             tags = {"h1", "h2", "h3", "h4", "h5", "h6"}
@@ -480,7 +480,24 @@ def verify(html_path: str, output_json_path: str, kit_path: str | None = None) -
     with open(html_path) as f:
         html = f.read()
     with open(output_json_path) as f:
-        layout = json.load(f)
+        data = json.load(f)
+
+    all_issues: list[str] = []
+
+    if isinstance(data, dict) and "content" in data:
+        from .validator import validate_elementor_template
+        schema_errors = validate_elementor_template(data)
+        for err in schema_errors:
+            all_issues.append(f"schema: {err}")
+        layout = data.get("content", [])
+    elif isinstance(data, list):
+        layout = data
+    else:
+        return {
+            "widgets": 0,
+            "issues": ["Output JSON root is neither an Elementor envelope object nor a layout list."],
+            "passed": False,
+        }
 
     # Auto-detect kit file next to output
     if kit_path is None:
@@ -492,8 +509,6 @@ def verify(html_path: str, output_json_path: str, kit_path: str | None = None) -
     parsed = parse_html(html)
     # Build a virtual root node containing all sections for traversal
     root = {"tag": "root", "children": parsed["sections"]}
-
-    all_issues: list[str] = []
     widget_count = 0
 
     def count_widgets(el):

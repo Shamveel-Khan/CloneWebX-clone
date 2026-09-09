@@ -6,7 +6,7 @@
 [![openclaw skill](https://img.shields.io/badge/openclaw-skill-6366f1.svg)](https://github.com/humanlayer/claude-code-skills)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Elementor](https://img.shields.io/badge/elementor-3.x+-ec4899.svg)](https://elementor.com/)
+[![Elementor](https://img.shields.io/badge/elementor-3.16+-ec4899.svg)](https://elementor.com/)
 
 `html2elementor` is a **fully open-source, local, zero-dependency-on-external-services** converter that emits clean Elementor container-based JSON from static HTML + CSS.
 
@@ -18,10 +18,12 @@ Pairs naturally with AI-generated HTML: point an LLM at your design brief, run t
 
 - Parses HTML + CSS **locally** (no browser, no API calls) using BeautifulSoup + tinycss2.
 - Resolves the CSS cascade including inheritance, inline styles, and **CSS custom properties** (`var(--x)`).
-- Maps DOM nodes to Elementor widgets: `heading`, `text-editor`, `button`, `image`, `icon-list`, `icon-box`.
+- Maps DOM nodes to Elementor widgets: `heading`, `text-editor`, `button`, `image`, `icon-list`, `icon-box`, `form`.
 - Builds a container tree matching Elementor 3.x flex layouts (rows, columns, nested grids).
+- Emits a **standards-compliant Elementor template envelope** (`version: "0.4"`) importable directly via **Elementor → Templates → Import Templates**.
 - Extracts **global colors and typography** into a companion `kit.json` (page-unique hashed IDs so imports don't clobber each other).
-- Emits a `verify.py` companion that diff-checks the output against the source and flags missing colors / wrong sizes / mis-matched backgrounds.
+- Runs an automated **schema validator** (`validator.py`) after every conversion — fails the build if envelope, `header_size`, widget types, or ID uniqueness are broken.
+- Generates an **image manifest** (`--manifest`) listing all external image URLs that need to be localised before final production import.
 
 ### Example
 
@@ -36,27 +38,34 @@ Pairs naturally with AI-generated HTML: point an LLM at your design brief, run t
 </section>
 ```
 
-**Output** (`landing.json`):
+**Output** (`landing.json`) — a valid Elementor template envelope:
 ```json
-[
-  {
-    "elType": "container",
-    "settings": {
-      "background_background": "classic",
-      "background_color": "#0b1220",
-      "padding": {"unit":"px","top":"96","right":"64","bottom":"96","left":"64"},
-      "flex_align_items": "stretch"
-    },
-    "elements": [
-      {"elType":"widget","widgetType":"heading","settings":{"title":"Hello world","title_color":"#ffffff","typography_font_size":{"unit":"px","size":"64"}}},
-      {"elType":"widget","widgetType":"text-editor","settings":{"editor":"<p>A subtitle.</p>","text_color":"#9ca3af"}},
-      {"elType":"widget","widgetType":"button","settings":{"text":"Get started","background_color":"#ec4899","button_text_color":"#ffffff"}}
-    ]
-  }
-]
+{
+  "version": "0.4",
+  "title": "Hello world",
+  "type": "page",
+  "page_settings": [],
+  "content": [
+    {
+      "elType": "container",
+      "isInner": false,
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#0b1220",
+        "padding": {"unit":"px","top":"96","right":"64","bottom":"96","left":"64"},
+        "flex_align_items": "stretch"
+      },
+      "elements": [
+        {"elType":"widget","widgetType":"heading","isInner":false,"settings":{"title":"Hello world","header_size":"h1","title_color":"#ffffff","typography_font_size":{"unit":"px","size":"64"}}},
+        {"elType":"widget","widgetType":"text-editor","isInner":false,"settings":{"editor":"<p>A subtitle.</p>","text_color":"#9ca3af"}},
+        {"elType":"widget","widgetType":"button","isInner":false,"settings":{"text":"Get started","background_color":"#ec4899","button_text_color":"#ffffff","link":{"url":"#","is_external":"","nofollow":""}}}
+      ]
+    }
+  ]
+}
 ```
 
-Drop into `_elementor_data` meta of a WordPress page → your layout renders.
+Go to **Elementor → Templates → Import Templates** and upload `landing.json` — done.
 
 ---
 
@@ -71,6 +80,8 @@ pip install -r requirements.txt
 ```
 
 Requires Python 3.10+ and three tiny dependencies: `beautifulsoup4`, `tinycss2`, `cssselect2`. No browser, no Node, no services.
+
+Requires **Elementor ≥ 3.16** (Flexbox Container support must be enabled).
 
 ### Install as a Claude Code skill
 
@@ -105,12 +116,22 @@ python3 -m html2elementor input.html -o output.json
 ```
 
 This produces:
-- `output.json` — the Elementor data payload
+- `output.json` — a **valid Elementor template envelope** (importable via Elementor → Templates → Import)
 - `output.kit.json` — site-kit globals (custom colors, custom typography)
 
-**External stylesheets are loaded automatically.** If `input.html` links `<link rel="stylesheet" href="styles.css">`, the converter resolves that file relative to the HTML file's directory and includes it in the CSS cascade. CSS custom properties (`var(--accent)`) are resolved before mapping to Elementor settings.
+**Flags:**
 
-For designs where the stylesheet can't be auto-detected (e.g. HTML piped via stdin, or a CDN URL), pass it explicitly:
+| Flag | Description |
+|------|-------------|
+| `-o output.json` | Output path (default: stdout) |
+| `--css extra.css` | Extra CSS files to include in the cascade (repeatable) |
+| `--title "My Page"` | Override the template title (defaults to HTML `<title>`) |
+| `--raw-layout` | Skip the envelope; emit bare `_elementor_data` array |
+| `--use-globals` | Emit `__globals__` kit references instead of inlined styles |
+| `--manifest` | Also write `output.manifest.json` listing all external image URLs |
+| `--skip-validate` | Skip post-conversion schema validation |
+
+**External stylesheets are loaded automatically.** If `input.html` links `<link rel="stylesheet" href="styles.css">`, the converter resolves that file relative to the HTML file's directory and includes it in the CSS cascade.
 
 ```bash
 # Extra CSS file
@@ -118,12 +139,15 @@ python3 -m html2elementor input.html --css styles.css -o output.json
 
 # Multiple CSS files
 python3 -m html2elementor input.html --css reset.css --css design.css -o output.json
+
+# Export image manifest alongside JSON
+python3 -m html2elementor input.html -o output.json --manifest
 ```
 
 ### Python API
 
 ```python
-from html2elementor import convert
+from html2elementor import convert, convert_to_json
 
 with open("landing.html") as f:
     html = f.read()
@@ -133,13 +157,21 @@ result = convert(html, html_path="landing.html")
 # result["layout"]     → list[dict] (sections → containers → widgets)
 # result["kit"]        → dict (custom_colors + custom_typography)
 
-# Or pass CSS strings directly
-with open("styles.css") as f:
-    css = f.read()
-result = convert(html, extra_css=[css])
+# Full template envelope as JSON string (importable into Elementor):
+json_str = convert_to_json(html, html_path="landing.html")
+
+# Use globals instead of inlined styles (requires kit import):
+json_str = convert_to_json(html, html_path="landing.html", use_globals=True)
 ```
 
-### Importing into WordPress
+### Importing into WordPress — via Elementor UI (recommended)
+
+1. Run the CLI to get `output.json`.
+2. In WordPress, go to **Elementor → Templates → Saved Templates**.
+3. Click **Import Templates** and upload `output.json`.
+4. Open any page with Elementor, click **Add Template**, find your import, and insert.
+
+### Importing into WordPress — via WP-CLI (advanced)
 
 ```bash
 # 1. Copy files into the container / host
@@ -148,7 +180,10 @@ docker compose cp output.kit.json wp:/tmp/layout.kit.json
 
 # 2. Merge into the active Elementor kit + create a page
 docker compose exec wp wp eval '
-$data = file_get_contents("/tmp/layout.json");
+$raw  = file_get_contents("/tmp/layout.json");
+$env  = json_decode($raw, true);
+$data = wp_json_encode($env["content"] ?? $env);   // works with envelope OR bare array
+
 $kit  = json_decode(file_get_contents("/tmp/layout.kit.json"), true);
 $active_kit = get_option("elementor_active_kit");
 $ks = get_post_meta($active_kit, "_elementor_page_settings", true) ?: [];
@@ -161,7 +196,7 @@ foreach (($kit["custom_typography"] ?? []) as $t) {
 update_post_meta($active_kit, "_elementor_page_settings", $ks);
 
 $pid = wp_insert_post([
-    "post_title"  => "My Page",
+    "post_title"  => $env["title"] ?? "My Page",
     "post_status" => "publish",
     "post_type"   => "page",
     "meta_input"  => [
@@ -180,7 +215,7 @@ docker compose exec wp wp elementor flush_css --allow-root
 
 ### Verify the conversion
 
-`verify.py` compares the generated layout against the source HTML and reports mismatches in color, font-size, spacing, and alignment. Useful during iteration:
+`verify.py` compares the generated layout against the source HTML and reports mismatches in color, font-size, spacing, and alignment.
 
 ```bash
 python3 -m html2elementor.verify input.html output.json
@@ -199,15 +234,17 @@ Tolerances: font-size ±2px, padding/margin ±4px, colors exact.
 
 | HTML | Elementor widget |
 |------|------------------|
-| `<h1>` … `<h6>` | `heading` with matching `header_size` |
+| `<h1>` … `<h6>` | `heading` with matching `header_size` (`h1`–`h6`) |
 | `<p>` (long text) | `text-editor` with resolved color + typography |
-| `<p>` / `<div>` with short text (≤50 chars) | `heading` with `header_size: "div"` |
-| `<button>` / styled `<a>` | `button` (filled, outlined, or text-link) |
+| Short text span / label (≤50 chars) | `heading` with `header_size: "h5"` or `"h6"` |
+| `<button>` / styled `<a>` | `button` with `link`, `background_color`, icon |
+| CTA phrases ("Shop Now", "Contact Us") | `button` widget (real Elementor button, not heading) |
 | `<img>` | `image` (with circular / custom-size detection) |
 | `<div>` + bg + radius 50% + fixed size | **circular avatar** inner container |
 | `<div>` + bg + radius + short text | **badge** / pill |
 | `<div class="col"><h4>…</h4><a>…</a>…</div>` | `heading` + `icon-list` (footer columns) |
-| `<input>` | `text-editor` with inline-styled HTML input |
+| `<form>` | `form` widget (real Elementor form, not plain text) |
+| Form feedback messages (`.w-form-done`, `.w-form-fail`) | Suppressed (not emitted) |
 
 ### Layout detection
 
@@ -253,6 +290,7 @@ Tolerances: font-size ±2px, padding/margin ±4px, colors exact.
   ```
 - `image_custom_dimension` only works with files already in the WP media library. Remote URLs fall back to natural image size.
 - System colors (`primary`, `secondary`, `text`, `accent`) are **site-shared**. `html2elementor` only uses `custom_colors` with page-unique hashed IDs to prevent page A's palette from overwriting page B's.
+- By default, styles are **inlined** on every widget (not linked to kit globals). This makes the JSON fully self-contained and importable into any WordPress site without a kit import step. Use `--use-globals` only when you control the target site's kit.
 
 ---
 
@@ -260,20 +298,24 @@ Tolerances: font-size ±2px, padding/margin ±4px, colors exact.
 
 ```
 html2elementor/
-├── __init__.py      # Public API: convert(html) → {layout, kit}
+├── __init__.py      # Public API: convert(html) → {layout, kit}; convert_to_json() → envelope
 ├── cli.py           # `python3 -m html2elementor input.html -o out.json`
 ├── parser.py        # HTML → tree of {tag, classes, text, styles, children}
 ├── resolver.py      # CSS cascade: selector matching + specificity + var() sub
 ├── sections.py      # Top-level section detection
-├── widgets.py       # DOM → widget specs (heading, button, image, …)
+├── widgets.py       # DOM → widget specs (heading, button, image, form, …)
 ├── containers.py    # Section → flex container settings
 ├── styles.py        # CSS parsing helpers (padding, radius, shadow, typography)
 ├── colors.py        # hex/rgb/named-color → #hex, darken(), lighten()
 ├── globals.py       # Extract site-wide colors + typography into kit.json
 ├── hover.py         # Hover state generation for buttons / icon-boxes
-├── media.py         # Optional image upload helpers
-├── builder.py       # Assemble final _elementor_data JSON (IDs, nesting)
-└── verify.py        # Diff output vs source (colors, sizes, spacing)
+├── media.py         # Image manifest + optional upload helpers
+├── builder.py       # Assemble final Elementor template envelope JSON (IDs, nesting)
+├── validator.py     # Schema validator: envelope, header_size, widget types, ID uniqueness
+├── verify.py        # Diff output vs source (colors, sizes, spacing)
+└── tests/
+    ├── test_compliance.py   # Compliance test suite (all 10 templates)
+    └── *.html               # 10 fixture HTML templates
 ```
 
 Pipeline:
@@ -286,7 +328,9 @@ HTML string
     ↓ widgets._walk (recursive DOM traversal)
       ↓ emit widgets with Elementor settings
   ↓ globals.consolidate (extract kit + rewrite references)
-  ↓ builder.build_layout (assign IDs, nest elements)
+  ↓ builder.build_layout (assign IDs, nest elements, isInner flags)
+  ↓ builder.build_template_envelope (wrap in {"version":"0.4",...})
+  ↓ validator.validate_elementor_template (schema check — fails build on error)
   ↓ JSON
 ```
 
@@ -297,7 +341,7 @@ HTML string
 10 test pages covering common modern landing patterns:
 
 | Test | Pattern |
-|------|---------|
+|------|---------| 
 | `portfolio.html` | Minimalist creative portfolio |
 | `education.html` | Edtech / courses |
 | `pricing.html` | SaaS pricing plans |
@@ -309,7 +353,12 @@ HTML string
 | `team.html` | Team photos + values grid |
 | `ai-saas.html` | AI-generated style (CSS vars, Tailwind-ish classes) |
 
-Run all tests:
+Run unit test suite (all 3 compliance checks):
+```bash
+python3 -m unittest discover html2elementor/tests/ -v
+```
+
+Run CLI on all templates and validate output:
 ```bash
 for t in portfolio education pricing analytics conference studio blog app team ai-saas; do
   python3 -m html2elementor html2elementor/tests/$t.html -o /tmp/out.json
@@ -317,7 +366,7 @@ for t in portfolio education pricing analytics conference studio blog app team a
 done
 ```
 
-Current status: **95% visual match on AI-generated HTML** after 5 iterations of a screenshot-diff loop.
+Current status: **3/3 tests pass. All 10 templates produce envelope-compliant, importable JSON.**
 
 ---
 
@@ -326,7 +375,8 @@ Current status: **95% visual match on AI-generated HTML** after 5 iterations of 
 - **Local, deterministic, free forever.** No API keys, no services, no "AI credits."
 - **Prefer visual fidelity over semantic fidelity.** A text-editor with inline HTML that renders correctly beats a semantically-pure widget that looks wrong.
 - **Never share state between pages.** Every page import uses hashed-ID custom colors and typographies so a new import can't break an existing page.
-- **Fail loud, not silent.** `verify.py` catches missing colors, wrong sizes, and structural drift before you import.
+- **Fail loud, not silent.** `validator.py` catches envelope errors, invalid `header_size`, bad widget types, and duplicate IDs before you even get to WordPress. `verify.py` catches missing colors, wrong sizes, and structural drift.
+- **Self-contained by default.** Styles are inlined, not linked to `__globals__`. The JSON works on any WordPress site out of the box.
 
 ---
 
@@ -347,7 +397,7 @@ PRs welcome. The shortest path to a useful contribution:
 
 1. Pick a landing page (your own, or a competitor's exported HTML).
 2. Run `python3 -m html2elementor your.html -o out.json`.
-3. Import, screenshot, compare.
+3. Import via **Elementor → Templates → Import Templates**.
 4. If something looks wrong, find the fix in `widgets.py` or `resolver.py`, add a test file to `tests/`, send a PR.
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for dev setup.

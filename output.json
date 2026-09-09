@@ -1,0 +1,4347 @@
+{
+  "version": "0.4",
+  "title": "Grove Webflow Ecommerce website template",
+  "type": "page",
+  "content": [
+    {
+      "id": "4aa83b6",
+      "elType": "container",
+      "settings": {
+        "content_width": "full",
+        "flex_direction": "row",
+        "flex_justify_content": "space-between",
+        "flex_align_items": "center",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "16",
+          "right": "40",
+          "bottom": "16",
+          "left": "40",
+          "isLinked": false
+        },
+        "flex_direction_tablet": "row",
+        "flex_direction_mobile": "column",
+        "flex_wrap": "nowrap",
+        "flex_wrap_tablet": "wrap",
+        "_title": "nav"
+      },
+      "elements": [
+        {
+          "id": "642a6ff",
+          "elType": "container",
+          "settings": {
+            "flex_direction": "row",
+            "flex_align_items": "center",
+            "flex_justify_content": "flex-end",
+            "flex_gap": {
+              "unit": "px",
+              "size": 20,
+              "column": "20",
+              "row": "20"
+            },
+            "_flex_size": "shrink",
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "39a7b77",
+              "elType": "widget",
+              "settings": {
+                "view": "inline",
+                "space_between": {
+                  "unit": "px",
+                  "size": 20,
+                  "sizes": []
+                },
+                "icon_list": [
+                  {
+                    "text": "About",
+                    "link": {
+                      "url": "/about",
+                      "is_external": false
+                    },
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    }
+                  },
+                  {
+                    "text": "Categories",
+                    "link": {
+                      "url": "/categories",
+                      "is_external": false
+                    },
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    }
+                  },
+                  {
+                    "text": "Shop",
+                    "link": {
+                      "url": "/shop",
+                      "is_external": false
+                    },
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    }
+                  },
+                  {
+                    "text": "Blogs",
+                    "link": {
+                      "url": "/blogs",
+                      "is_external": false
+                    },
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    }
+                  },
+                  {
+                    "text": "FAQ",
+                    "link": {
+                      "url": "/faq",
+                      "is_external": false
+                    },
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    }
+                  },
+                  {
+                    "text": "Reviews",
+                    "link": {
+                      "url": "/reviews",
+                      "is_external": false
+                    },
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    }
+                  }
+                ]
+              },
+              "elements": [],
+              "widgetType": "icon-list",
+              "isInner": false
+            },
+            {
+              "id": "24f56b2",
+              "elType": "widget",
+              "settings": {
+                "text": "Contact us",
+                "link": {
+                  "url": "/contact-us",
+                  "is_external": false,
+                  "nofollow": false
+                },
+                "size": "md",
+                "align": "left",
+                "border_radius": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                },
+                "background_color": "#ffffff00",
+                "border_border": "none",
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [],
+              "widgetType": "button",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "f8f0d9a",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "hero"
+      },
+      "elements": [
+        {
+          "id": "c4f806a",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "f328a58",
+              "elType": "widget",
+              "settings": {
+                "title": "Bringing the beauty of nature to your doorstep",
+                "header_size": "h1",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "7c170c1",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "f40b3ff",
+                  "elType": "widget",
+                  "settings": {
+                    "image": {
+                      "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e0511f75c3da45c33b2916_hero-02.jpg",
+                      "id": ""
+                    },
+                    "image_size": "full",
+                    "align": "center",
+                    "alt": "Hero Image"
+                  },
+                  "elements": [],
+                  "widgetType": "image",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "ed8c533",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "3ae73eb",
+                  "elType": "widget",
+                  "settings": {
+                    "editor": "<p>What started as a small seed of an idea has blossomed into a thriving online oasis where plant enthusiasts & nature lovers alike can find inspiration, guidance.</p>",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "text-editor",
+                  "isInner": false
+                },
+                {
+                  "id": "be73b3e",
+                  "elType": "widget",
+                  "settings": {
+                    "text": "Shop Now",
+                    "link": {
+                      "url": "/shop",
+                      "is_external": false,
+                      "nofollow": false
+                    },
+                    "size": "md",
+                    "align": "left",
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    },
+                    "selected_icon": {
+                      "value": "fas fa-arrow-right",
+                      "library": "fa-solid"
+                    },
+                    "icon_align": "right",
+                    "background_color": "#ffffff00",
+                    "border_border": "none",
+                    "_padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [],
+                  "widgetType": "button",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "4dd0fa3",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "9127bb5",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "940+",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "b3cf4e0",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Happy Customer",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "27d4132",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "a4b708b",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "700+",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "05f538e",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Type of Plants",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "277c597",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "41463b8",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "230+",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "d83106f",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Unique Style",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "c86658f",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "f77c301",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e04fec6ae522bb3e954d38_hero-01.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Hero Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "e1f8d44",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "content"
+      },
+      "elements": [
+        {
+          "id": "10210ba",
+          "elType": "widget",
+          "settings": {
+            "title": "Collection",
+            "header_size": "h5",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "d814654",
+          "elType": "widget",
+          "settings": {
+            "title": "Our Products",
+            "header_size": "h2",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "5f54bb4",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "6ff112e",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded277eabb951dca5e4016_product-thumb-04.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": ""
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "1617c6d",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65deda6d69675af3d6168be2_cart.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Cart Icon"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "fb69f3b",
+              "elType": "widget",
+              "settings": {
+                "title": "Flowerpot Garden",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "5e7d0bb",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 21.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "c6b6f1c",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "65e2702",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded2265d6993e50ac6a8b2_product-thumb-03.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": ""
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "b76f31d",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65deda6d69675af3d6168be2_cart.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Cart Icon"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "0f79b9c",
+              "elType": "widget",
+              "settings": {
+                "title": "Monstera Deliciosa",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "275b53d",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 28.10 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "9eda2eb",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "a0bf5c2",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded201cf6df29bd31a7b1a_product-thumb-02.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": ""
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "d97838f",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65deda6d69675af3d6168be2_cart.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Cart Icon"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "3c3db7f",
+              "elType": "widget",
+              "settings": {
+                "title": "Orchid Opulence",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "b6ef896",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 24.20 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "93b1bfd",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "a0d2f3c",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded85b52ef0afcb5706e99_product-thumb-01.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": ""
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "87ed80a",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65deda6d69675af3d6168be2_cart.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Cart Icon"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "efde5cd",
+              "elType": "widget",
+              "settings": {
+                "title": "Houseplant Philippine",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "80d216a",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 20.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "7651b21",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "content"
+      },
+      "elements": [
+        {
+          "id": "9272510",
+          "elType": "widget",
+          "settings": {
+            "title": "Explore By Categories",
+            "header_size": "h5",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "70ce8d6",
+          "elType": "widget",
+          "settings": {
+            "title": "Our Categories",
+            "header_size": "h2",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "f31021a",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "d6ed6c8",
+              "elType": "widget",
+              "settings": {
+                "title": "Air Purifying Plants",
+                "header_size": "h4",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "e272538",
+              "elType": "widget",
+              "settings": {
+                "title": "View Products",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "39c0b25",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65decdd928d7169ca1c06a06_category-thumb-06.png",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Category Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "8d39558",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "8f60630",
+              "elType": "widget",
+              "settings": {
+                "title": "Aquatic Plants",
+                "header_size": "h4",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "f1e595c",
+              "elType": "widget",
+              "settings": {
+                "title": "View Products",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "79aac2b",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65decdcec45e8eb7571ddaca_category-thumb-05.png",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Category Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "c27bb0c",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "d077496",
+              "elType": "widget",
+              "settings": {
+                "title": "Tropical Plants",
+                "header_size": "h4",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "1e8b17b",
+              "elType": "widget",
+              "settings": {
+                "title": "View Products",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "3a45288",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65decdc4e0416f0fd8a1c7bb_category-thumb-04.png",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Category Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "98edfb6",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "content"
+      },
+      "elements": [
+        {
+          "id": "721a572",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "6cd5e7e",
+              "elType": "widget",
+              "settings": {
+                "title": "New Arrivals",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "0bac992",
+              "elType": "widget",
+              "settings": {
+                "title": "Fiddle leaf fig plant",
+                "header_size": "h2",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "77c42ee",
+              "elType": "widget",
+              "settings": {
+                "title": "Starting From <strong>$28.40</strong>",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "704bb9c",
+              "elType": "widget",
+              "settings": {
+                "text": "Shop Now",
+                "link": {
+                  "url": "/shop",
+                  "is_external": false,
+                  "nofollow": false
+                },
+                "size": "md",
+                "align": "left",
+                "border_radius": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                },
+                "selected_icon": {
+                  "value": "fas fa-arrow-right",
+                  "library": "fa-solid"
+                },
+                "icon_align": "right",
+                "background_color": "#ffffff00",
+                "border_border": "none",
+                "_padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [],
+              "widgetType": "button",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "35a48eb",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "8c41394",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "9502e90",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Get 45% Off",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "ab5b3e5",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Gerbera Daisies",
+                    "header_size": "h4",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "272fd6f",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "c2d6137",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "New Product",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "d2426fa",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Pitcher Plant",
+                    "header_size": "h4",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "4ce9e12",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "content"
+      },
+      "elements": [
+        {
+          "id": "3b7f114",
+          "elType": "widget",
+          "settings": {
+            "title": "Personalized guidance for your greenery needs",
+            "header_size": "h2",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "d92d4b4",
+          "elType": "widget",
+          "settings": {
+            "editor": "<p>Whether you're embarking on your first foray into indoor gardening or you're a seasoned plant parent looking to expand your collection, we're committed to helping you achieve your greenery goals.</p>",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "text-editor",
+          "isInner": false
+        },
+        {
+          "id": "5145b29",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "43f6c5b",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "ae11ba7",
+                  "elType": "widget",
+                  "settings": {
+                    "image": {
+                      "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e0614f8b10765220bea209_ic-quality.svg",
+                      "id": ""
+                    },
+                    "image_size": "full",
+                    "align": "center",
+                    "alt": "Icon"
+                  },
+                  "elements": [],
+                  "widgetType": "image",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "79a345c",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "b7ac86e",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Quality products",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "e58e1e7",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "It is a long established fact that a reader.",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "b620a80",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "2c703f4",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "604dcbb",
+                  "elType": "widget",
+                  "settings": {
+                    "image": {
+                      "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e0616d98df5a7b7d19330f_ic-delivery-02.svg",
+                      "id": ""
+                    },
+                    "image_size": "full",
+                    "align": "center",
+                    "alt": "Icon"
+                  },
+                  "elements": [],
+                  "widgetType": "image",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "8b622eb",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "db62146",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Delivery to your door",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "480af57",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Better mental wellbeing and happiness",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "d802dc3",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "804543b",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "4d4e33a",
+                  "elType": "widget",
+                  "settings": {
+                    "image": {
+                      "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e0614fe43fa604b3c1477d_ic-seeds.svg",
+                      "id": ""
+                    },
+                    "image_size": "full",
+                    "align": "center",
+                    "alt": "Icon"
+                  },
+                  "elements": [],
+                  "widgetType": "image",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "4b01652",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "b3087cc",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Supply seeds",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "b6df32c",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Vibrant flowers to flavorful herbs",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "06b18c2",
+          "elType": "widget",
+          "settings": {
+            "image": {
+              "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e062cec98ded5a449ef04b_feature.png",
+              "id": ""
+            },
+            "image_size": "full",
+            "align": "center",
+            "alt": "Image"
+          },
+          "elements": [],
+          "widgetType": "image",
+          "isInner": false
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "4339bea",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "content"
+      },
+      "elements": [
+        {
+          "id": "05be503",
+          "elType": "widget",
+          "settings": {
+            "title": "Explore Products",
+            "header_size": "h5",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "6cf6d67",
+          "elType": "widget",
+          "settings": {
+            "title": "Latest Products",
+            "header_size": "h2",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "9d916df",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "8bbec6a",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded24b9bdc27b584316dc6_product-thumb-18.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "49732db",
+              "elType": "widget",
+              "settings": {
+                "title": "Pitcher Plant",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "9e1b4c6",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 16.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "fd2be6e",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 19.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "403358f",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "7d7ef98",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded44ec45187dc7c717c30_product-thumb-17.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "7eb5468",
+              "elType": "widget",
+              "settings": {
+                "title": "Gerbera Daisies",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "5755e81",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 24.20 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "3feab10",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "adcf21f",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded25925551ca50d644bce_product-thumb-16.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "da7db86",
+              "elType": "widget",
+              "settings": {
+                "title": "Fiddle leaf fig plant",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "4bb7bca",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 23.40 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "84e0e6a",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "4b79384",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded259446a3348bc9e3cc3_product-thumb-15.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "8c4732d",
+              "elType": "widget",
+              "settings": {
+                "title": "Dracaena Dragon Tree",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "9413582",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 18.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "bfb3bba",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 20.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "1cdbddd",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "9682f42",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded41b2c3d359a250d3ab6_product-thumb-14.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "8a2a537",
+              "elType": "widget",
+              "settings": {
+                "title": "Pilea peperomioides",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "cd6731d",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 20.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "54daec0",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "9df26b8",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded23cf8520643669c4b7d_product-thumb-13.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "cc41edc",
+              "elType": "widget",
+              "settings": {
+                "title": "Aspidistra elatior",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "b3330b6",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 19.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "f8f51b5",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "cbc9136",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded2add707f0855238066b_product-thumb-12.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "ad1aaaa",
+              "elType": "widget",
+              "settings": {
+                "title": "Philodendron Scandens",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "9475b21",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 15.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "8684b42",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "3ad6aee",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65ded23ccf6df29bd31a9461_product-thumb-11.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "6129813",
+              "elType": "widget",
+              "settings": {
+                "title": "Sansevieria Trifasciata",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "aea3f99",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 21.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "a40bb85",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 26.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "a08ee29",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "0bdf276",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65dede7a0f8a220a6385781f_product-thumb-10.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Product Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "b8b907d",
+              "elType": "widget",
+              "settings": {
+                "title": "Dracaena Fragrans",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "fc56364",
+              "elType": "widget",
+              "settings": {
+                "title": "$ 29.00 USD",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "ed2a3c4",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "cta"
+      },
+      "elements": [
+        {
+          "id": "94e7b39",
+          "elType": "widget",
+          "settings": {
+            "title": "Explore our curated collection of exotic plants",
+            "header_size": "h3",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "93e25e4",
+          "elType": "widget",
+          "settings": {
+            "editor": "<p>The allure of exotic plants with their vibrant colors & captivating foliage. From tropical wonders to rare specimens.</p>",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "text-editor",
+          "isInner": false
+        },
+        {
+          "id": "9023842",
+          "elType": "widget",
+          "settings": {
+            "text": "Contact us",
+            "link": {
+              "url": "/contact-us",
+              "is_external": false,
+              "nofollow": false
+            },
+            "size": "md",
+            "align": "left",
+            "border_radius": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            },
+            "selected_icon": {
+              "value": "fas fa-arrow-right",
+              "library": "fa-solid"
+            },
+            "icon_align": "right",
+            "background_color": "#ffffff00",
+            "border_border": "none",
+            "_padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [],
+          "widgetType": "button",
+          "isInner": false
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "9cc40cd",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "testimonials"
+      },
+      "elements": [
+        {
+          "id": "cbffaef",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "ac0a6b3",
+              "elType": "widget",
+              "settings": {
+                "title": "Testimonials",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "04fe28a",
+              "elType": "widget",
+              "settings": {
+                "title": "Customers Review",
+                "header_size": "h2",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "bae768a",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "531ba6a",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "3efbeac",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "f5834ac",
+                      "elType": "widget",
+                      "settings": {
+                        "image": {
+                          "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e0747d076c3e7a73257739_review-3.jpg",
+                          "id": ""
+                        },
+                        "image_size": "full",
+                        "align": "center",
+                        "alt": "Review Image"
+                      },
+                      "elements": [],
+                      "widgetType": "image",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                },
+                {
+                  "id": "6af6548",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "f3beb10",
+                      "elType": "widget",
+                      "settings": {
+                        "editor": "<p>“I recently ordered a plant subscription box from Grove & I couldn't be happier with my experience. Each month, I receive a new and exciting plant, and it's been such a joy watching my collection grow.”</p>",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "text-editor",
+                      "isInner": false
+                    },
+                    {
+                      "id": "2725f10",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Theresa Webb",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    },
+                    {
+                      "id": "e98f9f5",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Grorgia, USA",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "3643b59",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "fbd9ae4",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "5917142",
+                      "elType": "widget",
+                      "settings": {
+                        "image": {
+                          "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e06ced98df5a7b7d1ef29a_review-2.jpg",
+                          "id": ""
+                        },
+                        "image_size": "full",
+                        "align": "center",
+                        "alt": "Review Image"
+                      },
+                      "elements": [],
+                      "widgetType": "image",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                },
+                {
+                  "id": "c6bb715",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "94f44cb",
+                      "elType": "widget",
+                      "settings": {
+                        "editor": "<p>“As a beginner gardener, I was a bit nervous about ordering plants online, but Grove made the process so easy and enjoyable. The plants I received were healthy and beautiful, and the care instructions provided were incredibly helpful.”</p>",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "text-editor",
+                      "isInner": false
+                    },
+                    {
+                      "id": "380cff0",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Esther Howard",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    },
+                    {
+                      "id": "b81341f",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "California, USA",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "a132e0b",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "6afc138",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "c5e320d",
+                      "elType": "widget",
+                      "settings": {
+                        "image": {
+                          "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e06ced67ae17a2b0e006c7_review-1.jpg",
+                          "id": ""
+                        },
+                        "image_size": "full",
+                        "align": "center",
+                        "alt": "Review Image"
+                      },
+                      "elements": [],
+                      "widgetType": "image",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                },
+                {
+                  "id": "426c978",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "1d12308",
+                      "elType": "widget",
+                      "settings": {
+                        "editor": "<p>“I've been customer of Grove for years & they never disappoint! Their selection of plants is unmatched & the quality is always top-notch. Their customer service team is always friendly. I highly recommend them to anyone looking to add some greenery to their home!”</p>",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "text-editor",
+                      "isInner": false
+                    },
+                    {
+                      "id": "b3bb7bc",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Cameron Williamson",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    },
+                    {
+                      "id": "8b4ae05",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Texas, USA",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "8e40dd7",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "e1ef525",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "9b91742",
+                      "elType": "widget",
+                      "settings": {
+                        "image": {
+                          "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e075aba1f9e74cbe9ccbad_review-4.jpg",
+                          "id": ""
+                        },
+                        "image_size": "full",
+                        "align": "center",
+                        "alt": "Review Image"
+                      },
+                      "elements": [],
+                      "widgetType": "image",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                },
+                {
+                  "id": "231d70d",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "3efc6f8",
+                      "elType": "widget",
+                      "settings": {
+                        "editor": "<p>“I've struggled to keep plants alive in the past, but the personalized guidance I received from Grove has been a game-changer. They helped me select the perfect plants for my space and provided me with invaluable care tips.”</p>",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "text-editor",
+                      "isInner": false
+                    },
+                    {
+                      "id": "90b072e",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Wade Warren",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    },
+                    {
+                      "id": "64d9257",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "New York, USA",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "526ee6c",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e06fd337f1df728171a7e6_ic-slide-arrow.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Arrow"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "04b9cfe",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65e06fd3e8779b8f6ce330ea_ic-arrow-slide.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Arrow"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "f319c80",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "content"
+      },
+      "elements": [
+        {
+          "id": "bfe5a7f",
+          "elType": "widget",
+          "settings": {
+            "title": "Blogs",
+            "header_size": "h5",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "453c23b",
+          "elType": "widget",
+          "settings": {
+            "title": "News & Articles",
+            "header_size": "h2",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "642ff3a",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "fb18539",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65dd8c13d577f1f61ff61d99_blog-thumb-08.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Blog Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "57b8790",
+              "elType": "widget",
+              "settings": {
+                "title": "Troubleshooting common plant problems",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "d0c27d2",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65dd8dec0a2fe1c1809f541b_ic-date.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Date Icon"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "e31e741",
+              "elType": "widget",
+              "settings": {
+                "title": "Mar 4, 2024",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "f81994b",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "6cb80b2",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65dd8b39a401967a75a38633_blog-thumb-07.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Blog Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "0f11be3",
+              "elType": "widget",
+              "settings": {
+                "title": "Tips for growing plants in small spaces",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "b13d28c",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65dd8dec0a2fe1c1809f541b_ic-date.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Date Icon"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "299a48a",
+              "elType": "widget",
+              "settings": {
+                "title": "Mar 4, 2024",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "697166a",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "b4d6535",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65dc693bd0654927db407be3/65dd8b2253fbfe9666d6ad5e_blog-thumb-06.jpg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Blog Image"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "a281529",
+              "elType": "widget",
+              "settings": {
+                "title": "The joys of growing herbs indoors",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "7ec8166",
+              "elType": "widget",
+              "settings": {
+                "image": {
+                  "url": "https://cdn.prod.website-files.com/65bc7b2b1beb934fb80166e7/65dd8dec0a2fe1c1809f541b_ic-date.svg",
+                  "id": ""
+                },
+                "image_size": "full",
+                "align": "center",
+                "alt": "Date Icon"
+              },
+              "elements": [],
+              "widgetType": "image",
+              "isInner": false
+            },
+            {
+              "id": "81456e9",
+              "elType": "widget",
+              "settings": {
+                "title": "Mar 4, 2024",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "41fd249",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "content"
+      },
+      "elements": [
+        {
+          "id": "269f5a2",
+          "elType": "widget",
+          "settings": {
+            "title": "S H O P   I N S T A G R A M",
+            "header_size": "h5",
+            "align": "left"
+          },
+          "elements": [],
+          "widgetType": "heading",
+          "isInner": false
+        },
+        {
+          "id": "f94d2e9",
+          "elType": "widget",
+          "settings": {
+            "view": "traditional",
+            "space_between": {
+              "unit": "px",
+              "size": 10,
+              "sizes": []
+            },
+            "icon_list": [
+              {
+                "text": "",
+                "link": {
+                  "url": "https://www.instagram.com/",
+                  "is_external": false
+                },
+                "selected_icon": {
+                  "value": "",
+                  "library": ""
+                }
+              },
+              {
+                "text": "",
+                "link": {
+                  "url": "https://www.instagram.com/",
+                  "is_external": false
+                },
+                "selected_icon": {
+                  "value": "",
+                  "library": ""
+                }
+              },
+              {
+                "text": "",
+                "link": {
+                  "url": "https://www.instagram.com/",
+                  "is_external": false
+                },
+                "selected_icon": {
+                  "value": "",
+                  "library": ""
+                }
+              },
+              {
+                "text": "",
+                "link": {
+                  "url": "https://www.instagram.com/",
+                  "is_external": false
+                },
+                "selected_icon": {
+                  "value": "",
+                  "library": ""
+                }
+              },
+              {
+                "text": "",
+                "link": {
+                  "url": "https://www.instagram.com/",
+                  "is_external": false
+                },
+                "selected_icon": {
+                  "value": "",
+                  "library": ""
+                }
+              }
+            ]
+          },
+          "elements": [],
+          "widgetType": "icon-list",
+          "isInner": false
+        }
+      ],
+      "isInner": false
+    },
+    {
+      "id": "054da5b",
+      "elType": "container",
+      "settings": {
+        "content_width": "boxed",
+        "flex_direction": "column",
+        "flex_justify_content": "flex-start",
+        "flex_align_items": "stretch",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "column": "0",
+          "row": "0"
+        },
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "40",
+          "bottom": "0",
+          "left": "40",
+          "isLinked": false
+        },
+        "_title": "content"
+      },
+      "elements": [
+        {
+          "id": "693834e",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "1615966",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "e832748",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "af226b1",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Pages",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    },
+                    {
+                      "id": "6ac14e3",
+                      "elType": "widget",
+                      "settings": {
+                        "view": "traditional",
+                        "space_between": {
+                          "unit": "px",
+                          "size": 10,
+                          "sizes": []
+                        },
+                        "icon_list": [
+                          {
+                            "text": "About us",
+                            "link": {
+                              "url": "/about",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          },
+                          {
+                            "text": "Categories",
+                            "link": {
+                              "url": "/categories",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          },
+                          {
+                            "text": "Shop",
+                            "link": {
+                              "url": "/shop",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          },
+                          {
+                            "text": "Blogs",
+                            "link": {
+                              "url": "/blogs",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          },
+                          {
+                            "text": "Reviews",
+                            "link": {
+                              "url": "/reviews",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          },
+                          {
+                            "text": "FAQ",
+                            "link": {
+                              "url": "/faq",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          }
+                        ]
+                      },
+                      "elements": [],
+                      "widgetType": "icon-list",
+                      "isInner": false
+                    },
+                    {
+                      "id": "576f78f",
+                      "elType": "widget",
+                      "settings": {
+                        "text": "Contact us",
+                        "link": {
+                          "url": "/contact-us",
+                          "is_external": false,
+                          "nofollow": false
+                        },
+                        "size": "md",
+                        "align": "left",
+                        "border_radius": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "0",
+                          "left": "0",
+                          "isLinked": true
+                        },
+                        "background_color": "#ffffff00",
+                        "border_border": "none",
+                        "_padding": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "0",
+                          "left": "0",
+                          "isLinked": true
+                        }
+                      },
+                      "elements": [],
+                      "widgetType": "button",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                },
+                {
+                  "id": "47032a7",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "6c0f489",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Categories",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                },
+                {
+                  "id": "cdb9e1c",
+                  "elType": "container",
+                  "settings": {
+                    "content_width": "full",
+                    "flex_direction": "column",
+                    "flex_align_items": "flex-start",
+                    "flex_justify_content": "flex-start",
+                    "flex_gap": {
+                      "unit": "px",
+                      "size": 12,
+                      "column": "12",
+                      "row": "12"
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "84d9b85",
+                      "elType": "widget",
+                      "settings": {
+                        "title": "Resources",
+                        "header_size": "h5",
+                        "align": "left"
+                      },
+                      "elements": [],
+                      "widgetType": "heading",
+                      "isInner": false
+                    },
+                    {
+                      "id": "02e39d1",
+                      "elType": "widget",
+                      "settings": {
+                        "view": "traditional",
+                        "space_between": {
+                          "unit": "px",
+                          "size": 10,
+                          "sizes": []
+                        },
+                        "icon_list": [
+                          {
+                            "text": "Privacy Policy",
+                            "link": {
+                              "url": "/privacy-policy",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          },
+                          {
+                            "text": "Return Policy",
+                            "link": {
+                              "url": "/return-policy",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          },
+                          {
+                            "text": "Terms & Conditions",
+                            "link": {
+                              "url": "/terms-conditions",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          },
+                          {
+                            "text": "License",
+                            "link": {
+                              "url": "/template-info/licensing",
+                              "is_external": false
+                            },
+                            "selected_icon": {
+                              "value": "",
+                              "library": ""
+                            }
+                          }
+                        ]
+                      },
+                      "elements": [],
+                      "widgetType": "icon-list",
+                      "isInner": false
+                    }
+                  ],
+                  "isInner": true
+                }
+              ],
+              "isInner": true
+            },
+            {
+              "id": "93407a8",
+              "elType": "container",
+              "settings": {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_justify_content": "flex-start",
+                "flex_gap": {
+                  "unit": "px",
+                  "size": 12,
+                  "column": "12",
+                  "row": "12"
+                },
+                "padding": {
+                  "unit": "px",
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "isLinked": true
+                }
+              },
+              "elements": [
+                {
+                  "id": "e6338c6",
+                  "elType": "widget",
+                  "settings": {
+                    "title": "Newsletter",
+                    "header_size": "h5",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "heading",
+                  "isInner": false
+                },
+                {
+                  "id": "98fe2f1",
+                  "elType": "widget",
+                  "settings": {
+                    "editor": "<p>Join our community of plant enthusiasts and elevate your greenery game today!</p>",
+                    "align": "left"
+                  },
+                  "elements": [],
+                  "widgetType": "text-editor",
+                  "isInner": false
+                },
+                {
+                  "id": "4d523ec",
+                  "elType": "widget",
+                  "settings": {
+                    "form_name": "Form",
+                    "form_fields": [
+                      {
+                        "_id": "email",
+                        "field_type": "email",
+                        "field_label": "Enter your email here",
+                        "placeholder": "Enter your email here",
+                        "required": "false",
+                        "width": "100"
+                      }
+                    ],
+                    "button_text": "Submit",
+                    "button_size": "md",
+                    "button_width": "100"
+                  },
+                  "elements": [],
+                  "widgetType": "form",
+                  "isInner": false
+                },
+                {
+                  "id": "40febd2",
+                  "elType": "widget",
+                  "settings": {
+                    "view": "traditional",
+                    "space_between": {
+                      "unit": "px",
+                      "size": 10,
+                      "sizes": []
+                    },
+                    "icon_list": [
+                      {
+                        "text": "",
+                        "link": {
+                          "url": "https://twitter.com/",
+                          "is_external": false
+                        },
+                        "selected_icon": {
+                          "value": "",
+                          "library": ""
+                        }
+                      },
+                      {
+                        "text": "",
+                        "link": {
+                          "url": "https://www.facebook.com/",
+                          "is_external": false
+                        },
+                        "selected_icon": {
+                          "value": "",
+                          "library": ""
+                        }
+                      },
+                      {
+                        "text": "",
+                        "link": {
+                          "url": "https://www.youtube.com/",
+                          "is_external": false
+                        },
+                        "selected_icon": {
+                          "value": "",
+                          "library": ""
+                        }
+                      },
+                      {
+                        "text": "",
+                        "link": {
+                          "url": "https://www.instagram.com/",
+                          "is_external": false
+                        },
+                        "selected_icon": {
+                          "value": "",
+                          "library": ""
+                        }
+                      }
+                    ]
+                  },
+                  "elements": [],
+                  "widgetType": "icon-list",
+                  "isInner": false
+                }
+              ],
+              "isInner": true
+            }
+          ],
+          "isInner": true
+        },
+        {
+          "id": "830420b",
+          "elType": "container",
+          "settings": {
+            "content_width": "full",
+            "flex_direction": "column",
+            "flex_align_items": "flex-start",
+            "flex_justify_content": "flex-start",
+            "flex_gap": {
+              "unit": "px",
+              "size": 12,
+              "column": "12",
+              "row": "12"
+            },
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "c6252b3",
+              "elType": "widget",
+              "settings": {
+                "title": "© 2024 Grove.",
+                "header_size": "h5",
+                "align": "left"
+              },
+              "elements": [],
+              "widgetType": "heading",
+              "isInner": false
+            },
+            {
+              "id": "8eb8b56",
+              "elType": "widget",
+              "settings": {
+                "view": "traditional",
+                "space_between": {
+                  "unit": "px",
+                  "size": 10,
+                  "sizes": []
+                },
+                "icon_list": [
+                  {
+                    "text": "Nixar",
+                    "link": {
+                      "url": "https://nixar.io/",
+                      "is_external": false
+                    },
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    }
+                  },
+                  {
+                    "text": "Webflow",
+                    "link": {
+                      "url": "https://webflow.com/",
+                      "is_external": false
+                    },
+                    "selected_icon": {
+                      "value": "",
+                      "library": ""
+                    }
+                  }
+                ]
+              },
+              "elements": [],
+              "widgetType": "icon-list",
+              "isInner": false
+            }
+          ],
+          "isInner": true
+        }
+      ],
+      "isInner": false
+    }
+  ],
+  "page_settings": []
+}
