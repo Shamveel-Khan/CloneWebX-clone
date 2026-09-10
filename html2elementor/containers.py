@@ -368,26 +368,64 @@ def _section_settings(section: dict) -> dict[str, Any]:
         for side in ("left", "right"):
             if padding[side] == "0" and wp[side] != "0":
                 padding[side] = wp[side]
-    for side in ("left", "right"):
-        if int(padding[side]) < 20:
-            padding[side] = "40"
 
-    # Read gap from CSS (row-gap / column-gap / gap shorthand)
-    raw_gap = (w_styles.get("gap") or w_styles.get("row-gap") or
-               styles.get("gap") or styles.get("row-gap") or "")
-    gap_val = px_to_int(raw_gap) if raw_gap else None
-    # Only use default gap if section is flex/grid; otherwise margins handle spacing
-    gap_px = gap_val if gap_val is not None else (20 if is_flex else 0)
-    gap_str = str(gap_px)
+    # Only add default horizontal padding when CSS has none and there's no
+    # max-width constraint (which would provide its own centering).
+    # Previously this was always forced to 40px, which broke full-bleed sections.
+    has_explicit_h_padding = bool(
+        styles.get("padding-left") or styles.get("padding-right") or
+        styles.get("padding") or
+        (w_styles and (w_styles.get("padding-left") or w_styles.get("padding-right")))
+    )
+
+    # Read gap from CSS (row-gap / column-gap / gap shorthand).
+    # Distinguish "not set" (None) from explicit 0 so we don't force 20px
+    # when the source deliberately has gap:0.
+    raw_row_gap = (w_styles.get("row-gap") or styles.get("row-gap") or
+                   w_styles.get("gap") or styles.get("gap") or "")
+    raw_col_gap = (w_styles.get("column-gap") or styles.get("column-gap") or raw_row_gap)
+    gap_explicitly_set = bool(raw_row_gap)
+    if gap_explicitly_set:
+        row_gap_px = px_to_int(raw_row_gap) if raw_row_gap else 0
+        col_gap_px = px_to_int(raw_col_gap) if raw_col_gap else row_gap_px
+    else:
+        # Only use default gap if section is flex/grid; otherwise margins handle spacing
+        row_gap_px = col_gap_px = 20 if is_flex else 0
+
+    # Determine content_width from CSS max-width.
+    # Use "full" (no inner max-width wrapper) unless we have an explicit
+    # CSS max-width to honor — "boxed" forces Elementor's site-level max-width
+    # which often differs from the source design's intent.
+    max_width_src = w_styles.get("max-width") or styles.get("max-width")
+    mw_px = px_to_int(max_width_src) if max_width_src and max_width_src != "none" else None
+    content_width = "boxed" if mw_px else "full"
+
+    # When no explicit horizontal padding and no max-width, add sensible default
+    # so content isn't flush to viewport edges.
+    if not has_explicit_h_padding and not mw_px:
+        padding["left"] = "40"
+        padding["right"] = "40"
 
     settings: dict[str, Any] = {
-        "content_width": "boxed",
+        "content_width": content_width,
         "flex_direction": flex_dir,
         "flex_justify_content": justify,
         "flex_align_items": align,
-        "flex_gap": {"unit": "px", "size": gap_px, "column": gap_str, "row": gap_str},
+        "flex_gap": {
+            "unit": "px", "size": row_gap_px,
+            "column": str(col_gap_px), "row": str(row_gap_px),
+        },
         "padding": padding,
     }
+
+    # Apply boxed_width from CSS max-width
+    if mw_px:
+        settings["boxed_width"] = {"unit": "px", "size": mw_px, "sizes": []}
+
+    # min-height from CSS (hero sections, equal-height card rows)
+    min_h = px_to_int(styles.get("min-height") or w_styles.get("min-height"))
+    if min_h:
+        settings["min_height"] = {"unit": "px", "size": min_h, "sizes": []}
 
     # Check for gradient background first
     bg_raw = styles.get("background") or styles.get("background-image") or ""
@@ -680,6 +718,7 @@ def _wrap_row(widgets: list[dict], max_width: int | None = None, gap: int | None
     # "1.5fr 1fr 1fr" → first col ~43%, others ~28%). Falls back to equal
     # split when tracks are absent or counts don't match the widget count.
     tracks = extras.get("tracks")
+    gap_px = gap or 16
     if tracks and len(tracks) == width_n and sum(tracks) > 0 and not cols_per_row:
         # Reserve 2% per gap between columns for visual breathing room,
         # matching the equal-split heuristic, then distribute the remainder
@@ -691,13 +730,11 @@ def _wrap_row(widgets: list[dict], max_width: int | None = None, gap: int | None
         # Leave more breathing room when wrapping: gaps are in px (not %) and
         # at larger gaps (40-48px) they consume enough space that tight %
         # widths push the last card onto a new row.
-        if cols_per_row:
-            # Budget ~5% per gap so 3-col with 48px gap still fits at 1240px:
-            # (100 - 2*5)/3 = 30% × 3 = 90% + 2×~4% gap ≈ 98% < 100%.
-            reserve_per_gap = 5
-        else:
-            reserve_per_gap = 2
-        equal = int((100 - (width_n - 1) * reserve_per_gap) / width_n)
+        # Estimate gap as a % of the typical 1200px layout width so the
+        # column math is accurate regardless of gap size.
+        gap_pct = max(1, round((gap_px / 1200) * 100))
+        available = 100 - (width_n - 1) * gap_pct
+        equal = max(10, int(available / width_n))
         pcts = [equal] * n
 
     widgets_with_widths = []

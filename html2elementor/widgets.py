@@ -969,19 +969,53 @@ def _inline_flex_row_widget(node: dict, consumed: set[int]) -> dict:
             _walk(child, sub_widgets, consumed)
             if not sub_widgets:
                 continue
+            child_styles = child.get("styles", {})
+            child_flex_grow = px_to_int(child_styles.get("flex-grow")) or 0
+            child_flex_basis_raw = child_styles.get("flex-basis") or ""
+            child_w_raw = child_styles.get("width") or ""
+            # Determine child width: explicit %, flex-basis %, or split 48%
+            child_settings: dict[str, Any] = {
+                "content_width": "full",
+                "flex_direction": "column",
+                "flex_align_items": "flex-start",
+                "flex_gap": {"unit": "px", "size": 12, "column": "12", "row": "12"},
+            }
+            if child_flex_grow:
+                child_settings["_flex_size"] = "grow"
+                child_settings["_flex_grow"] = child_flex_grow
+            elif "%" in child_flex_basis_raw:
+                try:
+                    pct = float(child_flex_basis_raw.replace("%", "").strip())
+                    child_settings["_element_width"] = "initial"
+                    child_settings["_element_custom_width"] = {"unit": "%", "size": pct, "sizes": []}
+                    child_settings["_element_width_mobile"] = "initial"
+                    child_settings["_element_custom_width_mobile"] = {"unit": "%", "size": 100, "sizes": []}
+                except ValueError:
+                    child_settings["_element_width"] = "initial"
+                    child_settings["_element_custom_width"] = {"unit": "%", "size": 48, "sizes": []}
+                    child_settings["_element_width_mobile"] = "initial"
+                    child_settings["_element_custom_width_mobile"] = {"unit": "%", "size": 100, "sizes": []}
+            elif "%" in child_w_raw:
+                try:
+                    pct = float(child_w_raw.replace("%", "").strip())
+                    child_settings["_element_width"] = "initial"
+                    child_settings["_element_custom_width"] = {"unit": "%", "size": pct, "sizes": []}
+                    child_settings["_element_width_mobile"] = "initial"
+                    child_settings["_element_custom_width_mobile"] = {"unit": "%", "size": 100, "sizes": []}
+                except ValueError:
+                    child_settings["_element_width"] = "initial"
+                    child_settings["_element_custom_width"] = {"unit": "%", "size": 48, "sizes": []}
+                    child_settings["_element_width_mobile"] = "initial"
+                    child_settings["_element_custom_width_mobile"] = {"unit": "%", "size": 100, "sizes": []}
+            else:
+                child_settings["_element_width"] = "initial"
+                child_settings["_element_custom_width"] = {"unit": "%", "size": 48, "sizes": []}
+                child_settings["_element_width_mobile"] = "initial"
+                child_settings["_element_custom_width_mobile"] = {"unit": "%", "size": 100, "sizes": []}
             child_widgets.append({
                 "__inner_container__": True,
                 "_no_group": True,
-                "settings": {
-                    "content_width": "full",
-                    "flex_direction": "column",
-                    "flex_align_items": "flex-start",
-                    "flex_gap": {"unit": "px", "size": 12, "column": "12", "row": "12"},
-                    "_element_width": "initial",
-                    "_element_custom_width": {"unit": "%", "size": 48, "sizes": []},
-                    "_element_width_mobile": "initial",
-                    "_element_custom_width_mobile": {"unit": "%", "size": 100, "sizes": []},
-                },
+                "settings": child_settings,
                 "children": sub_widgets,
             })
         return {
@@ -1099,12 +1133,52 @@ def _inline_flex_row_widget(node: dict, consumed: set[int]) -> dict:
             if not sub_widgets:
                 continue
             # Only wrap in a fixed-width container when the CSS explicitly
-            # specifies a width on a div child (e.g. agenda `.time { width: 100px }`).
+            # specifies a width on a div child (e.g. agenda `.time { width: 100px }`)
+            # or a flex-grow value.
             # Plain buttons/anchors/leaves shouldn't be wrapped — they work
             # directly in row flex.
             child_styles = child.get("styles", {})
             w_px = px_to_int(child_styles.get("width", ""))
-            if child_tag == "div" and w_px and not (
+            w_pct_raw = child_styles.get("width") or ""
+            child_fg = px_to_int(child_styles.get("flex-grow")) or 0
+            child_fb_raw = child_styles.get("flex-basis") or ""
+            if child_tag == "div" and child_fg and not (
+                len(sub_widgets) == 1 and sub_widgets[0].get("__inner_container__")
+            ):
+                # CSS flex-grow → Elementor grow
+                child_widgets.append({
+                    "__inner_container__": True,
+                    "settings": {
+                        "content_width": "full",
+                        "flex_direction": "column",
+                        "flex_align_items": "flex-start",
+                        "flex_gap": {"unit": "px", "size": 4, "column": "4", "row": "4"},
+                        "_flex_size": "grow",
+                        "_flex_grow": child_fg,
+                    },
+                    "children": sub_widgets,
+                })
+            elif child_tag == "div" and "%" in child_fb_raw:
+                # flex-basis as % (e.g. flex-basis: 50%)
+                try:
+                    fb_pct = float(child_fb_raw.replace("%", "").strip())
+                except ValueError:
+                    fb_pct = 48
+                child_widgets.append({
+                    "__inner_container__": True,
+                    "settings": {
+                        "content_width": "full",
+                        "flex_direction": "column",
+                        "flex_align_items": "flex-start",
+                        "flex_gap": {"unit": "px", "size": 4, "column": "4", "row": "4"},
+                        "_element_width": "initial",
+                        "_element_custom_width": {"unit": "%", "size": fb_pct, "sizes": []},
+                        "_element_width_mobile": "initial",
+                        "_element_custom_width_mobile": {"unit": "%", "size": 100, "sizes": []},
+                    },
+                    "children": sub_widgets,
+                })
+            elif child_tag == "div" and w_px and not (
                 len(sub_widgets) == 1 and sub_widgets[0].get("__inner_container__")
             ):
                 child_widgets.append({
@@ -1499,6 +1573,16 @@ def _apply_container_card_styling(settings: dict, styles: dict) -> None:
         settings["box_shadow_box_shadow_type"] = "yes"
         settings["box_shadow_box_shadow"] = shadow
 
+    # overflow:hidden so border-radius clips child images correctly
+    overflow = (styles.get("overflow") or "").lower()
+    if overflow in ("hidden", "clip"):
+        settings["overflow"] = "hidden"
+
+    # position:relative — needed so absolutely positioned children have a containing block
+    pos = (styles.get("position") or "").lower()
+    if pos == "relative":
+        settings["_position"] = "relative"
+
 
 def _leaf_text_widget(node: dict) -> dict:
     """Styled div/span with text only — taglines, prices, small labels, emojis."""
@@ -1870,21 +1954,35 @@ def _all_text_html(node: dict, parent_color: str | None = None) -> str:
 
 
 def _apply_max_width_and_self_align(settings: dict, styles: dict) -> None:
-    """Apply CSS max-width as widget width, and compute widget self-alignment.
+    """Apply CSS max-width/width as widget width, and compute widget self-alignment.
     `margin: 0 auto` or `margin-left/right: auto` or text-align:center with max-width
     → widget centers in parent (via _flex_align_self: center). Otherwise no self-align
-    (parent flex-align-items applies)."""
-    from .styles import px_to_int as _px
-    mw = _px(styles.get("max-width"))
-    if not mw:
-        return
-    settings["_element_custom_width"] = {"unit": "px", "size": mw, "sizes": []}
-    settings["_element_width"] = "initial"
-    # Detect centered positioning: margin-left/right auto OR text-align center
-    ml = (styles.get("margin-left") or "").lower()
-    mr = (styles.get("margin-right") or "").lower()
+    (parent flex-align-items applies).
+    Supports both px and % units for width/max-width."""
+    from .styles import resolve_length_with_unit, px_to_int as _px
+    mw_raw = styles.get("max-width")
+    w_raw = styles.get("width") or ""
+
+    # Try max-width first (constraining), then explicit width
+    size = unit = None
+    if mw_raw and mw_raw not in ("none", ""):
+        mw_val, mw_unit = resolve_length_with_unit(mw_raw)
+        if mw_val is not None:
+            size, unit = mw_val, mw_unit
+    if size is None and w_raw and w_raw not in ("auto", ""):
+        w_val, w_unit = resolve_length_with_unit(w_raw)
+        if w_val is not None:
+            size, unit = w_val, w_unit
+
+    if size is not None:
+        settings["_element_custom_width"] = {"unit": unit, "size": int(size) if unit == "px" else size, "sizes": []}
+        settings["_element_width"] = "initial"
+
+    # Detect centered / right-pushed positioning from margin:auto
+    ml = (styles.get("margin-left") or "").lower().strip()
+    mr = (styles.get("margin-right") or "").lower().strip()
     ta = (styles.get("text-align") or "").lower()
-    is_centered = (ml == "auto" and mr == "auto") or ta == "center"
+    is_centered = (ml == "auto" and mr == "auto") or (ta == "center" and size is not None)
     is_right = ml == "auto" and mr != "auto"
     if is_centered:
         settings["_flex_align_self"] = "center"
@@ -2226,12 +2324,26 @@ def _styled_wrapper_container(node: dict, children: list[dict]) -> dict:
     mw = px_to_int(styles.get("max-width") or "")
     if mw:
         settings["boxed_width"] = {"unit": "px", "size": mw, "sizes": []}
-    # text-align → flex_align_items
-    ta = (styles.get("text-align") or "").lower()
-    if ta == "center":
-        settings["flex_align_items"] = "center"
-    elif ta in ("right", "end"):
-        settings["flex_align_items"] = "flex-end"
+    # Only use actual CSS align-items property for flex_align_items — NOT text-align.
+    # Mapping text-align:center → flex_align_items:center caused child width collapse
+    # because stretch was overridden. Text alignment on children is handled per-widget
+    # via the "align" setting (already done in heading_widget, text_widget etc.)
+    css_ai_raw = (styles.get("align-items") or "").lower()
+    ai_map_local = {
+        "flex-end": "flex-end", "end": "flex-end",
+        "flex-start": "flex-start", "start": "flex-start",
+        "center": "center", "stretch": "stretch",
+    }
+    if css_ai_raw and css_ai_raw in ai_map_local:
+        settings["flex_align_items"] = ai_map_local[css_ai_raw]
+    # overflow:hidden — preserves border-radius clipping on child images
+    overflow = (styles.get("overflow") or "").lower()
+    if overflow in ("hidden", "clip"):
+        settings["overflow"] = "hidden"
+    # position:relative — containing block for absolutely positioned children
+    pos = (styles.get("position") or "").lower()
+    if pos == "relative":
+        settings["_position"] = "relative"
     # Mark as styled so _group_into_grids doesn't try to row-wrap
     return {
         "__inner_container__": True,

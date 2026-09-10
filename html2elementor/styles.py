@@ -58,6 +58,34 @@ def px_to_float(css: str | None) -> float | None:
     return _resolve_length(str(css))
 
 
+def resolve_length_with_unit(css: str | None) -> tuple[float | None, str]:
+    """Resolve a CSS length value, returning (value, unit).
+    Supports 'px', '%', 'vw', 'vh', 'rem'. Returns (None, 'px') when unparseable.
+    Use when the caller can pass the unit directly to Elementor (e.g. container width/height).
+    """
+    if not css:
+        return None, "px"
+    css = css.strip()
+    if css.endswith("%"):
+        try:
+            return float(css[:-1]), "%"
+        except ValueError:
+            return None, "px"
+    if css.endswith("vw"):
+        try:
+            return float(css[:-2]) * _DESKTOP_W / 100, "px"
+        except ValueError:
+            return None, "px"
+    if css.endswith("vh"):
+        try:
+            # Approximate 100vh as 900px (our assumed viewport height)
+            return float(css[:-2]) * 900 / 100, "px"
+        except ValueError:
+            return None, "px"
+    val = _resolve_length(css)
+    return val, "px"
+
+
 def normalize_weight(css: str | None) -> str | None:
     if not css:
         return None
@@ -110,7 +138,7 @@ def apply_typography(settings: dict, styles: dict) -> None:
     letter_spacing = px_to_int(styles.get("letter-spacing") or styles.get("letterSpacing"))
     text_transform = styles.get("text-transform") or styles.get("textTransform")
 
-    if not (font_family or font_size or font_weight):
+    if not (font_family or font_size or font_weight or line_height):
         return
 
     settings["typography_typography"] = "custom"
@@ -122,12 +150,14 @@ def apply_typography(settings: dict, styles: dict) -> None:
         settings["typography_font_weight"] = font_weight
     if line_height and line_height != "normal":
         lh_str = str(line_height).strip()
-        if lh_str.endswith("px") and font_size:
+        # Use 16px as fallback base when explicit font-size is unavailable
+        base_size = font_size or 16
+        if lh_str.endswith("px"):
             # Absolute px value — convert to em ratio
             lh_px = px_to_float(lh_str)
             if lh_px:
                 settings["typography_line_height"] = {
-                    "unit": "em", "size": round(lh_px / font_size, 2), "sizes": []
+                    "unit": "em", "size": round(lh_px / base_size, 2), "sizes": []
                 }
         elif lh_str.endswith("em"):
             lh_em = px_to_float(lh_str)

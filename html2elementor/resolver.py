@@ -399,6 +399,33 @@ def _expand_shorthand(result: dict, prop: str, value: str) -> None:
     elif prop == "gap" and parts:
         result["row-gap"] = parts[0]
         result["column-gap"] = parts[1] if len(parts) > 1 else parts[0]
+    elif prop == "flex" and parts:
+        # Expand flex shorthand: flex:1  → grow:1 shrink:1 basis:0%
+        v0 = parts[0]
+        if v0 == "none":
+            result.setdefault("flex-grow", "0")
+            result.setdefault("flex-shrink", "0")
+            result.setdefault("flex-basis", "auto")
+        elif v0 == "auto":
+            result.setdefault("flex-grow", "1")
+            result.setdefault("flex-shrink", "1")
+            result.setdefault("flex-basis", "auto")
+        elif len(parts) == 1:
+            result.setdefault("flex-grow", v0)
+            result.setdefault("flex-shrink", "1")
+            result.setdefault("flex-basis", "0%")
+        elif len(parts) == 2:
+            result.setdefault("flex-grow", parts[0])
+            result.setdefault("flex-shrink", parts[1])
+            result.setdefault("flex-basis", "0%")
+        else:
+            result.setdefault("flex-grow", parts[0])
+            result.setdefault("flex-shrink", parts[1])
+            result.setdefault("flex-basis", parts[2])
+    elif prop == "place-items" and parts:
+        # CSS Grid shorthand: align-items justify-items
+        result.setdefault("align-items", parts[0])
+        result.setdefault("justify-items", parts[1] if len(parts) > 1 else parts[0])
     elif prop == "background":
         # background shorthand: may contain color, url(), gradient
         # Extract color — hex, rgb/rgba, hsl, or named color keyword
