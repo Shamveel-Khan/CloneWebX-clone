@@ -22,16 +22,27 @@ def main():
     ap.add_argument("--manifest", action="store_true", help="Generate images_manifest.json for external/referenced images")
     ap.add_argument("--no-validate", action="store_true", help="Skip post-generation schema validation")
     ap.add_argument("--upload", action="store_true", help="Upload external images to WP media library via Playsand")
-    ap.add_argument("--css", action="append", metavar="FILE",
-                    help="Extra CSS file(s) to include (may be repeated). Useful when the HTML links external stylesheets that can't be auto-resolved.")
+    ap.add_argument("--css", action="append", metavar="PATH_OR_URL",
+                    help="Extra CSS file path or URL to include (may be repeated). Useful to supply or override stylesheets manually.")
+    ap.add_argument("--no-css", action="store_true", help="Skip CSS fetching and resolution entirely")
     args = ap.parse_args()
 
     extra_css: list[str] | None = None
     if args.css:
         extra_css = []
-        for css_file in args.css:
-            with open(css_file) as f:
-                extra_css.append(f.read())
+        for css_target in args.css:
+            if css_target.startswith("http://") or css_target.startswith("https://"):
+                from .parser import _fetch_remote_css
+                remote_content = _fetch_remote_css(css_target)
+                if remote_content:
+                    extra_css.append(remote_content)
+                else:
+                    print(f"Warning: Could not fetch remote CSS from {css_target}", file=sys.stderr)
+            elif os.path.isfile(css_target):
+                with open(css_target, "r", encoding="utf-8") as f:
+                    extra_css.append(f.read())
+            else:
+                print(f"Warning: CSS file not found: {css_target}", file=sys.stderr)
 
     if args.url:
         try:
@@ -41,12 +52,12 @@ def main():
             print("Error: --url requires playwright. Install: pip install playwright && playwright install chromium", file=sys.stderr)
             sys.exit(1)
     elif args.input and args.input != "-":
-        with open(args.input) as f:
+        with open(args.input, "r", encoding="utf-8") as f:
             html = f.read()
-        result = convert(html, html_path=args.input, extra_css=extra_css, use_globals=args.use_globals)
+        result = convert(html, html_path=args.input, extra_css=extra_css, use_globals=args.use_globals, no_css=args.no_css)
     elif not sys.stdin.isatty():
         html = sys.stdin.read()
-        result = convert(html, extra_css=extra_css, use_globals=args.use_globals)
+        result = convert(html, extra_css=extra_css, use_globals=args.use_globals, no_css=args.no_css)
     else:
         ap.print_help()
         sys.exit(1)

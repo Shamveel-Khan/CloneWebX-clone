@@ -3,22 +3,22 @@
     {
       "_id": "text",
       "title": "Text",
-      "color": "#1a1a2e"
+      "color": "#333333"
     },
     {
       "_id": "primary",
       "title": "Primary",
-      "color": "#29292a"
+      "color": "#f7eee3"
     },
     {
       "_id": "secondary",
       "title": "Secondary",
-      "color": "#6366f1"
+      "color": "#ffffff"
     },
     {
       "_id": "accent",
       "title": "Accent",
-      "color": "#29292a"
+      "color": "#ddceb2"
     }
   ],
   "custom_colors": [
@@ -33,19 +33,44 @@
       "color": "#ffffff"
     },
     {
-      "_id": "fff4937",
+      "_id": "847c8fa",
+      "title": "CTA Accent",
+      "color": "#999999"
+    },
+    {
+      "_id": "7cce346",
+      "title": "Light Background",
+      "color": "#fbf6ed"
+    },
+    {
+      "_id": "0ea82c1",
+      "title": "Section Background",
+      "color": "#dddddd"
+    },
+    {
+      "_id": "ea68068",
+      "title": "Light Background 2",
+      "color": "#fcf9f3"
+    },
+    {
+      "_id": "d842155",
+      "title": "Section Background 2",
+      "color": "#ffdede"
+    },
+    {
+      "_id": "858cfcb",
       "title": "Text",
-      "color": "#1a1a2e"
+      "color": "#333333"
     },
     {
-      "_id": "5cd91c3",
+      "_id": "83319e9",
       "title": "Primary",
-      "color": "#29292a"
+      "color": "#f7eee3"
     },
     {
-      "_id": "434f406",
-      "title": "Secondary",
-      "color": "#6366f1"
+      "_id": "d548465",
+      "title": "Accent",
+      "color": "#ddceb2"
     }
   ],
   "system_typography": [
@@ -53,7 +78,7 @@
       "_id": "primary",
       "title": "Primary",
       "typography_typography": "custom",
-      "typography_font_family": "Inter",
+      "typography_font_family": "Satoshi",
       "typography_font_weight": "700",
       "typography_font_size": {
         "unit": "px",
@@ -65,7 +90,7 @@
       "_id": "secondary",
       "title": "Secondary",
       "typography_typography": "custom",
-      "typography_font_family": "Inter",
+      "typography_font_family": "Satoshi",
       "typography_font_weight": "600",
       "typography_font_size": {
         "unit": "px",
@@ -77,7 +102,7 @@
       "_id": "text",
       "title": "Text",
       "typography_typography": "custom",
-      "typography_font_family": "Inter",
+      "typography_font_family": "Satoshi",
       "typography_font_weight": "400",
       "typography_font_size": {
         "unit": "px",
@@ -89,7 +114,7 @@
       "_id": "accent",
       "title": "Accent",
       "typography_typography": "custom",
-      "typography_font_family": "Inter",
+      "typography_font_family": "Satoshi",
       "typography_font_weight": "500",
       "typography_font_size": {
         "unit": "px",
@@ -100,10 +125,202 @@
   ],
   "custom_typography": [
     {
-      "_id": "4d26a0c",
-      "title": "Inter",
+      "_id": "ac33e0e",
+      "title": "Button Text",
       "typography_typography": "custom",
-      "typography_font_family": "Inter",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "500",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "14",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "f4efb1c",
+      "title": "Button Text 2",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "500",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "12",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "fbb53ea",
+      "title": "Text",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "400",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "24",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "9aa2127",
+      "title": "Hero Heading",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "500",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "54",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "dfccac8",
+      "title": "Text 2",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "400",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "12",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "df6b297",
+      "title": "Text 3",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "700",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "12",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "9c4edb4",
+      "title": "Section Title",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "300",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "45",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "54b4c54",
+      "title": "Small Heading",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "400",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "18",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "d17364b",
+      "title": "Small Heading 2",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "300",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "22",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "cf0f17b",
+      "title": "Section Title 2",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "300",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "46",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "1307fdd",
+      "title": "Text 4",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "400",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "14",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "d2ff445",
+      "title": "Small Heading 3",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "300",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "30",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "ea5d95b",
+      "title": "Section Title 3",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "300",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "38",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "027192e",
+      "title": "Card Title",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "500",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "30",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "9307845",
+      "title": "Body Text",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "400",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "20",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "69b6ae0",
+      "title": "Text 5",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
+      "typography_font_weight": "400",
+      "typography_font_size": {
+        "unit": "px",
+        "size": "40",
+        "sizes": []
+      }
+    },
+    {
+      "_id": "94888c3",
+      "title": "Satoshi",
+      "typography_typography": "custom",
+      "typography_font_family": "Satoshi",
       "typography_font_weight": "700",
       "typography_font_size": {
         "unit": "px",
@@ -111,5 +328,7 @@
         "sizes": []
       }
     }
-  ]
+  ],
+  "body_background_background": "classic",
+  "body_background_color": "#fcf9f3"
 }

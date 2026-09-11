@@ -24,7 +24,8 @@ __version__ = "0.2.0"
 
 def convert(html: str, html_path: str | None = None,
             extra_css: list[str] | None = None,
-            use_globals: bool = False) -> dict[str, Any]:
+            use_globals: bool = False,
+            no_css: bool = False) -> dict[str, Any]:
     """Convert an HTML string to Elementor layout + kit globals.
 
     Returns dict with:
@@ -34,7 +35,7 @@ def convert(html: str, html_path: str | None = None,
         "color_map": dict — {hex: global_id}
         "font_map": dict — {font_name: global_id}
     """
-    capture = parse_html(html, html_path=html_path, extra_css=extra_css)
+    capture = parse_html(html, html_path=html_path, extra_css=extra_css, no_css=no_css)
 
     # Build globals kit from all colors/fonts in the HTML
     kit_settings, color_map, font_map, typo_map = build_kit(capture)

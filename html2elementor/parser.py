@@ -4,39 +4,153 @@ Node format matches the Playwright dom_capture output so downstream
 code (widgets, containers, sections) works without changes.
 """
 from __future__ import annotations
+import gzip
+import hashlib
+import logging
 import os
+import re
+import urllib.request
 from typing import Any
 from bs4 import BeautifulSoup, Tag, NavigableString
 from .resolver import resolve_all
 
+logger = logging.getLogger("html2elementor")
 SKIP_TAGS = {"script", "style", "noscript", "meta", "link", "template", "head"}
 
 
+def _fetch_remote_css(url: str, referer: str | None = None, cache_dir: str | None = None) -> str | None:
+    """Fetch external CSS with browser headers, host fallback, and disk caching."""
+    # Check cache first
+    cache_file = None
+    if cache_dir:
+        os.makedirs(cache_dir, exist_ok=True)
+        url_hash = hashlib.sha256(url.encode("utf-8")).hexdigest()[:16]
+        cache_file = os.path.join(cache_dir, f"css_{url_hash}.css")
+        if os.path.isfile(cache_file):
+            try:
+                with open(cache_file, "r", encoding="utf-8") as f:
+                    return f.read()
+            except Exception as e:
+                logger.debug(f"Cache read error for {url}: {e}")
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/css,*/*;q=0.1",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate",
+    }
+    if referer:
+        headers["Referer"] = referer
+
+    candidate_urls = [url]
+    if "assets-global.website-files.com" in url:
+        candidate_urls.append(url.replace("assets-global.website-files.com", "cdn.prod.website-files.com"))
+    elif "cdn.prod.website-files.com" in url:
+        candidate_urls.append(url.replace("cdn.prod.website-files.com", "assets-global.website-files.com"))
+
+    for target_url in candidate_urls:
+        try:
+            req = urllib.request.Request(target_url, headers=headers)
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                raw_bytes = resp.read()
+                # Check for gzip
+                if resp.info().get("Content-Encoding") == "gzip" or (len(raw_bytes) > 2 and raw_bytes[:2] == b"\x1f\x8b"):
+                    css_text = gzip.decompress(raw_bytes).decode("utf-8", errors="replace")
+                else:
+                    css_text = raw_bytes.decode("utf-8", errors="replace")
+
+                # Cache result
+                if cache_file and css_text:
+                    try:
+                        with open(cache_file, "w", encoding="utf-8") as f:
+                            f.write(css_text)
+                    except Exception as e:
+                        logger.debug(f"Failed to write CSS cache: {e}")
+                return css_text
+        except Exception as e:
+            logger.warning(f"Failed to fetch CSS from {target_url}: {e}")
+
+    return None
+
+
+def _sanitize_html_soup(soup: BeautifulSoup) -> None:
+    """Strip template blocks, data-w-id, Webflow IX2 transforms, and commerce elements."""
+    # 1. Strip <script type="text/x-wf-template"> blocks
+    for t in list(soup.find_all("script", type=lambda v: v and "wf-template" in v)):
+        t.decompose()
+
+    # 2. Strip commerce elements (.w-commerce-* or data-node-type="commerce-*")
+    for el in list(soup.find_all(True)):
+        if not el.parent:  # already decomposed
+            continue
+        classes = el.get("class", [])
+        classes_str = " ".join(classes) if isinstance(classes, list) else str(classes)
+        node_type = str(el.get("data-node-type", ""))
+        if "w-commerce-" in classes_str or node_type.startswith("commerce-"):
+            el.decompose()
+            continue
+
+        # 3. Strip data-w-id
+        if el.has_attr("data-w-id"):
+            del el["data-w-id"]
+
+        # 4. Strip Webflow IX2 inline transform styles
+        if el.has_attr("style"):
+            s = el["style"]
+            if "transform:" in s:
+                s_clean = re.sub(r"(-webkit-|-moz-|-ms-)?transform:[^;]+;?", "", s).strip()
+                if s_clean:
+                    el["style"] = s_clean
+                else:
+                    del el["style"]
+
+
 def parse_html(html: str, html_path: str | None = None,
-               extra_css: list[str] | None = None) -> dict[str, Any]:
+               extra_css: list[str] | None = None,
+               no_css: bool = False) -> dict[str, Any]:
     soup = BeautifulSoup(html, "html.parser")
 
-    # Inline <style> blocks
-    css_sources = [tag.string for tag in soup.find_all("style") if tag.string]
+    # Referer derived from <html data-wf-domain="...">
+    html_tag = soup.find("html")
+    wf_domain = html_tag.get("data-wf-domain") if html_tag else None
+    referer = f"https://{wf_domain}/" if wf_domain else None
 
-    # External stylesheets via <link rel="stylesheet" href="...">
-    if html_path:
-        base_dir = os.path.dirname(os.path.abspath(html_path))
+    # Sanitize Webflow artifacts & commerce widgets before tree traversal
+    _sanitize_html_soup(soup)
+
+    css_sources: list[str] = []
+
+    if not no_css:
+        # Inline <style> blocks
+        css_sources.extend(tag.string for tag in soup.find_all("style") if tag.string)
+
+        # Cache dir next to input HTML
+        base_dir = os.path.dirname(os.path.abspath(html_path)) if html_path else None
+        cache_dir = os.path.join(base_dir, ".css_cache") if base_dir else None
+
+        # External stylesheets via <link rel="stylesheet" href="...">
         for link in soup.find_all("link", rel=lambda r: r and "stylesheet" in (r if isinstance(r, list) else [r])):
-            href = link.get("href", "")
-            if not href or href.startswith("http") or href.startswith("//"):
+            href = link.get("href", "").strip()
+            if not href:
                 continue
-            css_file = os.path.join(base_dir, href)
-            if os.path.isfile(css_file):
-                try:
-                    with open(css_file) as f:
-                        css_sources.append(f.read())
-                except OSError:
-                    pass
 
-    # Caller-supplied extra CSS (e.g. passed via --css CLI flag)
-    if extra_css:
-        css_sources.extend(extra_css)
+            if href.startswith("http://") or href.startswith("https://") or href.startswith("//"):
+                full_url = "https:" + href if href.startswith("//") else href
+                remote_css = _fetch_remote_css(full_url, referer=referer, cache_dir=cache_dir)
+                if remote_css:
+                    css_sources.append(remote_css)
+            elif base_dir:
+                css_file = os.path.join(base_dir, href)
+                if os.path.isfile(css_file):
+                    try:
+                        with open(css_file, "r", encoding="utf-8") as f:
+                            css_sources.append(f.read())
+                    except OSError as e:
+                        logger.warning(f"Could not read local stylesheet {css_file}: {e}")
+
+        # Caller-supplied extra CSS (e.g. passed via --css CLI flag)
+        if extra_css:
+            css_sources.extend(extra_css)
 
     styles_map, hover_map, tablet_map, mobile_map = resolve_all(soup, css_sources)
 
