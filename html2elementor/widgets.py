@@ -207,6 +207,15 @@ def _walk(node: dict, out: list[dict], consumed: set[int]) -> None:
         out.append(_inline_flex_row_widget(node, consumed))
         return
 
+    # Transparent CMS/framework wrapper: .w-dyn-list, .w-dyn-items,
+    # .collection-list, .grid-wrapper, etc. — unwrap to the real list node
+    # so _is_card_grid and _emit_card_grid see the actual repeated items.
+    if tag == "div":
+        unwrapped = _unwrap_cms_shell(node)
+        if unwrapped is not None and unwrapped is not node:
+            _walk(unwrapped, out, consumed)
+            return
+
     # Card grid: a div with 2+ similar child divs (each has heading + content)
     if tag == "div" and _is_card_grid(node):
         cards = _emit_card_grid(node, consumed)
@@ -216,11 +225,25 @@ def _walk(node: dict, out: list[dict], consumed: set[int]) -> None:
             flex_dir = (parent_styles.get("flex-direction") or "").lower()
             # Only wrap in row layout if parent is grid or flex-row.
             # block/flex-column → leave flat (parent container handles vertical stacking).
+            # Fallback: when CSS didn't load, detect repeated items by class pattern
+            # and assume row/grid layout so cards get grouped properly.
             is_row_layout = (display == "grid") or (display in ("flex", "inline-flex") and not flex_dir.startswith("column"))
+            if not is_row_layout and not display:
+                # CSS absent: check for repeated sibling items (CMS-generated lists)
+                card_children = [c for c in node.get("children", [])
+                                 if c.get("tag") in ("div", "a", "li")]
+                if _has_repeated_items(card_children):
+                    is_row_layout = True
             if is_row_layout:
                 grid_cols = _get_grid_columns(node)
+                # CSS-absent fallback: infer column count from item count
+                # (cap at 4 for readability; 5+ items wrap to 4-col)
+                if not grid_cols and not display:
+                    n_cards = len(cards)
+                    grid_cols = min(n_cards, 4) if n_cards >= 3 else None
                 grid_max_width = px_to_int(parent_styles.get("max-width"))
                 grid_gap = px_to_int(parent_styles.get("gap"))
+
                 # Capture fr proportions from grid-template-columns so
                 # non-equal layouts (e.g. "1.5fr 1fr 1fr" for hero-bottom)
                 # assign proportional widths instead of 32/32/32.
@@ -1271,6 +1294,83 @@ def _image_row_widget(node: dict) -> dict:
     }
 
 
+def _is_cms_shell(node: dict) -> bool:
+    """Return True if this div is a transparent CMS/framework collection wrapper
+    that contributes no visual layout — its sole job is grouping repeated items.
+    Examples: .w-dyn-list, .w-dyn-items, .collection-list, .grid-wrapper."""
+    cls = " ".join(node.get("classes", [])).lower()
+    # Webflow CMS collection wrappers
+    if any(k in cls for k in ("w-dyn-list", "w-dyn-items", "collection-list",
+                               "collection-wrap")):
+        return True
+    # Generic transparent shells: single keyword with no own styling
+    SHELL_KEYWORDS = ("grid-wrapper", "list-wrapper", "items-wrapper",
+                      "products-wrapper", "posts-wrapper", "cards-wrapper")
+    if any(k in cls for k in SHELL_KEYWORDS):
+        styles = node.get("styles", {})
+        display = (styles.get("display") or "").lower()
+        # Only transparent if it doesn't set its own grid/flex layout
+        if display not in ("grid", "flex", "inline-flex"):
+            return True
+    return False
+
+
+def _has_repeated_items(children: list[dict], min_count: int = 3) -> bool:
+    """Return True when 3+ sibling divs share a common class stem,
+    indicating a CMS-generated repeated list (product cards, posts, etc.)."""
+    if len(children) < min_count:
+        return False
+    # Gather the first 'meaningful' class for each child (skip generic Webflow classes)
+    SKIP_CLS = {"w-dyn-item", "w-dyn-bind-empty", "w-inline-block"}
+
+    def _stem(c: dict) -> str | None:
+        for cls in c.get("classes", []):
+            if cls not in SKIP_CLS and not cls.startswith("w-"):
+                return cls
+        # Fall back to first class if all are Webflow
+        classes = c.get("classes", [])
+        return classes[0] if classes else None
+
+    stems = [_stem(c) for c in children if c.get("tag") in ("div", "a", "li")]
+    stems = [s for s in stems if s]
+    if len(stems) < min_count:
+        return False
+    # Count how many share the most-common stem
+    from collections import Counter
+    most_common, freq = Counter(stems).most_common(1)[0]
+    return freq >= min_count
+
+
+def _unwrap_cms_shell(node: dict) -> dict | None:
+    """If node is a transparent CMS shell (or contains one as its only child),
+    return the innermost real list node. Returns None if no unwrapping needed."""
+    # Direct shell: this node itself is a transparent wrapper
+    if _is_cms_shell(node):
+        real_children = [c for c in node.get("children", [])
+                         if c.get("tag") not in ("script", "style")]
+        if len(real_children) == 1:
+            # e.g. .w-dyn-list > .w-dyn-items (items is the real list)
+            return real_children[0]
+        # Multiple children that are the repeated items — return node as-is
+        # (caller will see this node has direct repeated children)
+        return None
+
+    # Single-child wrapper whose only child is a cms shell or repeated list
+    real_children = [c for c in node.get("children", [])
+                     if c.get("tag") not in ("script", "style")]
+    if len(real_children) == 1:
+        only = real_children[0]
+        if only.get("tag") == "div" and _is_cms_shell(only):
+            # e.g. section > .w-dyn-list > descend further
+            return _unwrap_cms_shell(only) or only
+        # Check if only child is itself a repeated-items list
+        only_children = [c for c in only.get("children", [])
+                         if c.get("tag") not in ("script", "style")]
+        if _has_repeated_items(only_children):
+            return only
+    return None
+
+
 def _is_card_grid(node: dict) -> bool:
     """A div with 2+ direct child divs that each have meaningful content.
     Content = heading/p/blockquote tags OR leaf divs/spans with text.
@@ -1314,7 +1414,11 @@ def _is_card_grid(node: dict) -> bool:
         has_bg = bool(styles.get("background") or styles.get("background-color"))
         has_radius = bool(styles.get("border-radius"))
         if has_max_width and not has_bg and not has_radius:
-            return False  # .container-style width limiter
+            # BUT: if children are clearly repeated items (shared class stem),
+            # treat as card grid even without explicit display (CSS may not have loaded).
+            if not _has_repeated_items(children):
+                return False  # .container-style width limiter
+
     # Reject if any child has ITSELF a nested card-grid pattern (3+ sibling
     # similar divs) — that's a meta-container, should descend instead.
     # Example: .container has .feature-header + .feature-grid (where

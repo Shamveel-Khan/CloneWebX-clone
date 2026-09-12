@@ -627,13 +627,27 @@ def _detect_split_layout(section: dict) -> tuple[dict, dict] | None:
 
 
 def _find_content_wrapper(section: dict) -> dict | None:
+    # CMS/framework transparent shells that should be skipped when looking
+    # for real content. Webflow: .w-dyn-list, .w-dyn-items; generic patterns.
+    _CMS_SHELLS = ("w-dyn-list", "w-dyn-items", "collection-list",
+                   "collection-wrap", "grid-wrapper", "list-wrapper",
+                   "items-wrapper", "products-wrapper")
+
+    def _is_transparent_shell(n: dict) -> bool:
+        cls = " ".join(n.get("classes", [])).lower()
+        return any(k in cls for k in _CMS_SHELLS)
+
     node = section
-    for _ in range(4):
+    for _ in range(6):  # bumped from 4 to 6 to handle deeper Webflow nesting
         children = [c for c in node.get("children", []) if c.get("tag") not in ("script", "style", None)]
         if len(children) != 1:
             return node
         ch = children[0]
         if ch.get("tag") in ("div", "section", "article"):
+            # Always descend through transparent CMS shells
+            if _is_transparent_shell(ch):
+                node = ch
+                continue
             # Stop before descending into a multi-column grid/flex container.
             # Those are content grids that walk_and_emit() should handle via
             # _is_card_grid() — promoting their direction to the section level
@@ -657,6 +671,7 @@ def _find_content_wrapper(section: dict) -> dict | None:
         else:
             return node
     return node
+
 
 
 def _find_hero_bg(section: dict, consumed: set[int]) -> dict | None:

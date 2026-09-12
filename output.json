@@ -4,7 +4,7 @@
   "type": "page",
   "content": [
     {
-      "id": "293d819",
+      "id": "a397a41",
       "elType": "container",
       "settings": {
         "content_width": "full",
@@ -38,7 +38,7 @@
       },
       "elements": [
         {
-          "id": "3dcab0a",
+          "id": "6913a79",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -57,7 +57,7 @@
           },
           "elements": [
             {
-              "id": "5f82449",
+              "id": "6bf7d6f",
               "elType": "widget",
               "settings": {
                 "image": {
@@ -76,7 +76,7 @@
           "isInner": true
         },
         {
-          "id": "68d8679",
+          "id": "6c14a09",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -95,7 +95,7 @@
           },
           "elements": [
             {
-              "id": "8675ed4",
+              "id": "a978290",
               "elType": "widget",
               "settings": {
                 "view": "inline",
@@ -190,7 +190,7 @@
           "isInner": true
         },
         {
-          "id": "d89c497",
+          "id": "4380b3f",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -215,7 +215,7 @@
           },
           "elements": [
             {
-              "id": "2f016d8",
+              "id": "379ec83",
               "elType": "widget",
               "settings": {
                 "text": "Contact us",
@@ -266,7 +266,7 @@
       "isInner": false
     },
     {
-      "id": "ae30a7a",
+      "id": "3264812",
       "elType": "container",
       "settings": {
         "content_width": "full",
@@ -306,7 +306,7 @@
       },
       "elements": [
         {
-          "id": "35e0711",
+          "id": "3e03cfc",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -335,7 +335,7 @@
           },
           "elements": [
             {
-              "id": "0ce23a7",
+              "id": "ee7cbb3",
               "elType": "widget",
               "settings": {
                 "title": "Bringing the beauty of nature to your doorstep",
@@ -356,7 +356,7 @@
               "isInner": false
             },
             {
-              "id": "8cd151d",
+              "id": "4618ab0",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -381,7 +381,7 @@
               },
               "elements": [
                 {
-                  "id": "8969ba0",
+                  "id": "3d1eeae",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -416,7 +416,7 @@
                   },
                   "elements": [
                     {
-                      "id": "6265d9c",
+                      "id": "082f049",
                       "elType": "container",
                       "settings": {
                         "content_width": "boxed",
@@ -457,7 +457,7 @@
                       },
                       "elements": [
                         {
-                          "id": "4f03fd2",
+                          "id": "0fc5e4d",
                           "elType": "widget",
                           "settings": {
                             "image": {
@@ -484,7 +484,7 @@
                   "isInner": true
                 },
                 {
-                  "id": "ff3cba6",
+                  "id": "7a87af4",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -519,7 +519,7 @@
                   },
                   "elements": [
                     {
-                      "id": "73f585e",
+                      "id": "6a7d2d2",
                       "elType": "widget",
                       "settings": {
                         "editor": "<p>What started as a small seed of an idea has blossomed into a thriving online oasis where plant enthusiasts & nature lovers alike can find inspiration, guidance.</p>",
@@ -539,7 +539,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "a1e423d",
+                      "id": "30378ff",
                       "elType": "widget",
                       "settings": {
                         "text": "Shop Now",
@@ -595,7 +595,7 @@
               "isInner": true
             },
             {
-              "id": "cec4fc4",
+              "id": "90f440f",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -620,7 +620,7 @@
               },
               "elements": [
                 {
-                  "id": "7e11f06",
+                  "id": "c359902",
                   "elType": "widget",
                   "settings": {
                     "editor": "940+<br>Happy Customer"
@@ -630,7 +630,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "5edf0a4",
+                  "id": "a7ead67",
                   "elType": "widget",
                   "settings": {
                     "editor": "700+<br>Type of Plants"
@@ -640,7 +640,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "b947c3d",
+                  "id": "092c6e2",
                   "elType": "widget",
                   "settings": {
                     "editor": "230+<br>Unique Style"
@@ -656,7 +656,7 @@
           "isInner": true
         },
         {
-          "id": "9d9e207",
+          "id": "df99855",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -690,7 +690,7 @@
           },
           "elements": [
             {
-              "id": "aeba939",
+              "id": "7d71a8a",
               "elType": "container",
               "settings": {
                 "content_width": "boxed",
@@ -717,7 +717,7 @@
               },
               "elements": [
                 {
-                  "id": "c27ad82",
+                  "id": "9f29313",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -747,7 +747,7 @@
       "isInner": false
     },
     {
-      "id": "4de74fe",
+      "id": "efbb08e",
       "elType": "container",
       "settings": {
         "content_width": "boxed",
@@ -785,7 +785,7 @@
       },
       "elements": [
         {
-          "id": "cb100d0",
+          "id": "4a2fc49",
           "elType": "widget",
           "settings": {
             "title": "Collection",
@@ -815,7 +815,7 @@
           "isInner": false
         },
         {
-          "id": "2bc867d",
+          "id": "d33878c",
           "elType": "widget",
           "settings": {
             "title": "Our Products",
@@ -844,7 +844,7 @@
           "isInner": false
         },
         {
-          "id": "6d01b5d",
+          "id": "8ad0199",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -883,7 +883,7 @@
           },
           "elements": [
             {
-              "id": "423c3f9",
+              "id": "7b19967",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -922,7 +922,7 @@
               },
               "elements": [
                 {
-                  "id": "d855ff8",
+                  "id": "a3078df",
                   "elType": "container",
                   "settings": {
                     "content_width": "boxed",
@@ -958,7 +958,7 @@
                   },
                   "elements": [
                     {
-                      "id": "a3e7546",
+                      "id": "1522f48",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -979,7 +979,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "1e23579",
+                      "id": "edd3ce5",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -998,7 +998,7 @@
                   "isInner": true
                 },
                 {
-                  "id": "edaa091",
+                  "id": "e209f27",
                   "elType": "widget",
                   "settings": {
                     "title": "Flowerpot Garden",
@@ -1027,7 +1027,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "9ebcd8a",
+                  "id": "723c720",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -1052,7 +1052,7 @@
                   },
                   "elements": [
                     {
-                      "id": "c465b3e",
+                      "id": "6d32649",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 21.00 USD",
@@ -1079,7 +1079,7 @@
               "isInner": true
             },
             {
-              "id": "bbebed1",
+              "id": "13938e1",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -1118,7 +1118,7 @@
               },
               "elements": [
                 {
-                  "id": "39d576c",
+                  "id": "8268de7",
                   "elType": "container",
                   "settings": {
                     "content_width": "boxed",
@@ -1154,7 +1154,7 @@
                   },
                   "elements": [
                     {
-                      "id": "c4fd4e6",
+                      "id": "5784de7",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -1175,7 +1175,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "ac45dd9",
+                      "id": "5908965",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -1194,7 +1194,7 @@
                   "isInner": true
                 },
                 {
-                  "id": "865961a",
+                  "id": "fac60db",
                   "elType": "widget",
                   "settings": {
                     "title": "Monstera Deliciosa",
@@ -1223,7 +1223,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "ce07d96",
+                  "id": "a39f3a1",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -1248,7 +1248,7 @@
                   },
                   "elements": [
                     {
-                      "id": "a9fedc8",
+                      "id": "efd314a",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 28.10 USD",
@@ -1275,7 +1275,7 @@
               "isInner": true
             },
             {
-              "id": "1084651",
+              "id": "a2f3bed",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -1314,7 +1314,7 @@
               },
               "elements": [
                 {
-                  "id": "2902aab",
+                  "id": "4377c4d",
                   "elType": "container",
                   "settings": {
                     "content_width": "boxed",
@@ -1350,7 +1350,7 @@
                   },
                   "elements": [
                     {
-                      "id": "35214ce",
+                      "id": "a84ced3",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -1371,7 +1371,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "e230954",
+                      "id": "a07ab65",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -1390,7 +1390,7 @@
                   "isInner": true
                 },
                 {
-                  "id": "65b4b07",
+                  "id": "d7e82f2",
                   "elType": "widget",
                   "settings": {
                     "title": "Orchid Opulence",
@@ -1419,7 +1419,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "bf9b579",
+                  "id": "65a5866",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -1444,7 +1444,7 @@
                   },
                   "elements": [
                     {
-                      "id": "71bc700",
+                      "id": "cdbec56",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 24.20 USD",
@@ -1471,7 +1471,7 @@
               "isInner": true
             },
             {
-              "id": "48a8b0d",
+              "id": "b187b4a",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -1510,7 +1510,7 @@
               },
               "elements": [
                 {
-                  "id": "071aea1",
+                  "id": "bc7600b",
                   "elType": "container",
                   "settings": {
                     "content_width": "boxed",
@@ -1546,7 +1546,7 @@
                   },
                   "elements": [
                     {
-                      "id": "2c05d1b",
+                      "id": "7de09fe",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -1567,7 +1567,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "f479ab6",
+                      "id": "1dc0854",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -1586,7 +1586,7 @@
                   "isInner": true
                 },
                 {
-                  "id": "7d2d61c",
+                  "id": "1275f59",
                   "elType": "widget",
                   "settings": {
                     "title": "Houseplant Philippine",
@@ -1615,7 +1615,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "78b0bb8",
+                  "id": "1928eae",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -1640,7 +1640,7 @@
                   },
                   "elements": [
                     {
-                      "id": "a8af7df",
+                      "id": "aa8496d",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 20.00 USD",
@@ -1673,7 +1673,7 @@
       "isInner": false
     },
     {
-      "id": "fb70dff",
+      "id": "7e53833",
       "elType": "container",
       "settings": {
         "content_width": "boxed",
@@ -1711,7 +1711,7 @@
       },
       "elements": [
         {
-          "id": "c44c871",
+          "id": "355a80b",
           "elType": "widget",
           "settings": {
             "title": "Explore By Categories",
@@ -1741,7 +1741,7 @@
           "isInner": false
         },
         {
-          "id": "28eaec4",
+          "id": "a6b56f4",
           "elType": "widget",
           "settings": {
             "title": "Our Categories",
@@ -1770,7 +1770,7 @@
           "isInner": false
         },
         {
-          "id": "7173af3",
+          "id": "e9f3a36",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -1809,7 +1809,7 @@
           },
           "elements": [
             {
-              "id": "55adc22",
+              "id": "6ed05cf",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -1848,7 +1848,7 @@
               },
               "elements": [
                 {
-                  "id": "9766139",
+                  "id": "04d5a1f",
                   "elType": "widget",
                   "settings": {
                     "title": "Air Purifying Plants",
@@ -1877,7 +1877,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "940c70e",
+                  "id": "3449762",
                   "elType": "widget",
                   "settings": {
                     "title": "View Products",
@@ -1898,7 +1898,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "70b5740",
+                  "id": "bebb5dd",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -1917,7 +1917,7 @@
               "isInner": true
             },
             {
-              "id": "0770c0e",
+              "id": "b79a9c8",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -1956,7 +1956,7 @@
               },
               "elements": [
                 {
-                  "id": "6d50f08",
+                  "id": "1d527d4",
                   "elType": "widget",
                   "settings": {
                     "title": "Aquatic Plants",
@@ -1985,7 +1985,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "93eff99",
+                  "id": "167df75",
                   "elType": "widget",
                   "settings": {
                     "title": "View Products",
@@ -2006,7 +2006,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "9ac0ea6",
+                  "id": "b8fdfaa",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -2025,7 +2025,7 @@
               "isInner": true
             },
             {
-              "id": "c499226",
+              "id": "abfe12d",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -2064,7 +2064,7 @@
               },
               "elements": [
                 {
-                  "id": "130c9f4",
+                  "id": "e1bdb3e",
                   "elType": "widget",
                   "settings": {
                     "title": "Tropical Plants",
@@ -2093,7 +2093,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "4eeb0e0",
+                  "id": "1a54f0f",
                   "elType": "widget",
                   "settings": {
                     "title": "View Products",
@@ -2114,7 +2114,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "28f2974",
+                  "id": "f73886a",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -2139,7 +2139,7 @@
       "isInner": false
     },
     {
-      "id": "c69b199",
+      "id": "1db7d24",
       "elType": "container",
       "settings": {
         "content_width": "full",
@@ -2179,7 +2179,7 @@
       },
       "elements": [
         {
-          "id": "9065472",
+          "id": "3212136",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -2222,7 +2222,7 @@
           "isInner": true
         },
         {
-          "id": "ae6b67d",
+          "id": "faf32fa",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -2256,7 +2256,7 @@
           },
           "elements": [
             {
-              "id": "3343864",
+              "id": "eacba12",
               "elType": "container",
               "settings": {
                 "content_width": "boxed",
@@ -2291,7 +2291,7 @@
               },
               "elements": [
                 {
-                  "id": "b2f386f",
+                  "id": "e30a6f6",
                   "elType": "widget",
                   "settings": {
                     "title": "Get 45% Off",
@@ -2320,7 +2320,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "b55b7aa",
+                  "id": "3d15918",
                   "elType": "widget",
                   "settings": {
                     "title": "Gerbera Daisies",
@@ -2344,7 +2344,7 @@
               "isInner": true
             },
             {
-              "id": "a829b56",
+              "id": "219058d",
               "elType": "container",
               "settings": {
                 "content_width": "boxed",
@@ -2379,7 +2379,7 @@
               },
               "elements": [
                 {
-                  "id": "93bedbd",
+                  "id": "6e3726b",
                   "elType": "widget",
                   "settings": {
                     "title": "New Product",
@@ -2408,7 +2408,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "08799b6",
+                  "id": "15ede01",
                   "elType": "widget",
                   "settings": {
                     "title": "Pitcher Plant",
@@ -2438,7 +2438,7 @@
       "isInner": false
     },
     {
-      "id": "42fa5e5",
+      "id": "8b80daa",
       "elType": "container",
       "settings": {
         "content_width": "boxed",
@@ -2478,7 +2478,7 @@
       },
       "elements": [
         {
-          "id": "2ad983c",
+          "id": "3336c40",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -2503,7 +2503,7 @@
           },
           "elements": [
             {
-              "id": "22944ce",
+              "id": "0f0fc17",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -2534,7 +2534,7 @@
               },
               "elements": [
                 {
-                  "id": "bc41f81",
+                  "id": "e088c96",
                   "elType": "widget",
                   "settings": {
                     "title": "Personalized guidance for your greenery needs",
@@ -2563,7 +2563,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "aa0b554",
+                  "id": "41c3f1a",
                   "elType": "widget",
                   "settings": {
                     "editor": "<p>Whether you're embarking on your first foray into indoor gardening or you're a seasoned plant parent looking to expand your collection, we're committed to helping you achieve your greenery goals.</p>",
@@ -2583,7 +2583,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "c2d1f45",
+                  "id": "8ade946",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -2608,7 +2608,7 @@
                   },
                   "elements": [
                     {
-                      "id": "cba23f6",
+                      "id": "dbaf95b",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -2624,7 +2624,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "854843a",
+                      "id": "b86622e",
                       "elType": "widget",
                       "settings": {
                         "editor": "Quality products<br>It is a long established fact that a reader."
@@ -2637,7 +2637,7 @@
                   "isInner": true
                 },
                 {
-                  "id": "929af48",
+                  "id": "05e5183",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -2662,7 +2662,7 @@
                   },
                   "elements": [
                     {
-                      "id": "a9c8ab5",
+                      "id": "ab7a0dd",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -2678,7 +2678,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "53400ec",
+                      "id": "5466dc3",
                       "elType": "widget",
                       "settings": {
                         "editor": "Delivery to your door<br>Better mental wellbeing and happiness"
@@ -2691,7 +2691,7 @@
                   "isInner": true
                 },
                 {
-                  "id": "3b0089f",
+                  "id": "d240c76",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -2716,7 +2716,7 @@
                   },
                   "elements": [
                     {
-                      "id": "68c5462",
+                      "id": "244139e",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -2732,7 +2732,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "e945fd8",
+                      "id": "81ca7c9",
                       "elType": "widget",
                       "settings": {
                         "editor": "Supply seeds<br>Vibrant flowers to flavorful herbs"
@@ -2748,7 +2748,7 @@
               "isInner": true
             },
             {
-              "id": "f8dd271",
+              "id": "9839815",
               "elType": "widget",
               "settings": {
                 "image": {
@@ -2775,7 +2775,7 @@
       "isInner": false
     },
     {
-      "id": "31200b7",
+      "id": "3ad6b39",
       "elType": "container",
       "settings": {
         "content_width": "boxed",
@@ -2813,7 +2813,7 @@
       },
       "elements": [
         {
-          "id": "f4f073f",
+          "id": "f6fe93f",
           "elType": "widget",
           "settings": {
             "title": "Explore Products",
@@ -2843,7 +2843,7 @@
           "isInner": false
         },
         {
-          "id": "8ba3390",
+          "id": "b86fea9",
           "elType": "widget",
           "settings": {
             "title": "Latest Products",
@@ -2872,7 +2872,7 @@
           "isInner": false
         },
         {
-          "id": "df7c5b2",
+          "id": "31fb3ba",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -2911,7 +2911,7 @@
           },
           "elements": [
             {
-              "id": "58ab09f",
+              "id": "d19b365",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -2950,7 +2950,7 @@
               },
               "elements": [
                 {
-                  "id": "5c06a75",
+                  "id": "a0471bf",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -2971,7 +2971,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "cf21fd0",
+                  "id": "be10ff3",
                   "elType": "widget",
                   "settings": {
                     "title": "Pitcher Plant",
@@ -3000,7 +3000,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "64520e0",
+                  "id": "1a936c3",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -3025,7 +3025,7 @@
                   },
                   "elements": [
                     {
-                      "id": "6e57a5f",
+                      "id": "08f5146",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 16.00 USD",
@@ -3046,7 +3046,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "dc82c9e",
+                      "id": "c313d6f",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 19.00 USD",
@@ -3073,7 +3073,7 @@
               "isInner": true
             },
             {
-              "id": "7489354",
+              "id": "8a833ba",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -3112,7 +3112,7 @@
               },
               "elements": [
                 {
-                  "id": "91d5005",
+                  "id": "702e75a",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -3133,7 +3133,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "6aed7df",
+                  "id": "f58a781",
                   "elType": "widget",
                   "settings": {
                     "title": "Gerbera Daisies",
@@ -3162,7 +3162,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "efb8339",
+                  "id": "aa1f0f3",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -3187,7 +3187,7 @@
                   },
                   "elements": [
                     {
-                      "id": "e596b30",
+                      "id": "5b04074",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 24.20 USD",
@@ -3214,7 +3214,7 @@
               "isInner": true
             },
             {
-              "id": "d3cec0e",
+              "id": "b3d3f07",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -3253,7 +3253,7 @@
               },
               "elements": [
                 {
-                  "id": "f17b4e9",
+                  "id": "28bd666",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -3274,7 +3274,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "35055f1",
+                  "id": "769eb3d",
                   "elType": "widget",
                   "settings": {
                     "title": "Fiddle leaf fig plant",
@@ -3303,7 +3303,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "3688e20",
+                  "id": "b3f938a",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -3328,7 +3328,7 @@
                   },
                   "elements": [
                     {
-                      "id": "8e093fb",
+                      "id": "6e3d584",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 23.40 USD",
@@ -3355,7 +3355,7 @@
               "isInner": true
             },
             {
-              "id": "d6cf7c2",
+              "id": "57b3941",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -3394,7 +3394,7 @@
               },
               "elements": [
                 {
-                  "id": "6413b63",
+                  "id": "1235043",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -3415,7 +3415,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "3d85d16",
+                  "id": "bcaf9d6",
                   "elType": "widget",
                   "settings": {
                     "title": "Dracaena Dragon Tree",
@@ -3444,7 +3444,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "26415a7",
+                  "id": "adedcbd",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -3469,7 +3469,7 @@
                   },
                   "elements": [
                     {
-                      "id": "24b1c8c",
+                      "id": "75b1f57",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 18.00 USD",
@@ -3490,7 +3490,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "544bf60",
+                      "id": "99775c6",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 20.00 USD",
@@ -3517,7 +3517,7 @@
               "isInner": true
             },
             {
-              "id": "9b24f17",
+              "id": "dfa854d",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -3556,7 +3556,7 @@
               },
               "elements": [
                 {
-                  "id": "d8e7ecb",
+                  "id": "2768a1c",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -3577,7 +3577,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "33e1c3d",
+                  "id": "7951ea8",
                   "elType": "widget",
                   "settings": {
                     "title": "Pilea peperomioides",
@@ -3606,7 +3606,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "1c2ce28",
+                  "id": "6a5ea61",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -3631,7 +3631,7 @@
                   },
                   "elements": [
                     {
-                      "id": "3c7a86f",
+                      "id": "7874174",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 20.00 USD",
@@ -3658,7 +3658,7 @@
               "isInner": true
             },
             {
-              "id": "0089d6e",
+              "id": "7b8bcd5",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -3697,7 +3697,7 @@
               },
               "elements": [
                 {
-                  "id": "c8c538e",
+                  "id": "18e1864",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -3718,7 +3718,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "759a47f",
+                  "id": "9e97592",
                   "elType": "widget",
                   "settings": {
                     "title": "Aspidistra elatior",
@@ -3747,7 +3747,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "3e59066",
+                  "id": "8531d75",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -3772,7 +3772,7 @@
                   },
                   "elements": [
                     {
-                      "id": "7b07c7d",
+                      "id": "0ab8c3b",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 19.00 USD",
@@ -3799,7 +3799,7 @@
               "isInner": true
             },
             {
-              "id": "874c724",
+              "id": "7f3075c",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -3838,7 +3838,7 @@
               },
               "elements": [
                 {
-                  "id": "5519228",
+                  "id": "fa2fa2f",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -3859,7 +3859,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "820b031",
+                  "id": "6fa8f4b",
                   "elType": "widget",
                   "settings": {
                     "title": "Philodendron Scandens",
@@ -3888,7 +3888,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "64a283a",
+                  "id": "0e54e45",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -3913,7 +3913,7 @@
                   },
                   "elements": [
                     {
-                      "id": "ec63b3a",
+                      "id": "47a4225",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 15.00 USD",
@@ -3940,7 +3940,7 @@
               "isInner": true
             },
             {
-              "id": "17bddea",
+              "id": "7ab6960",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -3979,7 +3979,7 @@
               },
               "elements": [
                 {
-                  "id": "397e96f",
+                  "id": "6712cae",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -4000,7 +4000,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "5a9fc00",
+                  "id": "143770f",
                   "elType": "widget",
                   "settings": {
                     "title": "Sansevieria Trifasciata",
@@ -4029,7 +4029,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "68bfece",
+                  "id": "56b7cfb",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -4054,7 +4054,7 @@
                   },
                   "elements": [
                     {
-                      "id": "751925e",
+                      "id": "fb0c609",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 21.00 USD",
@@ -4075,7 +4075,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "8ee4f62",
+                      "id": "ab2b270",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 26.00 USD",
@@ -4102,7 +4102,7 @@
               "isInner": true
             },
             {
-              "id": "999bc36",
+              "id": "2815718",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -4141,7 +4141,7 @@
               },
               "elements": [
                 {
-                  "id": "f2c60ff",
+                  "id": "ea8ab73",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -4162,7 +4162,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "4698e0e",
+                  "id": "cd02b94",
                   "elType": "widget",
                   "settings": {
                     "title": "Dracaena Fragrans",
@@ -4191,7 +4191,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "5a9bcce",
+                  "id": "4453d99",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -4216,7 +4216,7 @@
                   },
                   "elements": [
                     {
-                      "id": "ff41839",
+                      "id": "59a3527",
                       "elType": "widget",
                       "settings": {
                         "title": "$ 29.00 USD",
@@ -4249,7 +4249,7 @@
       "isInner": false
     },
     {
-      "id": "306745f",
+      "id": "7f34472",
       "elType": "container",
       "settings": {
         "content_width": "full",
@@ -4282,7 +4282,7 @@
       },
       "elements": [
         {
-          "id": "a98f103",
+          "id": "518b0e0",
           "elType": "container",
           "settings": {
             "content_width": "boxed",
@@ -4323,7 +4323,7 @@
           },
           "elements": [
             {
-              "id": "36b64b1",
+              "id": "f2851f2",
               "elType": "widget",
               "settings": {
                 "title": "Explore our curated collection of exotic plants",
@@ -4352,7 +4352,7 @@
               "isInner": false
             },
             {
-              "id": "9f4a5f9",
+              "id": "f87ea87",
               "elType": "widget",
               "settings": {
                 "editor": "<p>The allure of exotic plants with their vibrant colors & captivating foliage. From tropical wonders to rare specimens.</p>",
@@ -4372,7 +4372,7 @@
               "isInner": false
             },
             {
-              "id": "e3bd231",
+              "id": "c916b92",
               "elType": "widget",
               "settings": {
                 "text": "Contact us",
@@ -4427,7 +4427,7 @@
       "isInner": false
     },
     {
-      "id": "af2da7f",
+      "id": "4a58c92",
       "elType": "container",
       "settings": {
         "content_width": "boxed",
@@ -4465,7 +4465,7 @@
       },
       "elements": [
         {
-          "id": "05cbe2a",
+          "id": "a51f9aa",
           "elType": "widget",
           "settings": {
             "title": "Testimonials",
@@ -4495,7 +4495,7 @@
           "isInner": false
         },
         {
-          "id": "1efc2e9",
+          "id": "3cf631d",
           "elType": "widget",
           "settings": {
             "title": "Customers Review",
@@ -4524,7 +4524,7 @@
           "isInner": false
         },
         {
-          "id": "b2143e2",
+          "id": "885aa69",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -4549,7 +4549,7 @@
           },
           "elements": [
             {
-              "id": "096c8c4",
+              "id": "c6f384d",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -4584,7 +4584,7 @@
               },
               "elements": [
                 {
-                  "id": "9440c3c",
+                  "id": "f528841",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -4608,7 +4608,7 @@
               "isInner": true
             },
             {
-              "id": "a7aa0fa",
+              "id": "d671ca4",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -4643,7 +4643,7 @@
               },
               "elements": [
                 {
-                  "id": "91c233a",
+                  "id": "3269e22",
                   "elType": "container",
                   "settings": {
                     "content_width": "boxed",
@@ -4687,7 +4687,7 @@
                   },
                   "elements": [
                     {
-                      "id": "fa7ee44",
+                      "id": "bef14d0",
                       "elType": "widget",
                       "settings": {
                         "editor": "<p>“I recently ordered a plant subscription box from Grove & I couldn't be happier with my experience. Each month, I receive a new and exciting plant, and it's been such a joy watching my collection grow.”</p>",
@@ -4707,7 +4707,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "6a5dad8",
+                      "id": "c5f86cd",
                       "elType": "widget",
                       "settings": {
                         "title": "Theresa Webb",
@@ -4728,7 +4728,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "64e6b52",
+                      "id": "d0097db",
                       "elType": "widget",
                       "settings": {
                         "title": "Grorgia, USA",
@@ -4758,7 +4758,7 @@
           "isInner": true
         },
         {
-          "id": "641f314",
+          "id": "04040cd",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -4783,7 +4783,7 @@
           },
           "elements": [
             {
-              "id": "5ab7414",
+              "id": "481b882",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -4818,7 +4818,7 @@
               },
               "elements": [
                 {
-                  "id": "622ee33",
+                  "id": "0b86e64",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -4842,7 +4842,7 @@
               "isInner": true
             },
             {
-              "id": "08ad876",
+              "id": "37b6a74",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -4877,7 +4877,7 @@
               },
               "elements": [
                 {
-                  "id": "a215042",
+                  "id": "6f94af2",
                   "elType": "container",
                   "settings": {
                     "content_width": "boxed",
@@ -4921,7 +4921,7 @@
                   },
                   "elements": [
                     {
-                      "id": "8690f3b",
+                      "id": "1453899",
                       "elType": "widget",
                       "settings": {
                         "editor": "<p>“As a beginner gardener, I was a bit nervous about ordering plants online, but Grove made the process so easy and enjoyable. The plants I received were healthy and beautiful, and the care instructions provided were incredibly helpful.”</p>",
@@ -4941,7 +4941,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "e43a6b2",
+                      "id": "46704b0",
                       "elType": "widget",
                       "settings": {
                         "title": "Esther Howard",
@@ -4962,7 +4962,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "1eb8305",
+                      "id": "047968d",
                       "elType": "widget",
                       "settings": {
                         "title": "California, USA",
@@ -4992,7 +4992,7 @@
           "isInner": true
         },
         {
-          "id": "78c24c8",
+          "id": "7cbc7b1",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -5017,7 +5017,7 @@
           },
           "elements": [
             {
-              "id": "058b8ea",
+              "id": "4be2d73",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -5052,7 +5052,7 @@
               },
               "elements": [
                 {
-                  "id": "e58f5de",
+                  "id": "8b3ff51",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -5076,7 +5076,7 @@
               "isInner": true
             },
             {
-              "id": "e4ca4af",
+              "id": "524b9fd",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -5111,7 +5111,7 @@
               },
               "elements": [
                 {
-                  "id": "3866dc9",
+                  "id": "6e2f8b1",
                   "elType": "container",
                   "settings": {
                     "content_width": "boxed",
@@ -5155,7 +5155,7 @@
                   },
                   "elements": [
                     {
-                      "id": "91500db",
+                      "id": "bdbbbaf",
                       "elType": "widget",
                       "settings": {
                         "editor": "<p>“I've been customer of Grove for years & they never disappoint! Their selection of plants is unmatched & the quality is always top-notch. Their customer service team is always friendly. I highly recommend them to anyone looking to add some greenery to their home!”</p>",
@@ -5175,7 +5175,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "e0be2f3",
+                      "id": "b22a14b",
                       "elType": "widget",
                       "settings": {
                         "title": "Cameron Williamson",
@@ -5196,7 +5196,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "7f6b1ce",
+                      "id": "f3ec590",
                       "elType": "widget",
                       "settings": {
                         "title": "Texas, USA",
@@ -5226,7 +5226,7 @@
           "isInner": true
         },
         {
-          "id": "2f40e48",
+          "id": "b9ff8dc",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -5251,7 +5251,7 @@
           },
           "elements": [
             {
-              "id": "8f0766a",
+              "id": "41916c3",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -5286,7 +5286,7 @@
               },
               "elements": [
                 {
-                  "id": "255a244",
+                  "id": "b67bfca",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -5310,7 +5310,7 @@
               "isInner": true
             },
             {
-              "id": "1659866",
+              "id": "9bb9163",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -5345,7 +5345,7 @@
               },
               "elements": [
                 {
-                  "id": "a48d82f",
+                  "id": "5289263",
                   "elType": "container",
                   "settings": {
                     "content_width": "boxed",
@@ -5389,7 +5389,7 @@
                   },
                   "elements": [
                     {
-                      "id": "e89aaf3",
+                      "id": "d0e3a7a",
                       "elType": "widget",
                       "settings": {
                         "editor": "<p>“I've struggled to keep plants alive in the past, but the personalized guidance I received from Grove has been a game-changer. They helped me select the perfect plants for my space and provided me with invaluable care tips.”</p>",
@@ -5409,7 +5409,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "bb09348",
+                      "id": "a905e4a",
                       "elType": "widget",
                       "settings": {
                         "title": "Wade Warren",
@@ -5430,7 +5430,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "a798f74",
+                      "id": "600c13f",
                       "elType": "widget",
                       "settings": {
                         "title": "New York, USA",
@@ -5460,7 +5460,7 @@
           "isInner": true
         },
         {
-          "id": "e9639c1",
+          "id": "a7e06f1",
           "elType": "widget",
           "settings": {
             "image": {
@@ -5476,7 +5476,7 @@
           "isInner": false
         },
         {
-          "id": "8480fc6",
+          "id": "8d2c625",
           "elType": "widget",
           "settings": {
             "image": {
@@ -5495,7 +5495,7 @@
       "isInner": false
     },
     {
-      "id": "c86384d",
+      "id": "995b9ba",
       "elType": "container",
       "settings": {
         "content_width": "boxed",
@@ -5533,7 +5533,7 @@
       },
       "elements": [
         {
-          "id": "18b3f4b",
+          "id": "5f34c12",
           "elType": "widget",
           "settings": {
             "title": "Blogs",
@@ -5563,7 +5563,7 @@
           "isInner": false
         },
         {
-          "id": "915dd6b",
+          "id": "1a710a7",
           "elType": "widget",
           "settings": {
             "title": "News & Articles",
@@ -5592,7 +5592,7 @@
           "isInner": false
         },
         {
-          "id": "7442f72",
+          "id": "8d68af1",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -5631,7 +5631,7 @@
           },
           "elements": [
             {
-              "id": "9ab42af",
+              "id": "b5c4109",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -5670,7 +5670,7 @@
               },
               "elements": [
                 {
-                  "id": "650e1bd",
+                  "id": "e5da0ce",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -5691,7 +5691,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "0d23b91",
+                  "id": "e847042",
                   "elType": "widget",
                   "settings": {
                     "title": "Troubleshooting common plant problems",
@@ -5720,7 +5720,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "a6c2c65",
+                  "id": "8b310d3",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -5745,7 +5745,7 @@
                   },
                   "elements": [
                     {
-                      "id": "bc421e5",
+                      "id": "da05ebd",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -5761,7 +5761,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "a6a6d20",
+                      "id": "d163fcf",
                       "elType": "widget",
                       "settings": {
                         "title": "Mar 4, 2024",
@@ -5788,7 +5788,7 @@
               "isInner": true
             },
             {
-              "id": "392257a",
+              "id": "f4b1bf0",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -5827,7 +5827,7 @@
               },
               "elements": [
                 {
-                  "id": "d09fa1d",
+                  "id": "551a464",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -5848,7 +5848,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "dd36c62",
+                  "id": "8df00db",
                   "elType": "widget",
                   "settings": {
                     "title": "Tips for growing plants in small spaces",
@@ -5877,7 +5877,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "2bc34cb",
+                  "id": "b6fb537",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -5902,7 +5902,7 @@
                   },
                   "elements": [
                     {
-                      "id": "f60aceb",
+                      "id": "fb543ab",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -5918,7 +5918,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "06cc46c",
+                      "id": "0463eb5",
                       "elType": "widget",
                       "settings": {
                         "title": "Mar 4, 2024",
@@ -5945,7 +5945,7 @@
               "isInner": true
             },
             {
-              "id": "c71e173",
+              "id": "ff35379",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -5984,7 +5984,7 @@
               },
               "elements": [
                 {
-                  "id": "64bb691",
+                  "id": "a298b99",
                   "elType": "widget",
                   "settings": {
                     "image": {
@@ -6005,7 +6005,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "d039b6d",
+                  "id": "28dbbe0",
                   "elType": "widget",
                   "settings": {
                     "title": "The joys of growing herbs indoors",
@@ -6034,7 +6034,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "74709f2",
+                  "id": "93adc17",
                   "elType": "container",
                   "settings": {
                     "content_width": "full",
@@ -6059,7 +6059,7 @@
                   },
                   "elements": [
                     {
-                      "id": "e1327d8",
+                      "id": "d16460b",
                       "elType": "widget",
                       "settings": {
                         "image": {
@@ -6075,7 +6075,7 @@
                       "isInner": false
                     },
                     {
-                      "id": "3cffa48",
+                      "id": "2e6ff12",
                       "elType": "widget",
                       "settings": {
                         "title": "Mar 4, 2024",
@@ -6108,7 +6108,7 @@
       "isInner": false
     },
     {
-      "id": "70b368a",
+      "id": "9ad02ba",
       "elType": "container",
       "settings": {
         "content_width": "full",
@@ -6133,7 +6133,7 @@
       },
       "elements": [
         {
-          "id": "df08297",
+          "id": "4196f7e",
           "elType": "widget",
           "settings": {
             "title": "S H O P   I N S T A G R A M",
@@ -6154,7 +6154,7 @@
           "isInner": false
         },
         {
-          "id": "ea438bb",
+          "id": "3eb6c6a",
           "elType": "widget",
           "settings": {
             "view": "traditional",
@@ -6238,7 +6238,7 @@
       "isInner": false
     },
     {
-      "id": "e5ecdf1",
+      "id": "8a3a255",
       "elType": "container",
       "settings": {
         "content_width": "boxed",
@@ -6270,7 +6270,7 @@
       },
       "elements": [
         {
-          "id": "f4fa478",
+          "id": "b77f10f",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -6295,7 +6295,7 @@
           },
           "elements": [
             {
-              "id": "d209c4d",
+              "id": "1af2f50",
               "elType": "container",
               "settings": {
                 "content_width": "full",
@@ -6320,7 +6320,7 @@
               },
               "elements": [
                 {
-                  "id": "2daedae",
+                  "id": "6f3bf69",
                   "elType": "widget",
                   "settings": {
                     "editor": "Pages"
@@ -6330,7 +6330,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "14ded35",
+                  "id": "5afd911",
                   "elType": "widget",
                   "settings": {
                     "editor": "Categories"
@@ -6340,7 +6340,7 @@
                   "isInner": false
                 },
                 {
-                  "id": "e0fddff",
+                  "id": "fe87210",
                   "elType": "widget",
                   "settings": {
                     "editor": "Resources"
@@ -6353,7 +6353,7 @@
               "isInner": true
             },
             {
-              "id": "dfc2284",
+              "id": "43a05e1",
               "elType": "widget",
               "settings": {
                 "editor": "Newsletter<br>Join our community of plant enthusiasts and elevate your greenery game today!"
@@ -6366,7 +6366,7 @@
           "isInner": true
         },
         {
-          "id": "66bc926",
+          "id": "2016086",
           "elType": "container",
           "settings": {
             "content_width": "full",
@@ -6391,7 +6391,7 @@
           },
           "elements": [
             {
-              "id": "c72734f",
+              "id": "094f903",
               "elType": "widget",
               "settings": {
                 "title": "© 2024 Grove.",
@@ -6412,7 +6412,7 @@
               "isInner": false
             },
             {
-              "id": "6c00bab",
+              "id": "d15650b",
               "elType": "widget",
               "settings": {
                 "editor": "Nixar<br>Webflow"
