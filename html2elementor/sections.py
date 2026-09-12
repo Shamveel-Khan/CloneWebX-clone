@@ -21,6 +21,22 @@ def detect_sections(capture: dict) -> list[dict]:
         if n.get("tag") in SECTION_TAGS and n.get("children")
     ]
 
+    # Treat top-level div.header / div.navbar / div.w-nav roots as sections so
+    # they are kept whole (not exploded into their inner <nav> child).
+    top_header_divs = [
+        root for root in capture.get("sections", [])
+        if root.get("tag") == "div" and root.get("children")
+        and any(
+            k in " ".join(root.get("classes", [])).lower()
+            for k in ("header", "navbar", "w-nav")
+        )
+    ]
+    # Prepend them so dedup keeps them over any inner nav descendant
+    section_nodes = top_header_divs + [
+        n for n in section_nodes
+        if not any(_is_descendant_of(n, h) for h in top_header_divs)
+    ]
+
     # Deduplicate: keep outermost only (header containing nav → keep header)
     kept: list[dict] = []
     ids_seen: set[int] = set()
@@ -77,7 +93,7 @@ def classify_section(node: dict) -> str:
     tag = node.get("tag", "")
     classes = " ".join(node.get("classes", [])).lower()
 
-    if tag in ("header", "nav"):
+    if tag in ("header", "nav") or "header" in classes or "navbar" in classes:
         return "nav"
     if tag == "footer":
         return "footer"

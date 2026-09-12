@@ -1212,6 +1212,7 @@ def _inline_flex_row_widget(node: dict, consumed: set[int]) -> dict:
 
     return {
         "__inner_container__": True,
+        "_no_group": True,
         "settings": {
             "content_width": "full",
             "flex_direction": "row",

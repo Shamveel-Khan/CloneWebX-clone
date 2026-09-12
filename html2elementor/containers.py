@@ -64,7 +64,9 @@ def map_section(section: dict) -> tuple[dict[str, Any], list[dict]]:
 
     sec_tag = section.get("tag", "")
     sec_display = section.get("styles", {}).get("display", "")
-    if sec_tag in ("header", "nav", "footer"):
+    sec_cls = " ".join(section.get("classes", [])).lower()
+    is_header_or_nav = sec_tag in ("header", "nav") or (sec_tag == "div" and any(k in sec_cls for k in ("header", "navbar")))
+    if is_header_or_nav or sec_tag == "footer":
         # Check for a grid layout inside footer — if found, fall through to
         # normal section handling so the grid columns are preserved.
         has_grid_child = any(
@@ -72,9 +74,9 @@ def map_section(section: dict) -> tuple[dict[str, Any], list[dict]]:
             for c in _iter(section)
             if c is not section
         )
-        use_header_builder = (sec_tag in ("header", "nav")) or (sec_tag == "footer" and not has_grid_child)
+        use_header_builder = is_header_or_nav or (sec_tag == "footer" and not has_grid_child)
         if use_header_builder:
-            is_flex_row = sec_display == "flex" or sec_tag in ("header", "nav")
+            is_flex_row = sec_display == "flex" or is_header_or_nav
             if is_flex_row:
                 container["flex_direction"] = "row"
                 container["flex_direction_tablet"] = "row"
@@ -97,22 +99,47 @@ def map_section(section: dict) -> tuple[dict[str, Any], list[dict]]:
         # Footer with grid inside: fall through to generic section handling
 
     # Split hero: flex row with 2 children (image + content)
+    # Split hero: flex or grid row with 2 columns (image + content)
     split = _detect_split_layout(section)
     if split:
         first_node, second_node = split
-        # Determine which is image and which is content
-        first_styles = first_node.get("styles", {})
-        first_has_bg = "url(" in (first_styles.get("background-image", "") or first_styles.get("background", ""))
-        if first_has_bg:
+        # Check which node is the image node
+        def _check_is_img(n):
+            s = n.get("styles", {})
+            if "url(" in (s.get("background-image", "") or s.get("background", "")):
+                return True
+            for ch in _iter(n, max_depth=3):
+                if ch.get("tag") == "img" and ch.get("src"):
+                    return True
+            cls = " ".join(n.get("classes", [])).lower()
+            return any(k in cls for k in ("img", "image", "media", "thumb", "photo"))
+
+        first_is_img = _check_is_img(first_node)
+        if first_is_img:
             img_node, content_node = first_node, second_node
         else:
             img_node, content_node = second_node, first_node
+
         container["flex_direction"] = "row"
         container["flex_direction_tablet"] = "row"
         container["flex_direction_mobile"] = "column"
         container["flex_align_items"] = "stretch"
         container["content_width"] = "full"
         container["padding"] = {"unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": True}
+
+        # Calculate column widths if specified in CSS (e.g. 60%/40%)
+        def _get_width_pct(n):
+            s = n.get("styles", {})
+            w_str = s.get("width") or s.get("flex-basis") or ""
+            if "%" in w_str:
+                try:
+                    return int(float(w_str.replace("%", "").strip()))
+                except ValueError:
+                    pass
+            return 50
+
+        c_pct = _get_width_pct(content_node)
+        i_pct = 100 - c_pct if c_pct != 50 else 50
 
         # Image side
         img_styles = img_node.get("styles", {})
@@ -125,8 +152,10 @@ def map_section(section: dict) -> tuple[dict[str, Any], list[dict]]:
             "settings": {
                 "content_width": "full",
                 "flex_direction": "column",
+                "flex_align_items": "center",
+                "flex_justify_content": "center",
                 "_element_width": "initial",
-                "_element_custom_width": {"unit": "%", "size": 50, "sizes": []},
+                "_element_custom_width": {"unit": "%", "size": i_pct, "sizes": []},
                 "_element_custom_width_mobile": {"unit": "%", "size": 100, "sizes": []},
             },
             "children": [],
@@ -137,6 +166,10 @@ def map_section(section: dict) -> tuple[dict[str, Any], list[dict]]:
             img_container["settings"]["background_size"] = "cover"
             img_container["settings"]["background_position"] = "center center"
             img_container["settings"]["min_height"] = {"unit": "vh", "size": 60, "sizes": []}
+        else:
+            # Contains <img> child or image elements
+            img_elements = walk_and_emit(img_node)
+            img_container["children"] = img_elements
 
         # Content side
         content_elements = walk_and_emit(content_node)
@@ -144,8 +177,8 @@ def map_section(section: dict) -> tuple[dict[str, Any], list[dict]]:
         content_padding = css_padding_to_elementor(content_node.get("styles", {}))
         # Ensure minimum padding so content isn't flush
         for side in ("top", "bottom"):
-            if int(content_padding.get(side, "0")) < 40:
-                content_padding[side] = "60"
+            if int(content_padding.get(side, "0")) < 20:
+                content_padding[side] = "40"
         for side in ("left", "right"):
             if int(content_padding.get(side, "0")) < 20:
                 content_padding[side] = "40"
@@ -158,14 +191,14 @@ def map_section(section: dict) -> tuple[dict[str, Any], list[dict]]:
                 "flex_gap": {"unit": "px", "size": 20, "column": "20", "row": "20"},
                 "padding": content_padding,
                 "_element_width": "initial",
-                "_element_custom_width": {"unit": "%", "size": 50, "sizes": []},
+                "_element_custom_width": {"unit": "%", "size": c_pct, "sizes": []},
                 "_element_custom_width_mobile": {"unit": "%", "size": 100, "sizes": []},
             },
             "children": content_elements,
         }
 
         # Return in original DOM order
-        if first_has_bg:
+        if first_is_img:
             return container, [img_container, content_container]
         else:
             return container, [content_container, img_container]
@@ -500,44 +533,97 @@ def _apply_gradient(settings: dict, css: str) -> None:
 
 
 def _detect_split_layout(section: dict) -> tuple[dict, dict] | None:
-    """Detect a flex-row section with exactly 2 children: one image, one content.
-    Common pattern: hero with image left + text right (or vice versa)."""
-    styles = section.get("styles", {})
-    display = styles.get("display", "")
-    direction = styles.get("flex-direction", "")
-    if display != "flex" or direction not in ("row", "row-reverse", ""):
-        return None
-    children = [c for c in section.get("children", []) if c.get("tag") in ("div", "section", "article")]
+    """Detect a flex or grid 2-column split layout (e.g. hero with image left + text right,
+    or vice-versa), unwrapping single-child layout shells (.hero-wrap, .container) as needed."""
+    curr = section
+    for _ in range(4):
+        valid_children = [
+            c for c in curr.get("children", [])
+            if c.get("tag") in ("div", "section", "article", "main")
+        ]
+        if len(valid_children) == 1:
+            curr = valid_children[0]
+        else:
+            break
+
+    styles = curr.get("styles", {})
+    display = (styles.get("display") or "").lower()
+    direction = (styles.get("flex-direction") or "").lower()
+
+    # Must be flex-row or grid
+    is_flex_row = display in ("flex", "inline-flex") and direction in ("row", "row-reverse", "")
+    is_grid = display == "grid"
+    if not (is_flex_row or is_grid):
+        # Also allow if the section tag/classes indicate hero and has 2 main column divs
+        sec_cls = " ".join(section.get("classes", [])).lower()
+        if not ("hero" in sec_cls and len(curr.get("children", [])) == 2):
+            return None
+
+    children = [c for c in curr.get("children", []) if c.get("tag") in ("div", "section", "article")]
     if len(children) != 2:
         return None
 
-    # Identify which child is image and which is content
-    for i, child in enumerate(children):
-        child_styles = child.get("styles", {})
-        bg_img_val = child_styles.get("background-image", "") or child_styles.get("background", "")
-        has_bg_img = "url(" in bg_img_val
-
-        # Skip overlays — divs with semi-transparent bg but no image and no text
-        is_overlay = (
-            not has_bg_img and
-            not child.get("text") and
-            not child.get("children") and
-            ("rgba" in (child_styles.get("background", "") or child_styles.get("background-color", "")))
+    def _is_image_col(c: dict) -> bool:
+        c_styles = c.get("styles", {})
+        bg_val = c_styles.get("background-image", "") or c_styles.get("background", "")
+        if "url(" in bg_val:
+            return True
+        cls = " ".join(c.get("classes", [])).lower()
+        # Class name strongly indicates a pure image column
+        if any(k in cls for k in ("hero-img", "hero-image", "feature-image",
+                                   "banner-img", "split-img", "col-img")):
+            return True
+        # Generic image class keywords
+        if any(k in cls for k in ("img", "image", "media", "photo", "picture")):
+            # But only if the column has no substantial text content (a content
+            # col that also has a thumbnail img should NOT be flagged as image-only)
+            has_text = _has_text_content(c)
+            if not has_text:
+                return True
+        # Check for a lone img (no heading/paragraph siblings at any level)
+        has_heading = any(
+            n.get("tag") in ("h1", "h2", "h3", "h4", "h5", "h6", "p")
+            and (n.get("text") or "").strip()
+            for n in _iter(c, max_depth=5)
         )
-        if is_overlay:
-            continue
+        if not has_heading:
+            for n in _iter(c, max_depth=3):
+                if n.get("tag") == "img" and n.get("src"):
+                    return True
+        return False
 
-        has_no_text = not child.get("text") and not any(
-            gc.get("tag") in ("h1", "h2", "h3", "p") for gc in child.get("children", [])
-        )
-        if has_bg_img or (has_no_text and not is_overlay):
-            other = children[1 - i]
-            # Return in ORIGINAL DOM order (preserve left/right)
-            if i == 0:
-                return (child, other)   # image first (left), content second (right)
-            else:
-                return (other, child)   # content first (left), image second (right)
+    def _has_text_content(c: dict) -> bool:
+        if (c.get("text") or "").strip():
+            return True
+        for n in _iter(c, max_depth=4):
+            if n.get("tag") in ("h1", "h2", "h3", "h4", "h5", "h6", "p", "button"):
+                if (n.get("text") or "").strip() or n.get("children"):
+                    return True
+        return False
+
+    c0_img = _is_image_col(children[0])
+    c1_img = _is_image_col(children[1])
+    c0_text = _has_text_content(children[0])
+    c1_text = _has_text_content(children[1])
+
+    # Distinct split: one image column, one text/content column
+    if c0_img and not c1_img and c1_text:
+        return (children[0], children[1])  # image left, content right
+    elif c1_img and not c0_img and c0_text:
+        return (children[0], children[1])  # content left, image right
+    # Both marked image? Use class hints to decide which is the hero image col
+    if c0_img and c1_img:
+        c0_cls = " ".join(children[0].get("classes", [])).lower()
+        c1_cls = " ".join(children[1].get("classes", [])).lower()
+        c1_is_primary = any(k in c1_cls for k in ("img", "image", "media", "photo"))
+        c0_is_primary = any(k in c0_cls for k in ("img", "image", "media", "photo"))
+        if c1_is_primary and not c0_is_primary and c0_text:
+            return (children[0], children[1])
+        elif c0_is_primary and not c1_is_primary and c1_text:
+            return (children[0], children[1])
+
     return None
+
 
 
 def _find_content_wrapper(section: dict) -> dict | None:
@@ -945,34 +1031,61 @@ def _build_header_elements(section: dict) -> list[dict]:
     # so they stay together on the right (HTML <nav> semantics).
     # Use _element_custom_width: auto + content_width not set so container shrinks.
     sec_tag_local = section.get("tag", "")
+    sec_cls_local = " ".join(section.get("classes", [])).lower()
     is_flex_header = (
         sec_tag_local in ("header", "nav")
+        or (sec_tag_local == "div" and any(k in sec_cls_local for k in ("header", "navbar")))
         or section.get("styles", {}).get("display") == "flex"
     )
-    if is_flex_header and nav_icon_list and nav_cta:
-        # Wrap logo in its own container too for symmetry
-        if elements and elements[0].get("widgetType") in ("heading", "image"):
-            logo_widget = elements.pop(0)
-            elements.insert(0, {
+
+    if is_flex_header and elements and (nav_icon_list or nav_cta):
+        logo_widget = elements.pop(0) if elements else None
+        header_zones: list[dict] = []
+
+        # Zone 1: Logo / Brand (Left)
+        if logo_widget:
+            header_zones.append({
                 "__inner_container__": True,
                 "settings": {
+                    "content_width": "full",
                     "flex_direction": "row",
                     "flex_align_items": "center",
+                    "flex_justify_content": "flex-start",
                     "_flex_size": "shrink",
                 },
                 "children": [logo_widget],
             })
-        elements.append({
-            "__inner_container__": True,
-            "settings": {
-                "flex_direction": "row",
-                "flex_align_items": "center",
-                "flex_justify_content": "flex-end",
-                "flex_gap": {"unit": "px", "size": 20, "column": "20", "row": "20"},
-                "_flex_size": "shrink",
-            },
-            "children": [nav_icon_list, nav_cta],
-        })
+
+        # Zone 2: Navigation Menu (Center)
+        if nav_icon_list:
+            header_zones.append({
+                "__inner_container__": True,
+                "settings": {
+                    "content_width": "full",
+                    "flex_direction": "row",
+                    "flex_align_items": "center",
+                    "flex_justify_content": "center",
+                    "_flex_size": "shrink",
+                },
+                "children": [nav_icon_list],
+            })
+
+        # Zone 3: CTA & Actions (Right)
+        if nav_cta:
+            header_zones.append({
+                "__inner_container__": True,
+                "settings": {
+                    "content_width": "full",
+                    "flex_direction": "row",
+                    "flex_align_items": "center",
+                    "flex_justify_content": "flex-end",
+                    "flex_gap": {"unit": "px", "size": 16, "column": "16", "row": "16"},
+                    "_flex_size": "shrink",
+                },
+                "children": [nav_cta],
+            })
+
+        elements = header_zones
     else:
         if nav_icon_list:
             elements.append(nav_icon_list)
